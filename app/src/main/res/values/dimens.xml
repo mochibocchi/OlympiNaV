@@ -2,5 +2,7 @@
 <resources>
     <dimen name="main_heading_size">24sp</dimen>
     <dimen name="main_heading_padding_top">20dp</dimen>
+    <dimen name="back_button_margin_top">@dimen/main_heading_padding_top</dimen>
+    <dimen name="back_button_margin_left">10dp</dimen>
 
 </resources>

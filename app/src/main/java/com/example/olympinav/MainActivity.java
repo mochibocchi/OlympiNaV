@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         }
         else if (itemId == R.id.nav_saved_trips) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, SavedTripsActivity.class);
             startActivity(intent);
         }
 
