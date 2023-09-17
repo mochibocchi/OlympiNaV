@@ -40,11 +40,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int itemId = item.getItemId();
 //    Here, you can add more items in the navigation bar on the left.
         if (itemId == R.id.nav_home) {
-            // Start the main activity or any other activity
+            // To navigate to a new activity, change the activity here:
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
-        else if (itemId == R.id.nav_savedtrips) {
+        else if (itemId == R.id.nav_saved_trips) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+
+        else if (itemId == R.id.nav_service_updates) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+
+        else if (itemId == R.id.nav_contact) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+
+        else if (itemId == R.id.nav_feedback) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }

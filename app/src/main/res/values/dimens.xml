@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_heading_size">24sp</dimen>
+    <dimen name="main_heading_padding_top">20dp</dimen>
+
+</resources>

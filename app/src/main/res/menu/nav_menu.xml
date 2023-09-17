@@ -12,10 +12,21 @@
             android:icon="@drawable/baseline_home_24"
             android:title="Home"/>
         <item
-            android:id="@+id/nav_savedtrips"
+            android:id="@+id/nav_saved_trips"
             android:icon="@drawable/baseline_bookmark_24"
             android:title="Saved Trips"/>
-
+        <item
+            android:id="@+id/nav_service_updates"
+            android:icon="@drawable/baseline_announcement_24"
+            android:title="Service updates"/>
+        <item
+            android:id="@+id/nav_contact"
+            android:icon="@drawable/baseline_phone_24"
+            android:title="Contact"/>
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/baseline_chat_24"
+            android:title="Feedback"/>
     </group>
     <item
         android:title="">
@@ -25,6 +36,7 @@
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/baseline_exit_to_app_24"
                 android:title="Logout"/>
+
         </menu>
 
     </item>
