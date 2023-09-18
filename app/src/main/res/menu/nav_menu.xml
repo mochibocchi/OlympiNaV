@@ -27,6 +27,10 @@
             android:id="@+id/nav_feedback"
             android:icon="@drawable/baseline_chat_24"
             android:title="Feedback"/>
+        <item
+            android:id="@+id/nav_language"
+            android:icon="@drawable/baseline_chat_24"
+            android:title="Language"/>
     </group>
     <item
         android:title="">

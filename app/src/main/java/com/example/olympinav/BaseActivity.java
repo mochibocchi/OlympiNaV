@@ -55,10 +55,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } else if (itemId == R.id.nav_feedback) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, FeedbackActivity.class);
             startActivity(intent);
         } else if (itemId == R.id.nav_logout) {
             Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.nav_language) {
+            Intent intent = new Intent(this, LanguageActivity.class);
+            startActivity(intent);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
