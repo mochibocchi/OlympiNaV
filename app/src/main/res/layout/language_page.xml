@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/selectLanguageLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="Select Your Language"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- RadioGroup for language selection -->
+    <RadioGroup
+        android:id="@+id/languageRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <!-- English -->
+        <RadioButton
+            android:id="@+id/radioEnglish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="English"
+            android:textSize="18sp" />
+
+        <!-- German -->
+        <RadioButton
+            android:id="@+id/radioGerman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="German"
+            android:textSize="18sp" />
+
+        <!-- Spanish -->
+        <RadioButton
+            android:id="@+id/radioSpanish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Spanish"
+            android:textSize="18sp" />
+
+        <!-- Japanese -->
+        <RadioButton
+            android:id="@+id/radioJapanese"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Japanese"
+            android:textSize="18sp" />
+
+        <!-- Chinese -->
+        <RadioButton
+            android:id="@+id/radioChinese"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chinese"
+            android:textSize="18sp" />
+
+    </RadioGroup>
+
+    <!-- Next Button -->
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Next"
+        android:textSize="18sp" />
+
+</LinearLayout>
