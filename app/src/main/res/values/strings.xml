@@ -1,9 +1,16 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name">OlympiNav</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <!-- string names for heading -->
+    <string name="saved_trips">Saved trips</string>
 
+    <!-- string names for default messages -->
+    <string name="saved_trips_null_message">You haven\'t added any saved trips yet&#8230;</string>
+
+    <!-- string names for image description -->
+    <string name="back_icon_desc">Back button</string>
 </resources>

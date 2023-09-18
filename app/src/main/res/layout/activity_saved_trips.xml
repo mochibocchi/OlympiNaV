@@ -28,33 +28,45 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Saved trips"
-                android:textStyle="bold"
-                android:layout_gravity="center|top"
-
-                android:textSize="@dimen/main_heading_size"
-                android:paddingTop="@dimen/main_heading_padding_top"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="You haven't added any saved trips yet..."
-                android:layout_gravity="center" />
 
             <ImageButton
                 android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/back_button_margin_top"
-                android:layout_marginLeft="@dimen/back_button_margin_left"
-                app:srcCompat="?attr/homeAsUpIndicator"/>
+                android:layout_marginStart="@dimen/back_button_margin_left"
+                app:srcCompat="?attr/homeAsUpIndicator"
+                android:contentDescription="@string/back_icon_desc"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/saved_trips"
+                android:textStyle="bold"
+                android:layout_gravity="center|top"
+                android:textSize="@dimen/main_heading_size"
+                android:paddingTop="@dimen/main_heading_padding_top"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/saved_trips_null_message"
+                android:layout_gravity="center" />
+
+
         </FrameLayout>
 
 
     </LinearLayout>
 
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/nav_view"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu"
+        app:itemIconTint="@color/main_colour"
+        app:itemTextColor="@color/main_colour"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
