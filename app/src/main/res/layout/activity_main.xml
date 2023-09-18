@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- This is the navigation toolbar at the top of screen -->
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -24,31 +25,28 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+
+        <!-- Cards showing events are displayed here in the main body: -->
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <include layout="@layout/list_events" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Upcoming events"
+                android:text="@string/upcoming_events"
                 android:textStyle="bold"
                 android:layout_gravity="center|top"
-
                 android:textSize="@dimen/main_heading_size"
                 android:paddingTop="@dimen/main_heading_padding_top"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="You haven't added any tickets yet..."
-                android:layout_gravity="center" />
         </FrameLayout>
-
-
     </LinearLayout>
 
+    <!-- This connects the navigation view to the screen -->
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -58,5 +56,4 @@
         app:menu="@menu/nav_menu"
         app:itemIconTint="@color/main_colour"
         app:itemTextColor="@color/main_colour"/>
-
 </androidx.drawerlayout.widget.DrawerLayout>
