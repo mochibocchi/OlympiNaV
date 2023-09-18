@@ -7,6 +7,7 @@
 
     <!-- string names for heading -->
     <string name="saved_trips">Saved trips</string>
+    <string name="upcoming_events">Upcoming events</string>
 
     <!-- string names for default messages -->
     <string name="saved_trips_null_message">You haven\'t added any saved trips yet&#8230;</string>
