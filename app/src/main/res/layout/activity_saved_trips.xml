@@ -47,12 +47,7 @@
                 android:textSize="@dimen/main_heading_size"
                 android:paddingTop="@dimen/main_heading_padding_top"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/saved_trips_null_message"
-                android:layout_gravity="center" />
-
+            <include layout="@layout/list_savedtrips" />
 
         </FrameLayout>
 
