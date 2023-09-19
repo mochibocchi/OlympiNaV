@@ -16,12 +16,13 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:id="@+id/toolbar"
-            android:elevation="4dp"
             android:background="@color/main_colour"
-            />
+            android:elevation="4dp"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -51,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/saved_trips"
-                android:textColor="@color/black"
+                android:textColor="@color/main_colour"
                 android:textStyle="bold"
                 android:layout_gravity="center|top"
                 android:textSize="@dimen/main_heading_size"
@@ -86,7 +87,7 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"/>
+        app:itemIconTint="@color/main_colour"
+        app:itemTextColor="@color/main_colour"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
