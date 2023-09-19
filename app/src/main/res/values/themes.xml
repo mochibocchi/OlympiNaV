@@ -2,15 +2,18 @@
     <!-- Base application theme. -->
     <style name="Theme.OlympiNav" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
+        <!-- Set the background colour of action buttons: -->
         <item name="colorPrimary">@color/main_colour</item>
         <item name="colorPrimaryVariant">@color/main_colour</item>
+        <!-- Set the colour of icon inside action buttons: -->
         <item name="colorOnPrimary">@color/white</item>
 
         <!-- Secondary brand color. -->
-        <!-- Set the colour of floating action buttons: -->
+        <!-- Set the background colour of floating action buttons: -->
         <item name="colorSecondary">@color/main_colour</item>
         <item name="colorSecondaryVariant">@color/main_colour</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <!-- Set the colour of icon inside floating action buttons: -->
+        <item name="colorOnSecondary">@color/white</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
