@@ -9,7 +9,7 @@
     tools:context=".MainActivity"
     tools:openDrawer="start">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -34,6 +34,29 @@
             android:text="Scan QR Code"
             android:textSize="24sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="150dp"
+            app:srcCompat="@drawable/baseline_qr_code_scanner_24"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:layout_marginTop="50dp"
+            android:id="@+id/editTextNumber"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/confirm_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add ticket ID number" />
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
