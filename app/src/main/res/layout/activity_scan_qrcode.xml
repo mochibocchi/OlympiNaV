@@ -24,39 +24,65 @@
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <!-- Title -->
-        <TextView
-            android:id="@+id/selectLanguageLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:text="Scan QR Code"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:background="@android:color/transparent"
-            android:layout_marginTop="150dp"
-            app:srcCompat="@drawable/baseline_qr_code_scanner_24"
-            android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scan QR Code"
+                android:textColor="@color/main_colour"
+                android:textStyle="bold"
+                android:layout_gravity="center|top"
+                android:textSize="@dimen/main_heading_size"
+                android:paddingTop="@dimen/main_heading_padding_top"/>
 
-        <EditText
-            android:layout_marginTop="50dp"
-            android:id="@+id/editTextNumber"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/back_button_margin_top"
+                android:layout_marginStart="@dimen/back_button_margin_left"
+                android:clickable="true"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/baseline_arrow_back_24"
+                android:contentDescription="Back button"/>
 
-        <Button
-            android:id="@+id/confirm_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add ticket ID number" />
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/baseline_qr_code_scanner_24"
+                android:layout_marginBottom="50dp"
+                android:layout_gravity="center"
+                android:contentDescription="Scan QR Code icon"/>
+
+            <EditText
+                android:id="@+id/editTextNumber"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="100dp"
+                android:layout_width="300dp"
+
+                android:inputType="number"
+                android:hint="Enter ticket number"
+                android:textColor="@color/main_colour"
+                android:gravity="center"
+            />
+
+
+
+
+            <Button
+                android:id="@+id/confirm_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginBottom="50dp"
+                android:text="Add ticket ID number" />
+        </FrameLayout>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
