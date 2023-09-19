@@ -36,6 +36,9 @@
         <activity
             android:name=".LanguageActivity"
             android:exported="false" />
+        <activity
+            android:name=".ServiceUpdatesActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

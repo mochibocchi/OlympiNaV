@@ -49,7 +49,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, SavedTripsActivity.class);
             startActivity(intent);
         } else if (itemId == R.id.nav_service_updates) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, ServiceUpdatesActivity.class);
             startActivity(intent);
         } else if (itemId == R.id.nav_contact) {
             Intent intent = new Intent(this, MainActivity.class);

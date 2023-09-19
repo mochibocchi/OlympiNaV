@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity"
+    tools:openDrawer="start">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/main_colour"
+            android:elevation="4dp"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardOne"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/updateIconCardOne"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/baseline_warning_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="3"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur condimentum, odio ut congue consectetur, odio massa ultricies lacus, a elementum ligula arcu non ante. Nam in placerat nisl."
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toTopOf="@id/lastUpdatedCardOne"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/updateIconCardOne"
+                    app:layout_constraintTop_toTopOf="@id/updateIconCardOne"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/lastUpdatedCardOne"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:maxLines="1"
+                    android:text="Last updated: 12 minutes ago"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@id/updateIconCardOne"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/updateIconCardOne" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardTwo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardOne">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/updateIconCardTwo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/baseline_error_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="3"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur condimentum, odio ut congue consectetur, odio massa ultricies lacus, a elementum ligula arcu non ante. Nam in placerat nisl."
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toTopOf="@id/lastUpdatedCardTwo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/updateIconCardTwo"
+                    app:layout_constraintTop_toTopOf="@id/updateIconCardTwo"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/lastUpdatedCardTwo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:maxLines="1"
+                    android:text="Last updated: 12 minutes ago"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@id/updateIconCardTwo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/updateIconCardTwo" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardThree"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardTwo">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/updateIconCardThree"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/baseline_info_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="3"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur condimentum, odio ut congue consectetur, odio massa ultricies lacus, a elementum ligula arcu non ante. Nam in placerat nisl."
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toTopOf="@id/lastUpdatedCardThree"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/updateIconCardThree"
+                    app:layout_constraintTop_toTopOf="@id/updateIconCardThree"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/lastUpdatedCardThree"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:maxLines="1"
+                    android:text="Last updated: 12 minutes ago"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@id/updateIconCardThree"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/updateIconCardThree" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:itemIconTint="@color/main_colour"
+        app:itemTextColor="@color/main_colour"
+        app:menu="@menu/nav_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
