@@ -5,6 +5,8 @@ import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class SavedTripsActivity extends BaseActivity {
 
     @Override
@@ -12,9 +14,12 @@ public class SavedTripsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_trips);
         setupActivity();
-        ImageButton backButton = findViewById(R.id.backButton);
+        FloatingActionButton backFab = findViewById(R.id.backButton);
+        ImageButton helpButton = findViewById(R.id.helpButton);
 
         // Press back button to exit out of activity
-        backButton.setOnClickListener(view -> finish());
+        backFab.setOnClickListener(view -> finish());
+        helpButton.setOnClickListener(view -> finish());
+
     }
 }
