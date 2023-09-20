@@ -46,12 +46,14 @@
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
+                android:layout_gravity="bottom|center"
                 android:backgroundTint="@color/main_colour"
                 android:layout_margin="16dp"
                 android:contentDescription="Add new ticket"
                 app:borderWidth="0dp"
-                app:fabSize="normal" />
+                app:fabSize="normal"
+                android:clickable="true"
+                app:srcCompat="@drawable/baseline_add_24"/>
         </FrameLayout>
 
     </LinearLayout>

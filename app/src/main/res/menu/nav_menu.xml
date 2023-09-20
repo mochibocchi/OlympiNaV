@@ -29,7 +29,7 @@
             android:title="Feedback"/>
         <item
             android:id="@+id/nav_language"
-            android:icon="@drawable/baseline_chat_24"
+            android:icon="@drawable/baseline_language_24"
             android:title="Language"/>
     </group>
     <item
