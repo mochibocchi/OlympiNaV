@@ -14,4 +14,11 @@
 
     <!-- string names for image description -->
     <string name="back_icon_desc">Back button</string>
+
+    <string-array name="plan_trip_options">
+        <item>Now</item>
+        <item>Depart At</item>
+        <item>Arrive At</item>
+    </string-array>
+
 </resources>
