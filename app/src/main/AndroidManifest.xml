@@ -39,6 +39,9 @@
         <activity
             android:name=".ServiceUpdatesActivity"
             android:exported="false" />
+        <activity
+            android:name=".ViewTripActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
