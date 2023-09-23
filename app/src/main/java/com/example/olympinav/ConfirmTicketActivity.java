@@ -15,6 +15,6 @@ public class ConfirmTicketActivity extends BaseActivity {
         findViewById(R.id.backButton).setOnClickListener(v -> startActivity(new Intent(ConfirmTicketActivity.this,
                 MainActivity.class)));
         findViewById(R.id.okButton).setOnClickListener(v -> startActivity(new Intent(ConfirmTicketActivity.this,
-                MainActivity.class)));
+                MainActivityWithAddedEvent.class)));
     }
 }
