@@ -10,6 +10,7 @@
     <string name="upcoming_events">Upcoming events</string>
 
     <!-- string names for default messages -->
+    <string name="no_ticket_null_message">You haven\'t added any tickets yet&#8230;</string>
     <string name="saved_trips_null_message">You haven\'t added any saved trips yet&#8230;</string>
 
     <!-- string names for image description -->

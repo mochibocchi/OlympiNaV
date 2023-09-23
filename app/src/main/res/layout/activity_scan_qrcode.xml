@@ -38,17 +38,6 @@
                 android:textSize="@dimen/main_heading_size"
                 android:paddingTop="@dimen/main_heading_padding_top"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/backButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/back_button_margin_top"
-                android:layout_marginStart="@dimen/back_button_margin_left"
-                android:clickable="true"
-                android:background="@android:color/transparent"
-                app:srcCompat="@drawable/baseline_arrow_back_24"
-                android:contentDescription="Back button"/>
-
             <ImageView
                 android:layout_width="250dp"
                 android:layout_height="250dp"
@@ -71,9 +60,6 @@
                 android:textColor="@color/main_colour"
                 android:gravity="center"
             />
-
-
-
 
             <Button
                 android:id="@+id/addTicketButton"

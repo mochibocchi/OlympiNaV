@@ -1,11 +1,12 @@
 package com.example.olympinav;
 
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class SavedTripsActivity extends BaseActivity {
 
@@ -14,12 +15,11 @@ public class SavedTripsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_trips);
         setupActivity();
-        FloatingActionButton backFab = findViewById(R.id.backButton);
         ImageButton helpButton = findViewById(R.id.helpButton);
+        Button addTripButton = findViewById(R.id.addTripButton);
 
-        // Press back button to exit out of activity
-        backFab.setOnClickListener(view -> finish());
         helpButton.setOnClickListener(view -> finish());
+        addTripButton.setOnClickListener(view -> startActivity(new Intent(SavedTripsActivity.this, PlanTripActivity.class)));
 
     }
 }
