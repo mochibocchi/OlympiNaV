@@ -15,6 +15,6 @@ public class MainActivityWithAddedEvent extends BaseActivity {
         fab.setOnClickListener(v -> startActivity(new Intent(MainActivityWithAddedEvent.this, ScanQRCodeActivity.class)));
 
         findViewById(R.id.event).setOnClickListener(v -> startActivity(new Intent(MainActivityWithAddedEvent.this, ViewTripActivity.class)));
-        findViewById(R.id.event).setOnClickListener(v -> startActivity(new Intent(MainActivityWithAddedEvent.this, PlanTripActivity.class)));
+        findViewById(R.id.event).setOnClickListener(v -> startActivity(new Intent(MainActivityWithAddedEvent.this, EventDetailsActivity.class)));
     }
 }
