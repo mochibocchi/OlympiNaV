@@ -61,9 +61,24 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/main_colour"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@id/tripDateTimeET"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/endLocationET" />
+
+        <EditText
+            android:id="@+id/tripDateTimeET"
+            style="@style/StandardEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:focusable="false"
+            android:hint="Trip Date and Time"
+            android:textAlignment="center"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tripTypeSpinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tripTypeSpinner" />
 
         <View
             android:id="@+id/divider"
@@ -73,7 +88,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tripTypeSpinner" />
+            app:layout_constraintTop_toBottomOf="@id/tripDateTimeET" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
