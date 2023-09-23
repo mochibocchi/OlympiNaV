@@ -16,7 +16,5 @@ public class MainActivity extends BaseActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ScanQRCodeActivity.class)));
-
-        findViewById(R.id.event).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PlanTripActivity.class)));
     }
 }
