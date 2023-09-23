@@ -31,7 +31,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include layout="@layout/list_events" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="50dp">
+                <include layout="@layout/list_events"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,7 +46,8 @@
                 android:paddingTop="@dimen/main_heading_padding_top"
                 android:text="@string/upcoming_events"
                 android:textSize="@dimen/main_heading_size"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/main_colour"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"
