@@ -14,7 +14,10 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         setupActivity();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ScanQRCodeActivity.class)));
+        FloatingActionButton fabAddTicket = findViewById(R.id.fabAddTicket);
+        fabAddTicket.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ScanQRCodeActivity.class)));
+
+        FloatingActionButton fabPlanTrip = findViewById(R.id.fabPlanTrip);
+        fabPlanTrip.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PlanTripActivity.class)));
     }
 }

@@ -1,6 +1,8 @@
 package com.example.olympinav;
+
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivityWithAddedEvent extends BaseActivity {
@@ -11,8 +13,11 @@ public class MainActivityWithAddedEvent extends BaseActivity {
         setContentView(R.layout.activity_main_with_added_event);
         setupActivity();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(v -> startActivity(new Intent(MainActivityWithAddedEvent.this, ScanQRCodeActivity.class)));
+        FloatingActionButton fabAddTicket = findViewById(R.id.fabAddTicket);
+        fabAddTicket.setOnClickListener(v -> startActivity(new Intent(MainActivityWithAddedEvent.this, ScanQRCodeActivity.class)));
+
+        FloatingActionButton fabPlanTrip = findViewById(R.id.fabPlanTrip);
+        fabPlanTrip.setOnClickListener(v -> startActivity(new Intent(MainActivityWithAddedEvent.this, PlanTripActivity.class)));
 
         findViewById(R.id.event).setOnClickListener(v -> startActivity(new Intent(MainActivityWithAddedEvent.this, EventDetailsActivity.class)));
     }
