@@ -2,23 +2,25 @@ package com.example.olympinav;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.olympinav.generators.Generator;
 import com.example.olympinav.models.TransportationMethod;
 import com.example.olympinav.models.TransportationMethodType;
 import com.example.olympinav.models.Trip;
@@ -28,23 +30,37 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PlanTripActivity extends BaseActivity {
+  private List<Trip> trips = new ArrayList<>();
+  private LocalDateTime datetime;
+  private TripPlannerRecyclerViewAdapter adapter;
+  private EditText startLocationET;
+  private EditText endLocationET;
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_plan_trip);
     setupActivity();
+    setupRecyclerView();
+    setupTripDetailsFields();
+  }
+
+  private void setupTripDetailsFields() {
+    startLocationET = findViewById(R.id.startLocationET);
+    endLocationET = findViewById(R.id.endLocationET);
 
     Spinner tripTypeSpinner = findViewById(R.id.tripTypeSpinner);
-    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+    ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this,
         R.array.plan_trip_options, android.R.layout.simple_spinner_item);
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    tripTypeSpinner.setAdapter(adapter);
+    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    tripTypeSpinner.setAdapter(arrayAdapter);
 
     EditText tripDateTimeET = findViewById(R.id.tripDateTimeET);
     tripDateTimeET.setOnClickListener(v -> {
@@ -56,7 +72,7 @@ public class PlanTripActivity extends BaseActivity {
         new TimePickerDialog(PlanTripActivity.this, (view1, hourOfDay, minute) -> {
           date.set(Calendar.HOUR_OF_DAY, hourOfDay);
           date.set(Calendar.MINUTE, minute);
-          LocalDateTime datetime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+          datetime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
           tripDateTimeET.setText(datetime.format(DateTimeFormatter.ofPattern("hh:mma dd/MM/yy")));
         }, currentDate.get(Calendar.HOUR_OF_DAY), currentDate.get(Calendar.MINUTE), false).show();
       }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE)).show();
@@ -66,9 +82,10 @@ public class PlanTripActivity extends BaseActivity {
     tripTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
       public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (adapter.getItem(i).equals("Now")) {
+        if (arrayAdapter.getItem(i).equals("Now")) {
           tripDateTimeET.setText("");
           tripDateTimeET.setVisibility(View.GONE);
+          datetime = LocalDateTime.now();
         } else {
           tripDateTimeET.setVisibility(View.VISIBLE);
           tripDateTimeET.callOnClick();
@@ -79,10 +96,41 @@ public class PlanTripActivity extends BaseActivity {
       public void onNothingSelected(AdapterView<?> adapterView) {
       }
     });
+
+    Button searchButton = findViewById(R.id.searchButton);
+    searchButton.setOnClickListener(v -> {
+      if (startLocationET.getText().length() == 0) {
+        Toast.makeText(PlanTripActivity.this, "Please enter a start location", Toast.LENGTH_SHORT).show();
+        return;
+      }
+      if (endLocationET.getText().length() == 0) {
+        Toast.makeText(PlanTripActivity.this, "Please enter an end location", Toast.LENGTH_SHORT).show();
+        return;
+      }
+      trips = new ArrayList<>();
+      if (tripTypeSpinner.getSelectedItemPosition() == 2)
+        for (int i = 0; i < 4; i++) trips.add(Generator.generateTripBackwards(datetime));
+      else
+        for (int i = 0; i < 4; i++) trips.add(Generator.generateTripForwards(datetime));
+      adapter.setTrips(trips);
+      adapter.notifyDataSetChanged();
+    });
   }
 
-  private class TripPlannerRecyclerView extends RecyclerView.Adapter<TripPlannerRowViewHolder> {
+  private void setupRecyclerView() {
+    RecyclerView recyclerView = findViewById(R.id.recyclerView);
+    adapter = new TripPlannerRecyclerViewAdapter(trips);
+    recyclerView.setItemAnimator(new DefaultItemAnimator());
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    recyclerView.setAdapter(adapter);
+  }
+
+  class TripPlannerRecyclerViewAdapter extends RecyclerView.Adapter<TripPlannerRowViewHolder> {
     private List<Trip> trips;
+
+    public TripPlannerRecyclerViewAdapter(List<Trip> trips) {
+      this.trips = trips;
+    }
 
     @NonNull
     @Override
@@ -93,9 +141,9 @@ public class PlanTripActivity extends BaseActivity {
 
     @Override
     public void onBindViewHolder(@NonNull TripPlannerRowViewHolder v, int position) {
-      Trip trip = trips.get(v.getAdapterPosition());
-      Map<TransportationMethodType, Integer> counts = new HashMap<>(4);
-      Map<TransportationMethodType, Integer> durations = new HashMap<>(4);
+      Trip trip = trips.get(position);
+      Map<TransportationMethodType, Integer> counts = new HashMap<>(TransportationMethodType.values().length);
+      Map<TransportationMethodType, Integer> durations = new HashMap<>(TransportationMethodType.values().length);
       for (TransportationMethod tm : trip.getiDontKnow()) {
         counts.merge(tm.getType(), 1, Integer::sum);
         durations.merge(tm.getType(), (int) ChronoUnit.MINUTES.between(tm.getBoardAt(), tm.getDepartAt()), Integer::sum);
@@ -103,25 +151,25 @@ public class PlanTripActivity extends BaseActivity {
       if (!counts.containsKey(TransportationMethodType.WALK))
         v.walkCard.setVisibility(View.GONE);
       if (!counts.containsKey(TransportationMethodType.BUS))
-        v.walkCard.setVisibility(View.GONE);
+        v.busCard.setVisibility(View.GONE);
       if (!counts.containsKey(TransportationMethodType.TRAIN))
-        v.walkCard.setVisibility(View.GONE);
+        v.trainCard.setVisibility(View.GONE);
       if (!counts.containsKey(TransportationMethodType.FERRY))
-        v.walkCard.setVisibility(View.GONE);
+        v.ferryCard.setVisibility(View.GONE);
 
       for (Map.Entry<TransportationMethodType, Integer> countEntry : counts.entrySet()) {
         if (countEntry.getKey() == TransportationMethodType.WALK) {
           v.walkCount.setText(countEntry.getValue() + " walks");
-          v.walkDuration.setText(countEntry.getValue() + " minutes");
+          v.walkDuration.setText(durations.getOrDefault(TransportationMethodType.WALK, 0) + " minutes");
         } else if (countEntry.getKey() == TransportationMethodType.BUS) {
           v.busCount.setText(countEntry.getValue() + " buses");
-          v.busDuration.setText(countEntry.getValue() + " minutes");
+          v.busDuration.setText(durations.getOrDefault(TransportationMethodType.BUS, 0) + " minutes");
         } else if (countEntry.getKey() == TransportationMethodType.TRAIN) {
           v.trainCount.setText(countEntry.getValue() + " trains");
-          v.trainDuration.setText(countEntry.getValue() + " minutes");
+          v.trainDuration.setText(durations.getOrDefault(TransportationMethodType.TRAIN, 0) + " minutes");
         } else if (countEntry.getKey() == TransportationMethodType.FERRY) {
           v.ferryCount.setText(countEntry.getValue() + " ferrys");
-          v.ferryDuration.setText(countEntry.getValue() + " minutes");
+          v.ferryDuration.setText(durations.getOrDefault(TransportationMethodType.FERRY, 0) + " minutes");
         }
       }
 
@@ -129,7 +177,7 @@ public class PlanTripActivity extends BaseActivity {
       LocalDateTime tripEndTime = trip.getiDontKnow().get(trip.getiDontKnow().size() - 1).getDepartAt();
       int tripDuration = (int) ChronoUnit.MINUTES.between(tripStartTime, tripEndTime);
       v.leaveAt.setText(tripStartTime.format(DateTimeFormatter.ofPattern("hh:mma")));
-      v.arriveAt.setText(tripStartTime.format(DateTimeFormatter.ofPattern("hh:mma")));
+      v.arriveAt.setText(tripEndTime.format(DateTimeFormatter.ofPattern("hh:mma")));
       v.duration.setText(tripDuration + " minutes");
     }
 
@@ -137,6 +185,10 @@ public class PlanTripActivity extends BaseActivity {
     @Override
     public int getItemCount() {
       return trips.size();
+    }
+
+    public void setTrips(List<Trip> trips) {
+      this.trips = trips;
     }
   }
 
@@ -180,7 +232,7 @@ public class PlanTripActivity extends BaseActivity {
       ferryDuration = itemView.findViewById(R.id.ferryDuration);
 
       leaveAt = itemView.findViewById(R.id.leaveAt);
-      duration = itemView.findViewById(R.id.duration);
+      duration = itemView.findViewById(R.id.totalDuration);
       arriveAt = itemView.findViewById(R.id.arriveAt);
     }
   }

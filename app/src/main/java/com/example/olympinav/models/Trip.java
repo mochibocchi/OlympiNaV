@@ -10,6 +10,14 @@ public class Trip {
   private LocalDateTime arriveAt;
   private List<TransportationMethod> iDontKnow;
 
+  public Trip(LatLng startLocation, LatLng endLocation, LocalDateTime leaveAt, LocalDateTime arriveAt, List<TransportationMethod> iDontKnow) {
+    this.startLocation = startLocation;
+    this.endLocation = endLocation;
+    this.leaveAt = leaveAt;
+    this.arriveAt = arriveAt;
+    this.iDontKnow = iDontKnow;
+  }
+
   public LatLng getStartLocation() {
     return startLocation;
   }
