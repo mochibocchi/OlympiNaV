@@ -2,8 +2,8 @@ package com.example.olympinav.generators;
 
 import androidx.annotation.Nullable;
 
-import com.example.olympinav.models.TransportationMethod;
-import com.example.olympinav.models.TransportationMethodType;
+import com.example.olympinav.models.TravelMethod;
+import com.example.olympinav.models.TravelType;
 import com.example.olympinav.models.Trip;
 import com.example.olympinav.models.LatLng;
 import com.example.olympinav.models.NoiseLevel;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Generator {
-  public static TransportationMethod generateTransportationMethod(TransportationMethodType type, @Nullable LocalDateTime onwardsFrom) {
+  public static TravelMethod generateTransportationMethod(TravelType type, @Nullable LocalDateTime onwardsFrom) {
     ThreadLocalRandom r = ThreadLocalRandom.current();
     NoiseLevel n = NoiseLevel.values()[r.nextInt(NoiseLevel.values().length)];
     UsedCapacity c = UsedCapacity.values()[r.nextInt(UsedCapacity.values().length)];
@@ -25,7 +25,7 @@ public class Generator {
     LocalDateTime startTime = generateLocalDateTime(onwardsFrom);
     LocalDateTime endTime = generateLocalDateTime(startTime);
     String routeNumber = String.valueOf(r.nextInt(111, 999));
-    return new TransportationMethod(l, route, type, startTime, endTime, n, c, type != TransportationMethodType.WALK ? routeNumber : null);
+    return new TravelMethod(l, route, type, startTime, endTime, n, c, type != TravelType.WALK ? routeNumber : null);
   }
 
   public static LatLng generateLatLng() {
@@ -35,11 +35,11 @@ public class Generator {
     return new LatLng(lat, lng);
   }
 
-  public static List<LatLng> generateRoute(int length, TransportationMethodType type) {
+  public static List<LatLng> generateRoute(int length, TravelType type) {
     List<LatLng> route = new ArrayList<>(10);
     for (int i = 0; i < length; i++)
       route.add(generateLatLng());
-    if (type != TransportationMethodType.WALK)
+    if (type != TravelType.WALK)
       route.add(route.get(0));
     return route;
   }
@@ -59,19 +59,19 @@ public class Generator {
       ThreadLocalRandom r = ThreadLocalRandom.current();
       LatLng startLocation = generateLatLng();
       LatLng endLocation = generateLatLng();
-      List<TransportationMethod> vehicles = new ArrayList<>();
+      List<TravelMethod> vehicles = new ArrayList<>();
       for (int i = 0; i < 5; i++) {
           // Start and end with walks, in between is a random type
-          TransportationMethodType type = i == 0 || i == 4
-              ? TransportationMethodType.WALK
-              : TransportationMethodType.values()[r.nextInt(TransportationMethodType.values().length - 1)];
+          TravelType type = i == 0 || i == 4
+              ? TravelType.WALK
+              : TravelType.values()[r.nextInt(TravelType.values().length - 1)];
 
           // Start with the tripDepartAt argument, then use the previous trips departAt.
-          LocalDateTime onwardsFrom = i == 0 ? tripDepartAt : vehicles.get(vehicles.size() - 1).getDepartAt();
+          LocalDateTime onwardsFrom = i == 0 ? tripDepartAt : vehicles.get(vehicles.size() - 1).getArriveAt();
           vehicles.add(generateTransportationMethod(type, onwardsFrom));
       }
-      LocalDateTime departAt = vehicles.get(0).getBoardAt();
-      LocalDateTime arriveAt = vehicles.get(vehicles.size() - 1).getDepartAt();
+      LocalDateTime departAt = vehicles.get(0).getDepartAt();
+      LocalDateTime arriveAt = vehicles.get(vehicles.size() - 1).getArriveAt();
       return new Trip(startLocation, endLocation, departAt, arriveAt, vehicles);
   }
 
@@ -80,25 +80,25 @@ public class Generator {
     ThreadLocalRandom r = ThreadLocalRandom.current();
     LatLng startLocation = generateLatLng();
     LatLng endLocation = generateLatLng();
-    List<TransportationMethod> vehicles = new ArrayList<>();
+    List<TravelMethod> vehicles = new ArrayList<>();
     // Generating the trip backwards and then reversing the list because
     for (int i = 0; i < 5; i++) {
-        TransportationMethodType type = i == 0 || i == 4
-            ? TransportationMethodType.WALK
-            : TransportationMethodType.values()[r.nextInt(TransportationMethodType.values().length - 1)];
+        TravelType type = i == 0 || i == 4
+            ? TravelType.WALK
+            : TravelType.values()[r.nextInt(TravelType.values().length - 1)];
 
-      LocalDateTime backwardsFrom = i == 0 ? tripArriveAt : vehicles.get(vehicles.size() - 1).getBoardAt();
-      TransportationMethod v = generateTransportationMethod(type, backwardsFrom);
-      v.setDepartAt(backwardsFrom);
-      v.setBoardAt(generateLocalDateTimeBackwards(backwardsFrom));
+      LocalDateTime backwardsFrom = i == 0 ? tripArriveAt : vehicles.get(vehicles.size() - 1).getDepartAt();
+      TravelMethod v = generateTransportationMethod(type, backwardsFrom);
+      v.setArriveAt(backwardsFrom);
+      v.setDepartAt(generateLocalDateTimeBackwards(backwardsFrom));
       vehicles.add(v);
     }
 
-    List<TransportationMethod> reversed = new ArrayList<>(vehicles.size());
+    List<TravelMethod> reversed = new ArrayList<>(vehicles.size());
     for (int i = vehicles.size() - 1; i >= 0; i--)
       reversed.add(vehicles.get(i));
-    LocalDateTime arriveAt = reversed.get(0).getBoardAt();
-    LocalDateTime departAt = reversed.get(vehicles.size() - 1).getDepartAt();
+    LocalDateTime arriveAt = reversed.get(0).getDepartAt();
+    LocalDateTime departAt = reversed.get(vehicles.size() - 1).getArriveAt();
     return new Trip(startLocation, endLocation, arriveAt, departAt, reversed);
   }
 }

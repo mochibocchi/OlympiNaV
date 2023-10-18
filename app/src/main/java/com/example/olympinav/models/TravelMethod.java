@@ -6,23 +6,23 @@ import android.os.Parcelable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class TransportationMethod implements Parcelable {
+public class TravelMethod implements Parcelable {
   protected LatLng latlng;
   protected List<LatLng> route;
-  protected TransportationMethodType type;
-  protected LocalDateTime boardAt;
+  protected TravelType type;
   protected LocalDateTime departAt;
+  protected LocalDateTime arriveAt;
   private NoiseLevel noiseLevel;
   private UsedCapacity usedCapacity;
   private String routeNumber;
 
-  public TransportationMethod(LatLng latlng, List<LatLng> route, TransportationMethodType type, LocalDateTime boardAt
-      , LocalDateTime departAt, NoiseLevel noiseLevel, UsedCapacity usedCapacity, String routeNumber) {
+  public TravelMethod(LatLng latlng, List<LatLng> route, TravelType type, LocalDateTime departAt,
+                      LocalDateTime arriveAt, NoiseLevel noiseLevel, UsedCapacity usedCapacity, String routeNumber) {
     this.latlng = latlng;
     this.route = route;
     this.type = type;
-    this.boardAt = boardAt;
     this.departAt = departAt;
+    this.arriveAt = arriveAt;
     this.noiseLevel = noiseLevel;
     this.usedCapacity = usedCapacity;
     this.routeNumber = routeNumber;
@@ -44,20 +44,12 @@ public class TransportationMethod implements Parcelable {
     this.route = route;
   }
 
-  public TransportationMethodType getType() {
+  public TravelType getType() {
     return type;
   }
 
-  public void setType(TransportationMethodType type) {
+  public void setType(TravelType type) {
     this.type = type;
-  }
-
-  public LocalDateTime getBoardAt() {
-    return boardAt;
-  }
-
-  public void setBoardAt(LocalDateTime boardAt) {
-    this.boardAt = boardAt;
   }
 
   public LocalDateTime getDepartAt() {
@@ -66,6 +58,14 @@ public class TransportationMethod implements Parcelable {
 
   public void setDepartAt(LocalDateTime departAt) {
     this.departAt = departAt;
+  }
+
+  public LocalDateTime getArriveAt() {
+    return arriveAt;
+  }
+
+  public void setArriveAt(LocalDateTime arriveAt) {
+    this.arriveAt = arriveAt;
   }
 
   public NoiseLevel getNoiseLevel() {
@@ -102,8 +102,8 @@ public class TransportationMethod implements Parcelable {
     dest.writeParcelable(this.latlng, flags);
     dest.writeTypedList(this.route);
     dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-    dest.writeSerializable(this.boardAt);
     dest.writeSerializable(this.departAt);
+    dest.writeSerializable(this.arriveAt);
     dest.writeInt(this.noiseLevel == null ? -1 : this.noiseLevel.ordinal());
     dest.writeInt(this.usedCapacity == null ? -1 : this.usedCapacity.ordinal());
     dest.writeString(this.routeNumber);
@@ -113,9 +113,9 @@ public class TransportationMethod implements Parcelable {
     this.latlng = source.readParcelable(LatLng.class.getClassLoader());
     this.route = source.createTypedArrayList(LatLng.CREATOR);
     int tmpType = source.readInt();
-    this.type = tmpType == -1 ? null : TransportationMethodType.values()[tmpType];
-    this.boardAt = (LocalDateTime) source.readSerializable();
+    this.type = tmpType == -1 ? null : TravelType.values()[tmpType];
     this.departAt = (LocalDateTime) source.readSerializable();
+    this.arriveAt = (LocalDateTime) source.readSerializable();
     int tmpNoiseLevel = source.readInt();
     this.noiseLevel = tmpNoiseLevel == -1 ? null : NoiseLevel.values()[tmpNoiseLevel];
     int tmpUsedCapacity = source.readInt();
@@ -123,13 +123,13 @@ public class TransportationMethod implements Parcelable {
     this.routeNumber = source.readString();
   }
 
-  protected TransportationMethod(Parcel in) {
+  protected TravelMethod(Parcel in) {
     this.latlng = in.readParcelable(LatLng.class.getClassLoader());
     this.route = in.createTypedArrayList(LatLng.CREATOR);
     int tmpType = in.readInt();
-    this.type = tmpType == -1 ? null : TransportationMethodType.values()[tmpType];
-    this.boardAt = (LocalDateTime) in.readSerializable();
+    this.type = tmpType == -1 ? null : TravelType.values()[tmpType];
     this.departAt = (LocalDateTime) in.readSerializable();
+    this.arriveAt = (LocalDateTime) in.readSerializable();
     int tmpNoiseLevel = in.readInt();
     this.noiseLevel = tmpNoiseLevel == -1 ? null : NoiseLevel.values()[tmpNoiseLevel];
     int tmpUsedCapacity = in.readInt();
@@ -137,15 +137,15 @@ public class TransportationMethod implements Parcelable {
     this.routeNumber = in.readString();
   }
 
-  public static final Creator<TransportationMethod> CREATOR = new Creator<TransportationMethod>() {
+  public static final Creator<TravelMethod> CREATOR = new Creator<TravelMethod>() {
     @Override
-    public TransportationMethod createFromParcel(Parcel source) {
-      return new TransportationMethod(source);
+    public TravelMethod createFromParcel(Parcel source) {
+      return new TravelMethod(source);
     }
 
     @Override
-    public TransportationMethod[] newArray(int size) {
-      return new TransportationMethod[size];
+    public TravelMethod[] newArray(int size) {
+      return new TravelMethod[size];
     }
   };
 }

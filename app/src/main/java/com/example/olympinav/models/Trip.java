@@ -10,16 +10,16 @@ import java.util.List;
 public class Trip implements Parcelable {
   private LatLng startLocation;
   private LatLng endLocation;
-  private LocalDateTime leaveAt;
+  private LocalDateTime departAt;
   private LocalDateTime arriveAt;
-  private List<TransportationMethod> iDontKnow;
+  private List<TravelMethod> travelMethods;
 
-  public Trip(LatLng startLocation, LatLng endLocation, LocalDateTime leaveAt, LocalDateTime arriveAt, List<TransportationMethod> iDontKnow) {
+  public Trip(LatLng startLocation, LatLng endLocation, LocalDateTime departAt, LocalDateTime arriveAt, List<TravelMethod> travelMethods) {
     this.startLocation = startLocation;
     this.endLocation = endLocation;
-    this.leaveAt = leaveAt;
+    this.departAt = departAt;
     this.arriveAt = arriveAt;
-    this.iDontKnow = iDontKnow;
+    this.travelMethods = travelMethods;
   }
 
   public LatLng getStartLocation() {
@@ -38,12 +38,12 @@ public class Trip implements Parcelable {
     this.endLocation = endLocation;
   }
 
-  public LocalDateTime getLeaveAt() {
-    return leaveAt;
+  public LocalDateTime getDepartAt() {
+    return departAt;
   }
 
-  public void setLeaveAt(LocalDateTime leaveAt) {
-    this.leaveAt = leaveAt;
+  public void setDepartAt(LocalDateTime departAt) {
+    this.departAt = departAt;
   }
 
   public LocalDateTime getArriveAt() {
@@ -54,16 +54,16 @@ public class Trip implements Parcelable {
     this.arriveAt = arriveAt;
   }
 
-  public List<TransportationMethod> getiDontKnow() {
-    return iDontKnow;
+  public List<TravelMethod> getTravelMethods() {
+    return travelMethods;
   }
 
-  public void setiDontKnow(List<TransportationMethod> iDontKnow) {
-    this.iDontKnow = iDontKnow;
+  public void setTravelMethods(List<TravelMethod> travelMethods) {
+    this.travelMethods = travelMethods;
   }
 
   public int getDuration(ChronoUnit unit) {
-    return (int) unit.between(leaveAt, arriveAt);
+    return (int) unit.between(departAt, arriveAt);
   }
 
   @Override
@@ -75,25 +75,25 @@ public class Trip implements Parcelable {
   public void writeToParcel(Parcel dest, int flags) {
     dest.writeParcelable(this.startLocation, flags);
     dest.writeParcelable(this.endLocation, flags);
-    dest.writeSerializable(this.leaveAt);
+    dest.writeSerializable(this.departAt);
     dest.writeSerializable(this.arriveAt);
-    dest.writeTypedList(this.iDontKnow);
+    dest.writeTypedList(this.travelMethods);
   }
 
   public void readFromParcel(Parcel source) {
     this.startLocation = source.readParcelable(LatLng.class.getClassLoader());
     this.endLocation = source.readParcelable(LatLng.class.getClassLoader());
-    this.leaveAt = (LocalDateTime) source.readSerializable();
+    this.departAt = (LocalDateTime) source.readSerializable();
     this.arriveAt = (LocalDateTime) source.readSerializable();
-    this.iDontKnow = source.createTypedArrayList(TransportationMethod.CREATOR);
+    this.travelMethods = source.createTypedArrayList(TravelMethod.CREATOR);
   }
 
   protected Trip(Parcel in) {
     this.startLocation = in.readParcelable(LatLng.class.getClassLoader());
     this.endLocation = in.readParcelable(LatLng.class.getClassLoader());
-    this.leaveAt = (LocalDateTime) in.readSerializable();
+    this.departAt = (LocalDateTime) in.readSerializable();
     this.arriveAt = (LocalDateTime) in.readSerializable();
-    this.iDontKnow = in.createTypedArrayList(TransportationMethod.CREATOR);
+    this.travelMethods = in.createTypedArrayList(TravelMethod.CREATOR);
   }
 
   public static final Creator<Trip> CREATOR = new Creator<Trip>() {

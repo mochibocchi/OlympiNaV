@@ -1,6 +1,6 @@
 package com.example.olympinav.models;
 
-public enum TransportationMethodType {
+public enum TravelType {
   BUS,
   TRAIN,
   FERRY,

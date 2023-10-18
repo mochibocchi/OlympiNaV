@@ -23,8 +23,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.olympinav.generators.Generator;
-import com.example.olympinav.models.TransportationMethod;
-import com.example.olympinav.models.TransportationMethodType;
+import com.example.olympinav.models.TravelMethod;
+import com.example.olympinav.models.TravelType;
 import com.example.olympinav.models.Trip;
 import com.google.android.material.card.MaterialCardView;
 
@@ -144,39 +144,39 @@ public class PlanTripActivity extends BaseActivity {
     @Override
     public void onBindViewHolder(@NonNull TripPlannerRowViewHolder v, int position) {
       Trip trip = trips.get(position);
-      Map<TransportationMethodType, Integer> counts = new HashMap<>(TransportationMethodType.values().length);
-      Map<TransportationMethodType, Integer> durations = new HashMap<>(TransportationMethodType.values().length);
-      for (TransportationMethod tm : trip.getiDontKnow()) {
+      Map<TravelType, Integer> counts = new HashMap<>(TravelType.values().length);
+      Map<TravelType, Integer> durations = new HashMap<>(TravelType.values().length);
+      for (TravelMethod tm : trip.getTravelMethods()) {
         counts.merge(tm.getType(), 1, Integer::sum);
-        durations.merge(tm.getType(), (int) ChronoUnit.MINUTES.between(tm.getBoardAt(), tm.getDepartAt()), Integer::sum);
+        durations.merge(tm.getType(), (int) ChronoUnit.MINUTES.between(tm.getDepartAt(), tm.getArriveAt()), Integer::sum);
       }
-      if (!counts.containsKey(TransportationMethodType.WALK))
+      if (!counts.containsKey(TravelType.WALK))
         v.walkCard.setVisibility(View.GONE);
-      if (!counts.containsKey(TransportationMethodType.BUS))
+      if (!counts.containsKey(TravelType.BUS))
         v.busCard.setVisibility(View.GONE);
-      if (!counts.containsKey(TransportationMethodType.TRAIN))
+      if (!counts.containsKey(TravelType.TRAIN))
         v.trainCard.setVisibility(View.GONE);
-      if (!counts.containsKey(TransportationMethodType.FERRY))
+      if (!counts.containsKey(TravelType.FERRY))
         v.ferryCard.setVisibility(View.GONE);
 
-      for (Map.Entry<TransportationMethodType, Integer> countEntry : counts.entrySet()) {
-        if (countEntry.getKey() == TransportationMethodType.WALK) {
+      for (Map.Entry<TravelType, Integer> countEntry : counts.entrySet()) {
+        if (countEntry.getKey() == TravelType.WALK) {
           v.walkCount.setText(countEntry.getValue() + " walks");
-          v.walkDuration.setText(durations.getOrDefault(TransportationMethodType.WALK, 0) + " minutes");
-        } else if (countEntry.getKey() == TransportationMethodType.BUS) {
+          v.walkDuration.setText(durations.getOrDefault(TravelType.WALK, 0) + " minutes");
+        } else if (countEntry.getKey() == TravelType.BUS) {
           v.busCount.setText(countEntry.getValue() + " buses");
-          v.busDuration.setText(durations.getOrDefault(TransportationMethodType.BUS, 0) + " minutes");
-        } else if (countEntry.getKey() == TransportationMethodType.TRAIN) {
+          v.busDuration.setText(durations.getOrDefault(TravelType.BUS, 0) + " minutes");
+        } else if (countEntry.getKey() == TravelType.TRAIN) {
           v.trainCount.setText(countEntry.getValue() + " trains");
-          v.trainDuration.setText(durations.getOrDefault(TransportationMethodType.TRAIN, 0) + " minutes");
-        } else if (countEntry.getKey() == TransportationMethodType.FERRY) {
+          v.trainDuration.setText(durations.getOrDefault(TravelType.TRAIN, 0) + " minutes");
+        } else if (countEntry.getKey() == TravelType.FERRY) {
           v.ferryCount.setText(countEntry.getValue() + " ferrys");
-          v.ferryDuration.setText(durations.getOrDefault(TransportationMethodType.FERRY, 0) + " minutes");
+          v.ferryDuration.setText(durations.getOrDefault(TravelType.FERRY, 0) + " minutes");
         }
       }
 
-      LocalDateTime tripStartTime = trip.getiDontKnow().get(0).getBoardAt();
-      LocalDateTime tripEndTime = trip.getiDontKnow().get(trip.getiDontKnow().size() - 1).getDepartAt();
+      LocalDateTime tripStartTime = trip.getTravelMethods().get(0).getDepartAt();
+      LocalDateTime tripEndTime = trip.getTravelMethods().get(trip.getTravelMethods().size() - 1).getArriveAt();
       int tripDuration = (int) ChronoUnit.MINUTES.between(tripStartTime, tripEndTime);
       v.leaveAt.setText(tripStartTime.format(DateTimeFormatter.ofPattern("hh:mma")));
       v.arriveAt.setText(tripEndTime.format(DateTimeFormatter.ofPattern("hh:mma")));

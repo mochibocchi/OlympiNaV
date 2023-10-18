@@ -7,10 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -18,8 +16,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.olympinav.models.TransportationMethod;
-import com.example.olympinav.models.TransportationMethodType;
+import com.example.olympinav.models.TravelMethod;
+import com.example.olympinav.models.TravelType;
 import com.example.olympinav.models.Trip;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -57,7 +55,7 @@ public class ViewTripActivity extends BaseActivity {
 
   private void setupViews() {
       TextView time = findViewById(R.id.time);
-      time.setText(trip.getLeaveAt().format(timeFormatter) + " - " + trip.getArriveAt().format(timeFormatter));
+      time.setText(trip.getDepartAt().format(timeFormatter) + " - " + trip.getArriveAt().format(timeFormatter));
       TextView duration = findViewById(R.id.duration);
       duration.setText(trip.getDuration(ChronoUnit.MINUTES) + " minutes");
       TextView price = findViewById(R.id.price);
@@ -66,17 +64,17 @@ public class ViewTripActivity extends BaseActivity {
 
   private void setupRecyclerView() {
     RecyclerView recyclerView = findViewById(R.id.recyclerView);
-    adapter = new TripStintReyclerView(trip.getiDontKnow());
+    adapter = new TripStintReyclerView(trip.getTravelMethods());
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.setAdapter(adapter);
   }
 
   class TripStintReyclerView extends RecyclerView.Adapter<TripStintViewHolder> {
-      List<TransportationMethod> transportationMethods;
+      List<TravelMethod> travelMethods;
 
-      public TripStintReyclerView(List<TransportationMethod> tms) {
-          this.transportationMethods = tms;
+      public TripStintReyclerView(List<TravelMethod> tms) {
+          this.travelMethods = tms;
       }
 
     @NonNull
@@ -88,7 +86,7 @@ public class ViewTripActivity extends BaseActivity {
 
     @Override
     public void onBindViewHolder(@NonNull TripStintViewHolder v, int position) {
-        TransportationMethod tm = transportationMethods.get(position);
+        TravelMethod tm = travelMethods.get(position);
         @ColorRes int color;
         switch (tm.getType()) {
             case BUS:
@@ -137,13 +135,13 @@ public class ViewTripActivity extends BaseActivity {
 
         v.boardLocation.setText("Board Location");
         v.departLocation.setText("Depart Location");
-        v.transportNumber.setText(tm.getType() == TransportationMethodType.WALK ? "WALK" : tm.getRouteNumber());
-        v.tripDuration.setText(ChronoUnit.MINUTES.between(tm.getBoardAt(), tm.getDepartAt()) + " minutes");
+        v.transportNumber.setText(tm.getType() == TravelType.WALK ? "WALK" : tm.getRouteNumber());
+        v.tripDuration.setText(ChronoUnit.MINUTES.between(tm.getDepartAt(), tm.getArriveAt()) + " minutes");
     }
 
     @Override
     public int getItemCount() {
-      return transportationMethods.size();
+      return travelMethods.size();
     }
   }
 
