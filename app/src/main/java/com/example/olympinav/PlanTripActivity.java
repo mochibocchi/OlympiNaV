@@ -2,6 +2,7 @@ package com.example.olympinav;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -179,6 +181,12 @@ public class PlanTripActivity extends BaseActivity {
       v.leaveAt.setText(tripStartTime.format(DateTimeFormatter.ofPattern("hh:mma")));
       v.arriveAt.setText(tripEndTime.format(DateTimeFormatter.ofPattern("hh:mma")));
       v.duration.setText(tripDuration + " minutes");
+
+      v.clickDetector.setOnClickListener(view -> {
+        Intent i = new Intent(PlanTripActivity.this, ViewTripActivity.class);
+        i.putExtra("trip", trip);
+        startActivity(i);
+      });
     }
 
 
@@ -212,6 +220,7 @@ public class PlanTripActivity extends BaseActivity {
     private TextView leaveAt;
     private TextView duration;
     private TextView arriveAt;
+    private ConstraintLayout clickDetector;
 
     public TripPlannerRowViewHolder(@NonNull View itemView) {
       super(itemView);
@@ -234,6 +243,8 @@ public class PlanTripActivity extends BaseActivity {
       leaveAt = itemView.findViewById(R.id.leaveAt);
       duration = itemView.findViewById(R.id.totalDuration);
       arriveAt = itemView.findViewById(R.id.arriveAt);
+
+      clickDetector = itemView.findViewById(R.id.clickDetector);
     }
   }
 }

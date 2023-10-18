@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/topDot"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/bus_color"
+        app:cardCornerRadius="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/boardLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Board Bus Location"
+        android:textColor="@color/bus_color"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/topDot"
+        app:layout_constraintStart_toEndOf="@id/topDot"
+        app:layout_constraintTop_toTopOf="@id/topDot" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/section"
+        android:layout_width="10dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/bus_color"
+        app:cardCornerRadius="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topDot" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/transportNumberParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="0dp"
+        app:contentPadding="8dp"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/bus_color"
+        app:layout_constraintBottom_toTopOf="@id/tripDuration"
+        app:layout_constraintStart_toEndOf="@id/section"
+        app:layout_constraintTop_toTopOf="@id/section">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/busImage"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/transportNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/transportNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="2dp"
+                android:text="425"
+                android:textColor="@color/bus_color"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/busImage"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tripDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:text="13 minutes"
+        android:textColor="@color/bus_color"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/section"
+        app:layout_constraintStart_toEndOf="@id/section"
+        app:layout_constraintTop_toBottomOf="@id/transportNumberParent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bottomDot"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/bus_color"
+        app:cardCornerRadius="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/section" />
+
+    <TextView
+        android:id="@+id/departLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Depart Bus Location"
+        android:textColor="@color/bus_color"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/bottomDot"
+        app:layout_constraintStart_toEndOf="@id/bottomDot"
+        app:layout_constraintTop_toTopOf="@id/bottomDot" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

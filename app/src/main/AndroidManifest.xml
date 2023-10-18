@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OlympiNav"
         tools:targetApi="31">
+
+        <!-- API key placed here for marker's convenience. -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA4saJ_PnKllXYUJGRySMNLm0wcHqqBZoo" />
+
         <activity
             android:name=".EventDetailsActivity"
             android:exported="false" />
