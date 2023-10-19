@@ -87,56 +87,39 @@ public class ViewTripActivity extends BaseActivity {
     @Override
     public void onBindViewHolder(@NonNull TripStintViewHolder v, int position) {
         TravelMethod tm = travelMethods.get(position);
-        @ColorRes int color;
-        switch (tm.getType()) {
-            case BUS:
-                color = R.color.bus_color;
-                break;
-            case TRAIN:
-                color = R.color.train_color;
-                break;
-            case FERRY:
-                color = R.color.ferry_color;
-                break;
-            default:
-                color = R.color.walk_color;
-                break;
-        }
-        @DrawableRes int transportImage;
-        switch (tm.getType()) {
-            case BUS:
-                transportImage = R.drawable.baseline_directions_bus_24;
-                break;
-            case TRAIN:
-                transportImage = R.drawable.baseline_train_24;
-                break;
-            case FERRY:
-                transportImage = R.drawable.baseline_ferry_24;
-                break;
-            default:
-                transportImage = R.drawable.baseline_directions_walk_24;
-                break;
-        }
 
         // Hide all bottom dots except for the last one.
         if (position != getItemCount() - 1) {
             v.bottomDot.setVisibility(View.GONE);
             v.departLocation.setVisibility(View.GONE);
         }
+
+        @ColorRes int color = tm.getType().getColor();
+        @DrawableRes int drawable = tm.getType().getDrawable();
         v.topDot.setCardBackgroundColor(getResources().getColor(color));
         v.section.setCardBackgroundColor(getResources().getColor(color));
         v.bottomDot.setCardBackgroundColor(getResources().getColor(color));
         v.transportNumberParent.setStrokeColor(getResources().getColor(color));
         v.transportNumber.setTextColor(getResources().getColor(color));
-        v.busImage.setBackgroundResource(transportImage);
+        v.busImage.setBackgroundResource(drawable);
         v.boardLocation.setTextColor(getResources().getColor(color));
         v.departLocation.setTextColor(getResources().getColor(color));
         v.tripDuration.setTextColor(getResources().getColor(color));
+        v.noiseLevel.setTextColor(getResources().getColor(color));
+        v.busyness.setTextColor(getResources().getColor(color));
 
         v.boardLocation.setText("Board Location");
         v.departLocation.setText("Depart Location");
         v.transportNumber.setText(tm.getType() == TravelType.WALK ? "WALK" : tm.getRouteNumber());
         v.tripDuration.setText(ChronoUnit.MINUTES.between(tm.getDepartAt(), tm.getArriveAt()) + " minutes");
+
+        if (tm.getType() != TravelType.WALK) {
+            v.noiseLevel.setText(tm.getNoiseLevel().getDisplayString());
+            v.busyness.setText(tm.getUsedCapacity().getDisplayString());
+        } else {
+            v.noiseLevel.setVisibility(View.GONE);
+            v.busyness.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -158,9 +141,8 @@ public class ViewTripActivity extends BaseActivity {
       TextView departLocation;
 
       TextView tripDuration;
-
-
-
+      TextView noiseLevel;
+      TextView busyness;
 
       public TripStintViewHolder(View itemView) {
           super(itemView);
@@ -174,6 +156,8 @@ public class ViewTripActivity extends BaseActivity {
           boardLocation = itemView.findViewById(R.id.boardLocation);
           departLocation = itemView.findViewById(R.id.departLocation);
           tripDuration = itemView.findViewById(R.id.tripDuration);
+          noiseLevel = itemView.findViewById(R.id.noiseLevel);
+          busyness = itemView.findViewById(R.id.busyness);
       }
   }
 
