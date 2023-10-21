@@ -16,7 +16,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/eventType"
+            android:id="@+id/eventDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/back_button_margin_left"

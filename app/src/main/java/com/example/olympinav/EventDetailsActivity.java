@@ -17,7 +17,7 @@ import com.example.olympinav.Utils.MyApp;
 
 public class EventDetailsActivity extends AppCompatActivity {
 
-    TextView tvTicketId, tvEventName, tvEventType;
+    TextView tvTicketId, tvEventName, tvEventDate, tvImageId;
     Button btnUpdate, btnDelete;
     EventDao eventDao;
     int eventId;
@@ -30,7 +30,8 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         tvTicketId = findViewById(R.id.tvTicketId);
         tvEventName = findViewById(R.id.tvEventName);
-        tvEventType = findViewById(R.id.tvEventType);
+        tvEventDate = findViewById(R.id.tvEventDate);
+        tvImageId = findViewById(R.id.tvImageId);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
 
@@ -44,7 +45,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                     this.event = dbEvent;
                     tvTicketId.setText("Ticket ID: " + this.event.getTicketId());
                     tvEventName.setText("Event Name: " + this.event.getEventName());
-                    tvEventType.setText("Event Type: " + this.event.getDate());
+                    tvEventDate.setText("Event Date: " + this.event.getDate());
+                    tvImageId.setText("Image ID: " + this.event.getImageId());
                 }
             });
 
@@ -78,11 +80,11 @@ public class EventDetailsActivity extends AppCompatActivity {
         // Creating the view to create the dialog. We are re-using the dialog we created in Week-4 to add new event.
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_event, null);
         EditText editTextEventName = dialogView.findViewById(R.id.editTextEventName);
-        EditText editTextEventType = dialogView.findViewById(R.id.editTextEventType);
+        EditText editTextEventDate = dialogView.findViewById(R.id.editTextEventDate);
 
         // Pre-set the current event name and type to these edittext views.
         editTextEventName.setText(event.getEventName());
-        editTextEventType.setText(event.getDate());
+        editTextEventDate.setText(event.getDate());
 
         //Creating the dialog builder to create the pop up dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -91,7 +93,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         //Setting and implementing the update operation
         builder.setPositiveButton("Update", (dialog, which) -> {
             String eventName = editTextEventName.getText().toString();
-            String eventType = editTextEventType.getText().toString();
+            String eventType = editTextEventDate.getText().toString();
 
             //update the values
             event.setEventName(eventName);

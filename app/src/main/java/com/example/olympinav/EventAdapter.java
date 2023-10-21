@@ -40,7 +40,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         Event event = eventList.get(position);
         holder.eventName.setText(event.getEventName());
-        holder.eventType.setText(event.getDate());
+        holder.eventDate.setText(event.getDate());
+        holder.eventImage.setImageResource(event.getImageId());
+
         // Bind other event data as needed
     }
 
@@ -52,13 +54,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     public class EventViewHolder extends RecyclerView.ViewHolder {
         ImageView eventImage;
         TextView eventName;
-        TextView eventType;
+        TextView eventDate;
 
         public EventViewHolder(@NonNull View itemView) {
             super(itemView);
-            eventImage = itemView.findViewById(R.id.eventImage);
+            eventImage = itemView.findViewById(R.id.eventImageView);
             eventName = itemView.findViewById(R.id.eventName);
-            eventType = itemView.findViewById(R.id.eventType);
+            eventDate = itemView.findViewById(R.id.eventDate);
 
             itemView.setOnClickListener(v -> {
                 if (mListener != null) {

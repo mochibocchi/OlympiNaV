@@ -28,5 +28,6 @@ public interface EventDao {
 
     @Query("SELECT * FROM events WHERE ticketId = :ticketNumber")
     Event getEventByTicketId(String ticketNumber);
+
 }
 

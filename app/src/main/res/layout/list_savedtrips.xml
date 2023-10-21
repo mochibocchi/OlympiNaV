@@ -88,7 +88,7 @@
             app:layout_constraintVertical_bias="0.5" />
 
         <TextView
-            android:id="@+id/eventType"
+            android:id="@+id/eventDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="136 Kloske Road, Brisbane City QLD 4000"
@@ -103,7 +103,7 @@
             android:layout_marginTop="@dimen/margin_top_table"
             android:textSize="@dimen/text_size_table"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eventType" />
+            app:layout_constraintTop_toBottomOf="@+id/eventDate" />
 
         <TextView
             android:id="@+id/textView6"

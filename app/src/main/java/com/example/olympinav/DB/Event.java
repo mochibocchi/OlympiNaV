@@ -11,19 +11,17 @@ public class Event {
     private String ticketId;
     private String eventName;
     private String date;
+    private Integer imageId;
 
-    public Event(String ticketId, String eventName, String date) {
+    public Event(String ticketId, String eventName, String date, Integer imageId) {
         this.ticketId = ticketId;
         this.eventName = eventName;
         this.date = date;
+        this.imageId = imageId;
     }
 
     public String getTicketId() {
         return ticketId;
-    }
-
-    public void setTicketId(String ticketId) {
-        this.ticketId = ticketId;
     }
 
     public String getEventName() {
@@ -40,5 +38,10 @@ public class Event {
 
     public void setDate(String date) {
         this.date = date;
+    }
+    public Integer getImageId() { return imageId; }
+
+    public void setImageId(Integer imageId) {
+        this.imageId = imageId;
     }
 }
