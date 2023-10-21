@@ -25,5 +25,8 @@ public interface EventDao {
 
     @Query("SELECT * FROM events WHERE id = :eventId")
     LiveData<Event> getEventById(int eventId);
+
+    @Query("SELECT * FROM events WHERE ticketId = :ticketNumber")
+    Event getEventByTicketId(String ticketNumber);
 }
 

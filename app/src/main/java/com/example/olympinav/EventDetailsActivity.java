@@ -43,8 +43,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 if (dbEvent != null) {
                     this.event = dbEvent;
                     tvTicketId.setText("Ticket ID: " + this.event.getTicketId());
-                    tvEventName.setText("Event Name: " + this.event.getName());
-                    tvEventType.setText("Event Type: " + this.event.getType());
+                    tvEventName.setText("Event Name: " + this.event.getEventName());
+                    tvEventType.setText("Event Type: " + this.event.getDate());
                 }
             });
 
@@ -81,8 +81,8 @@ public class EventDetailsActivity extends AppCompatActivity {
         EditText editTextEventType = dialogView.findViewById(R.id.editTextEventType);
 
         // Pre-set the current event name and type to these edittext views.
-        editTextEventName.setText(event.getName());
-        editTextEventType.setText(event.getType());
+        editTextEventName.setText(event.getEventName());
+        editTextEventType.setText(event.getDate());
 
         //Creating the dialog builder to create the pop up dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -94,8 +94,8 @@ public class EventDetailsActivity extends AppCompatActivity {
             String eventType = editTextEventType.getText().toString();
 
             //update the values
-            event.setName(eventName);
-            event.setType(eventType);
+            event.setEventName(eventName);
+            event.setDate(eventType);
 
             AsyncTask.execute(() -> {
                 eventDao.update(event);

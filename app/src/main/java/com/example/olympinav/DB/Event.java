@@ -9,13 +9,13 @@ public class Event {
     @PrimaryKey(autoGenerate = true)
     public int id;
     private String ticketId;
-    private String name;
-    private String type;
+    private String eventName;
+    private String date;
 
-    public Event(String ticketId, String name, String type) {
+    public Event(String ticketId, String eventName, String date) {
         this.ticketId = ticketId;
-        this.name = name;
-        this.type = type;
+        this.eventName = eventName;
+        this.date = date;
     }
 
     public String getTicketId() {
@@ -26,19 +26,19 @@ public class Event {
         this.ticketId = ticketId;
     }
 
-    public String getName() {
-        return name;
+    public String getEventName() {
+        return eventName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
-    public String getType() {
-        return type;
+    public String getDate() {
+        return date;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setDate(String date) {
+        this.date = date;
     }
 }

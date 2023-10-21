@@ -47,7 +47,7 @@ public class MainActivity extends BaseActivity {
 
         eventAdapter.setOnItemClickListener(position -> {
             Toast.makeText(MainActivity.this,
-                    eventList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                    eventList.get(position).getEventName(), Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(MainActivity.this, EventDetailsActivity.class);
             Event event = eventList.get(position);
@@ -109,9 +109,7 @@ public class MainActivity extends BaseActivity {
 
         // Create a list of predetermined events here
         List<Event> events = new ArrayList<>();
-        events.add(new Event("12345","Swimming Event", "136 Kloske Road, Brisbane City QLD 4000"));
-        events.add(new Event("12345","Swimming Event", "136 Kloske Road, Brisbane City QLD 4000"));
-        events.add(new Event("12345","Swimming Event", "136 Kloske Road, Brisbane City QLD 4000"));
+        events.add(new Event("12345","Swimming Event", "26th January"));
 
         // Insert predetermined events into the database
         AsyncTask.execute(() -> {
