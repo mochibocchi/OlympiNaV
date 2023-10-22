@@ -23,13 +23,7 @@
             android:name=".EventDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivityWithAddedEvent"
-            android:exported="false" />
-        <activity
             android:name=".SavedTripsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ScanQRCodeActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
