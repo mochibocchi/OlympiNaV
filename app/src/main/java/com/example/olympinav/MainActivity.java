@@ -1,7 +1,9 @@
 package com.example.olympinav;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,10 +20,13 @@ import com.example.olympinav.Utils.MyApp;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends BaseActivity {
     ArrayList<Event> eventList;
+    Set<String> enteredTicketNumbers = new HashSet<>();
     private RecyclerView recyclerView;
     private FloatingActionButton fabAddNewTicket;
     private EventAdapter eventAdapter;
@@ -35,19 +40,21 @@ public class MainActivity extends BaseActivity {
         FloatingActionButton fabPlanTrip = findViewById(R.id.fabPlanTrip);
         fabPlanTrip.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PlanTripActivity.class)));
 
-        FloatingActionButton fabAddTicket = findViewById(R.id.fabAddTicket);
+        // Load previously user-inputted tickets from a previous session
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        enteredTicketNumbers = preferences.getStringSet("enteredTicketNumbers", new HashSet<>());
+        displayPreviouslyEnteredEvents();
 
+        // Initialise the recycler view for all our event items
         recyclerView = findViewById(R.id.recyclerView);
         fabAddNewTicket = findViewById(R.id.fabAddTicket);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         initialiseEventList();
         eventList = new ArrayList<>();
-//        getDataFromDatabase();
-
         eventAdapter = new EventAdapter(eventList);
         recyclerView.setAdapter(eventAdapter);
 
+        // If user clicks on any of the event items, it will bring event details activity.
         eventAdapter.setOnItemClickListener(position -> {
             Toast.makeText(MainActivity.this,
                     eventList.get(position).getEventName(), Toast.LENGTH_SHORT).show();
@@ -58,6 +65,7 @@ public class MainActivity extends BaseActivity {
             startActivity(intent);
         });
 
+        // Click on the + button to add new ticket
         fabAddNewTicket.setOnClickListener(view -> {
             AddTicketNumber();
         });
@@ -72,9 +80,17 @@ public class MainActivity extends BaseActivity {
 
         builder.setPositiveButton("Confirm", (dialog, which) -> {
             String ticketNumber = editTextTicketNumber.getText().toString();
+            // Check if user is entering in a duplicate ticket ID
+            if (enteredTicketNumbers.contains(ticketNumber))
+            {
+                Toast.makeText(this, "Ticket already entered", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                enteredTicketNumbers.add(ticketNumber);
 
-            // Fetch and display the event associated with the entered ticket number
-            DisplayEvent(ticketNumber);
+                // Fetch and display the event associated with the entered ticket number
+                DisplayEvent(ticketNumber);
+            }
         });
 
         AlertDialog dialog = builder.create();
@@ -93,6 +109,7 @@ public class MainActivity extends BaseActivity {
                     eventList.add(event);
                     eventAdapter.notifyDataSetChanged();
                     Toast.makeText(this, "Successfully added new ticket " + ticketNumber, Toast.LENGTH_SHORT).show();
+                    saveEnteredTicketNumbers();
                 });
             } else {
                 runOnUiThread(() -> {
@@ -104,19 +121,34 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initialiseEventList() {
+
         EventDao eventDao = MyApp.getAppDatabase().eventDao();
 
-        // Create a list of predetermined events here
+        // Pre-populate events into the database
         List<Event> events = new ArrayList<>();
         events.add(new Event("SWM123","Swimming Event", "26th January, 8AM", R.drawable.olympic_swimming));
         events.add(new Event("TRI123","Triathlon Event", "26th January, 12PM", R.drawable.olympic_triathlon));
 
-        // Insert predetermined events into the database
         AsyncTask.execute(() -> {
             for (Event event : events) {
                 eventDao.insert(event);
             }
         });
+    }
+
+    private void saveEnteredTicketNumbers() {
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        Set<String> uniqueTicketNumbers = new HashSet<>(enteredTicketNumbers);
+        editor.putStringSet("enteredTicketNumbers", uniqueTicketNumbers);
+        editor.apply();
+    }
+
+    private void displayPreviouslyEnteredEvents() {
+        for (String ticketNumber : enteredTicketNumbers) {
+            DisplayEvent(ticketNumber);
+        }
     }
 
     // Idk if we'll need this code later, so I'll just leave it here commented.
