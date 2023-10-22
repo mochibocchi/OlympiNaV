@@ -59,8 +59,6 @@ public class MainActivity extends BaseActivity {
         });
 
         fabAddNewTicket.setOnClickListener(view -> {
-//          manageNewEventFunctionality();
-
             AddTicketNumber();
         });
     }
@@ -105,6 +103,23 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    private void initialiseEventList() {
+        EventDao eventDao = MyApp.getAppDatabase().eventDao();
+
+        // Create a list of predetermined events here
+        List<Event> events = new ArrayList<>();
+        events.add(new Event("SWM123","Swimming Event", "26th January, 8AM", R.drawable.olympic_swimming));
+        events.add(new Event("TRI123","Triathlon Event", "26th January, 12PM", R.drawable.olympic_triathlon));
+
+        // Insert predetermined events into the database
+        AsyncTask.execute(() -> {
+            for (Event event : events) {
+                eventDao.insert(event);
+            }
+        });
+    }
+
+    // Idk if we'll need this code later, so I'll just leave it here commented.
 //    private void manageNewEventFunctionality() {
 //
 //        AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -135,7 +150,7 @@ public class MainActivity extends BaseActivity {
 //        dialog.show();
 //    }
 
-    private void getDataFromDatabase() {
+//    private void getDataFromDatabase() {
 //        EventDao eventDao = MyApp.getAppDatabase().eventDao();
 //        LiveData<List<Event>> eventsLiveData = eventDao.getAllEvents();
 //        eventsLiveData.observe(this, events -> {
@@ -143,21 +158,5 @@ public class MainActivity extends BaseActivity {
 //            eventList.addAll(events);
 //            eventAdapter.notifyDataSetChanged();
 //        });
-    }
-
-    private void initialiseEventList() {
-        EventDao eventDao = MyApp.getAppDatabase().eventDao();
-
-        // Create a list of predetermined events here
-        List<Event> events = new ArrayList<>();
-        events.add(new Event("12345","Swimming Event", "26th January, 8AM", R.drawable.olympic_swimming));
-        events.add(new Event("123456","Triathlon Event", "26th January, 12PM", R.drawable.olympic_triathlon));
-
-        // Insert predetermined events into the database
-        AsyncTask.execute(() -> {
-            for (Event event : events) {
-                eventDao.insert(event);
-            }
-        });
-    }
+//    }
 }
