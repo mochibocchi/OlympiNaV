@@ -69,7 +69,6 @@ public class MainActivity extends BaseActivity {
         fabAddNewTicket.setOnClickListener(view -> {
             AddTicketNumber();
         });
-//        getDataFromDatabase();
     }
     @Override
     protected void onResume() {
@@ -156,11 +155,16 @@ public class MainActivity extends BaseActivity {
     }
 
     private void displayPreviouslyEnteredTickets() {
+        // Clear the eventList to prevent duplicates
+        eventList.clear();
+
         for (String ticketNumber : enteredTicketNumbers) {
-            // Fetch and display the event associated with the entered ticket number
+            Log.d("Event Retrieval", "Processing ticket: " + ticketNumber);
             DisplayEvent(ticketNumber);
         }
     }
+
+
 
 
     // Idk if we'll need this code later, so I'll just leave it here commented.
