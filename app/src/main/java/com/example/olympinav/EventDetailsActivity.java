@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,19 +22,21 @@ import com.example.olympinav.Utils.MyApp;
 import java.util.HashSet;
 import java.util.Set;
 
-public class EventDetailsActivity extends AppCompatActivity {
+public class EventDetailsActivity extends BaseActivity {
 
     TextView tvTicketId, tvEventName, tvEventDate, tvImageId;
     Button btnUpdate, btnDelete;
     EventDao eventDao;
     int eventId;
     Event event;
+    ImageView eventImage;
     private static final String SHARED_PREF_KEY = "MyPreferences";
     private Set<String> enteredTicketNumbers = new HashSet<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
+        setupActivity();
 
         SharedPreferences preferences = getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE);
         enteredTicketNumbers = preferences.getStringSet("enteredTicketNumbers", new HashSet<>());
@@ -44,6 +47,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         tvImageId = findViewById(R.id.tvImageId);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
+        eventImage = findViewById(R.id.eventImageView);
 
         eventDao = MyApp.getAppDatabase().eventDao();
 
@@ -53,10 +57,11 @@ public class EventDetailsActivity extends AppCompatActivity {
             eventDao.getEventById(eventId).observe(this, dbEvent -> {
                 if (dbEvent != null) {
                     this.event = dbEvent;
-                    tvTicketId.setText("Ticket ID: " + this.event.getTicketId());
-                    tvEventName.setText("Event Name: " + this.event.getEventName());
-                    tvEventDate.setText("Event Date: " + this.event.getDate());
-                    tvImageId.setText("Image ID: " + this.event.getImageId());
+                    tvTicketId.setText(this.event.getTicketId());
+                    tvEventName.setText(this.event.getEventName());
+                    tvEventDate.setText(this.event.getDate());
+                    tvImageId.setText(this.event.getImageId());
+                    eventImage.setImageResource(event.getImageId());
                 }
             });
 
@@ -64,7 +69,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (event != null) {
-                        updateTheEvent();
+                        Intent intent = new Intent(EventDetailsActivity.this, PlanTripActivity.class);
+                        startActivity(intent);
                     }
                 }
             });
@@ -83,6 +89,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
 
     }
+
     private void updateTheEvent() {
 
         // Creating the view to create the dialog. We are re-using the dialog we created in Week-4 to add new event.

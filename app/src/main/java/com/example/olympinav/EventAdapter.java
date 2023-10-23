@@ -41,8 +41,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         Event event = eventList.get(position);
         holder.eventImage.setImageResource(event.getImageId());
         holder.eventName.setText(event.getEventName());
-        holder.eventDate.setText("Date: " + event.getDate());
-        holder.ticketId.setText("Ticket ID: " + event.getTicketId());
+        holder.eventDate.setText(event.getDate());
+        holder.ticketId.setText(event.getTicketId());
 
         // Bind other event data as needed
     }
