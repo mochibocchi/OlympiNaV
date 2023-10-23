@@ -1,5 +1,8 @@
 package com.example.olympinav;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +18,9 @@ import com.example.olympinav.DB.Event;
 import com.example.olympinav.DB.EventDao;
 import com.example.olympinav.Utils.MyApp;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class EventDetailsActivity extends AppCompatActivity {
 
     TextView tvTicketId, tvEventName, tvEventDate, tvImageId;
@@ -22,11 +28,15 @@ public class EventDetailsActivity extends AppCompatActivity {
     EventDao eventDao;
     int eventId;
     Event event;
-
+    private static final String SHARED_PREF_KEY = "MyPreferences";
+    private Set<String> enteredTicketNumbers = new HashSet<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
+
+        SharedPreferences preferences = getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE);
+        enteredTicketNumbers = preferences.getStringSet("enteredTicketNumbers", new HashSet<>());
 
         tvTicketId = findViewById(R.id.tvTicketId);
         tvEventName = findViewById(R.id.tvEventName);
@@ -73,8 +83,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
 
     }
-
-
     private void updateTheEvent() {
 
         // Creating the view to create the dialog. We are re-using the dialog we created in Week-4 to add new event.
@@ -118,9 +126,18 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     private void deleteTheEvent() {
         AsyncTask.execute(() -> {
+            // Remove the event's ticket number from the enteredTicketNumbers set
+            enteredTicketNumbers.remove(event.getTicketId());
+
+            // Delete the event from the database
             eventDao.delete(event);
+
+            // Navigate back to the MainActivity
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
             finish();
         });
+        Toast.makeText(this, "Delete event" + event.getTicketId(), Toast.LENGTH_SHORT).show();
     }
 
 }
