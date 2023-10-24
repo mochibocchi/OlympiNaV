@@ -131,8 +131,8 @@ public class MainActivity extends BaseActivity {
 
         // Pre-populate events into the database
         List<Event> events = new ArrayList<>();
-        events.add(new Event("SWM123","Swimming Event", "26th January, 8AM", R.drawable.olympic_swimming));
-        events.add(new Event("TRI123","Triathlon Event", "26th January, 12PM", R.drawable.olympic_triathlon));
+        events.add(new Event("SWM123","Swimming Event", "26th January, 8AM", "350 Main Beach Road, Brisbane City", R.drawable.olympic_swimming));
+        events.add(new Event("TRI123","Triathlon Event", "26th January, 12PM","95 Lemke Road, Brisbane City", R.drawable.olympic_triathlon));
 
         AsyncTask.execute(() -> {
             for (Event event : events) {

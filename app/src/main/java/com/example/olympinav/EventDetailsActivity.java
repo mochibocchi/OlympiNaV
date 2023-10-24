@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.olympinav.DB.Event;
 import com.example.olympinav.DB.EventDao;
@@ -24,7 +23,7 @@ import java.util.Set;
 
 public class EventDetailsActivity extends BaseActivity {
 
-    TextView tvTicketId, tvEventName, tvEventDate, tvImageId;
+    TextView tvTicketId, tvEventName, tvEventDate, tvEventAddress, tvImageId;
     Button btnUpdate, btnDelete;
     EventDao eventDao;
     int eventId;
@@ -32,6 +31,8 @@ public class EventDetailsActivity extends BaseActivity {
     ImageView eventImage;
     private static final String SHARED_PREF_KEY = "MyPreferences";
     private Set<String> enteredTicketNumbers = new HashSet<>();
+    public static final String EXTRA_START_LOCATION = "start_location";
+    public static final String EXTRA_END_LOCATION = "end_location";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class EventDetailsActivity extends BaseActivity {
         tvTicketId = findViewById(R.id.tvTicketId);
         tvEventName = findViewById(R.id.tvEventName);
         tvEventDate = findViewById(R.id.tvEventDate);
+        tvEventAddress = findViewById(R.id.tvEventAddress);
         tvImageId = findViewById(R.id.tvImageId);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
@@ -60,6 +62,7 @@ public class EventDetailsActivity extends BaseActivity {
                     tvTicketId.setText(this.event.getTicketId());
                     tvEventName.setText(this.event.getEventName());
                     tvEventDate.setText(this.event.getDate());
+                    tvEventAddress.setText(this.event.getAddress());
                     tvImageId.setText(this.event.getImageId());
                     eventImage.setImageResource(event.getImageId());
                 }
@@ -70,9 +73,14 @@ public class EventDetailsActivity extends BaseActivity {
                 public void onClick(View view) {
                     if (event != null) {
                         Intent intent = new Intent(EventDetailsActivity.this, PlanTripActivity.class);
+                        String eventAddress = event.getAddress();
+                        String startLocation = "Current Location";
+                        intent.putExtra(EXTRA_START_LOCATION, startLocation);
+                        intent.putExtra(EXTRA_END_LOCATION, eventAddress);
                         startActivity(intent);
                     }
                 }
+
             });
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -1,5 +1,8 @@
 package com.example.olympinav;
 
+import static com.example.olympinav.EventDetailsActivity.EXTRA_END_LOCATION;
+import static com.example.olympinav.EventDetailsActivity.EXTRA_START_LOCATION;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -49,6 +52,7 @@ public class PlanTripActivity extends BaseActivity {
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_plan_trip);
+    getPrefilledLocations(); // If user opens up from vehicleDetailsActivity, grab the event address from the event item
     setupActivity();
     setupRecyclerView();
     setupTripDetailsFields();
@@ -245,6 +249,20 @@ public class PlanTripActivity extends BaseActivity {
       arriveAt = itemView.findViewById(R.id.arriveAt);
 
       clickDetector = itemView.findViewById(R.id.clickDetector);
+    }
+  }
+
+  private void getPrefilledLocations() {
+    Intent intent = getIntent();
+    if (intent.hasExtra(EXTRA_START_LOCATION) && intent.hasExtra(EXTRA_END_LOCATION)) {
+      String startLocation = intent.getStringExtra(EXTRA_START_LOCATION);
+      String endLocation = intent.getStringExtra(EXTRA_END_LOCATION);
+
+      EditText tvStartLocationET = findViewById(R.id.startLocationET);
+      tvStartLocationET.setText(startLocation);
+
+      EditText tvEndLocationET = findViewById(R.id.endLocationET);
+      tvEndLocationET.setText(endLocation);
     }
   }
 }

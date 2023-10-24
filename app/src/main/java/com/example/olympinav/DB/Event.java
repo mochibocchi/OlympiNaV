@@ -11,12 +11,14 @@ public class Event {
     private String ticketId;
     private String eventName;
     private String date;
+    private String address;
     private Integer imageId;
 
-    public Event(String ticketId, String eventName, String date, Integer imageId) {
+    public Event(String ticketId, String eventName, String date, String address, Integer imageId) {
         this.ticketId = ticketId;
         this.eventName = eventName;
         this.date = date;
+        this.address = address;
         this.imageId = imageId;
     }
 
@@ -38,6 +40,11 @@ public class Event {
 
     public void setDate(String date) {
         this.date = date;
+    }
+    public String getAddress() { return address; }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
     public Integer getImageId() { return imageId; }
 
