@@ -72,12 +72,7 @@ public class EventDetailsActivity extends BaseActivity {
                 @Override
                 public void onClick(View view) {
                     if (event != null) {
-                        Intent intent = new Intent(EventDetailsActivity.this, PlanTripActivity.class);
-                        String eventAddress = event.getAddress();
-                        String startLocation = "Current Location";
-                        intent.putExtra(EXTRA_START_LOCATION, startLocation);
-                        intent.putExtra(EXTRA_END_LOCATION, eventAddress);
-                        startActivity(intent);
+                        openPlanTripActivity();
                     }
                 }
 
@@ -98,6 +93,14 @@ public class EventDetailsActivity extends BaseActivity {
 
     }
 
+    private void openPlanTripActivity() {
+        Intent intent = new Intent(EventDetailsActivity.this, PlanTripActivity.class);
+        String eventAddress = event.getAddress();
+        String startLocation = "Current Location";
+        intent.putExtra(EXTRA_START_LOCATION, startLocation);
+        intent.putExtra(EXTRA_END_LOCATION, eventAddress);
+        startActivity(intent);
+    }
     private void updateTheEvent() {
 
         // Creating the view to create the dialog. We are re-using the dialog we created in Week-4 to add new event.

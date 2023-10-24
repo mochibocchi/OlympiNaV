@@ -15,10 +15,8 @@ public class SavedTripsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_trips);
         setupActivity();
-        ImageButton helpButton = findViewById(R.id.helpButton);
         Button addTripButton = findViewById(R.id.addTripButton);
 
-        helpButton.setOnClickListener(view -> finish());
         addTripButton.setOnClickListener(view -> startActivity(new Intent(SavedTripsActivity.this, PlanTripActivity.class)));
 
     }

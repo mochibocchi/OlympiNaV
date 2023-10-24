@@ -1,5 +1,6 @@
 package com.example.olympinav;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -35,7 +37,6 @@ public class ViewTripActivity extends BaseActivity {
   private Trip trip;
   private TripStintReyclerView adapter;
   private GoogleMap map;
-
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class ViewTripActivity extends BaseActivity {
     trip = (Trip) getIntent().getParcelableExtra("trip");
     setupViews();
     setupRecyclerView();
+    setupFab();
   }
 
   private void setupViews() {
@@ -159,6 +161,11 @@ public class ViewTripActivity extends BaseActivity {
           noiseLevel = itemView.findViewById(R.id.noiseLevel);
           busyness = itemView.findViewById(R.id.busyness);
       }
+  }
+
+  private void setupFab() {
+      FloatingActionButton fabSaveNewTrip = findViewById(R.id.saveTripFAB);
+      fabSaveNewTrip.setOnClickListener(v -> startActivity(new Intent(ViewTripActivity.this, SavedTripsActivity.class)));
   }
 
 }
