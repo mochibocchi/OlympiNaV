@@ -56,9 +56,6 @@ public class MainActivity extends BaseActivity {
 
         // If user clicks on any of the event items, it will bring event details activity.
         eventAdapter.setOnItemClickListener(position -> {
-            Toast.makeText(MainActivity.this,
-                    eventList.get(position).getEventName(), Toast.LENGTH_SHORT).show();
-
             Intent intent = new Intent(MainActivity.this, EventDetailsActivity.class);
             Event event = eventList.get(position);
             intent.putExtra("eventId", event.id);
@@ -113,7 +110,7 @@ public class MainActivity extends BaseActivity {
                 runOnUiThread(() -> {
                     eventList.add(event);
                     eventAdapter.notifyDataSetChanged();
-                    Toast.makeText(this, "Successfully added new ticket " + ticketNumber, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "Successfully added new ticket " + ticketNumber, Toast.LENGTH_SHORT).show();
                     saveEnteredTicketNumbers();
                 });
             } else {

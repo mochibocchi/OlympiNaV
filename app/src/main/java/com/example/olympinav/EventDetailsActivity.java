@@ -155,7 +155,7 @@ public class EventDetailsActivity extends BaseActivity {
             startActivity(intent);
             finish();
         });
-        Toast.makeText(this, "Delete event" + event.getTicketId(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Successfully deleted ticket: " + event.getTicketId(), Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -52,7 +52,6 @@ public class ViewTripActivity extends BaseActivity {
     trip = (Trip) getIntent().getParcelableExtra("trip");
     setupViews();
     setupRecyclerView();
-    setupFab();
   }
 
   private void setupViews() {
@@ -162,10 +161,4 @@ public class ViewTripActivity extends BaseActivity {
           busyness = itemView.findViewById(R.id.busyness);
       }
   }
-
-  private void setupFab() {
-      FloatingActionButton fabSaveNewTrip = findViewById(R.id.saveTripFAB);
-      fabSaveNewTrip.setOnClickListener(v -> startActivity(new Intent(ViewTripActivity.this, SavedTripsActivity.class)));
-  }
-
 }
