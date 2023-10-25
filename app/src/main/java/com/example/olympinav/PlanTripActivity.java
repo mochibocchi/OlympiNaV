@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.olympinav.Utils.Utils;
 import com.example.olympinav.generators.Generator;
 import com.example.olympinav.models.TravelMethod;
 import com.example.olympinav.models.TravelType;
@@ -163,16 +164,16 @@ public class PlanTripActivity extends BaseActivity {
 
       for (Map.Entry<TravelType, Integer> countEntry : counts.entrySet()) {
         if (countEntry.getKey() == TravelType.WALK) {
-          v.walkCount.setText(countEntry.getValue() + " walks");
+          v.walkCount.setText(countEntry.getValue() + " " + Utils.calculateWordForQuantity("walk", countEntry.getValue()));
           v.walkDuration.setText(durations.getOrDefault(TravelType.WALK, 0) + " minutes");
         } else if (countEntry.getKey() == TravelType.BUS) {
-          v.busCount.setText(countEntry.getValue() + " buses");
+          v.busCount.setText(countEntry.getValue() + " " + Utils.calculateWordForQuantity("bus", countEntry.getValue()));
           v.busDuration.setText(durations.getOrDefault(TravelType.BUS, 0) + " minutes");
         } else if (countEntry.getKey() == TravelType.TRAIN) {
-          v.trainCount.setText(countEntry.getValue() + " trains");
+          v.trainCount.setText(countEntry.getValue() + " " + Utils.calculateWordForQuantity("train", countEntry.getValue()));
           v.trainDuration.setText(durations.getOrDefault(TravelType.TRAIN, 0) + " minutes");
         } else if (countEntry.getKey() == TravelType.FERRY) {
-          v.ferryCount.setText(countEntry.getValue() + " ferrys");
+          v.ferryCount.setText(countEntry.getValue() + " " + Utils.calculateWordForQuantity("ferry", countEntry.getValue()));
           v.ferryDuration.setText(durations.getOrDefault(TravelType.FERRY, 0) + " minutes");
         }
       }
