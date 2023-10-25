@@ -45,6 +45,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             // To navigate to a new activity, change the activity here:
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+        } else if (itemId == R.id.nav_plan_trip) {
+            Intent intent = new Intent(this, PlanTripActivity.class);
+            startActivity(intent);
         } else if (itemId == R.id.nav_service_updates) {
             Intent intent = new Intent(this, ServiceUpdatesActivity.class);
             startActivity(intent);
