@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.olympinav.Utils.Utils;
 import com.example.olympinav.generators.Generator;
 import com.example.olympinav.models.TravelMethod;
 import com.example.olympinav.models.TravelType;
@@ -40,6 +41,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class PlanTripActivity extends BaseActivity {
   private List<Trip> trips = new ArrayList<>();
@@ -114,10 +116,11 @@ public class PlanTripActivity extends BaseActivity {
         return;
       }
       trips = new ArrayList<>();
+      int options = ThreadLocalRandom.current().nextInt(3, 6);
       if (tripTypeSpinner.getSelectedItemPosition() == 2)
-        for (int i = 0; i < 4; i++) trips.add(Generator.generateTripBackwards(datetime));
+        for (int i = 0; i < options; i++) trips.add(Generator.generateTripBackwards(datetime));
       else
-        for (int i = 0; i < 4; i++) trips.add(Generator.generateTripForwards(datetime));
+        for (int i = 0; i < options; i++) trips.add(Generator.generateTripForwards(datetime));
       adapter.setTrips(trips);
       adapter.notifyDataSetChanged();
     });
@@ -154,27 +157,23 @@ public class PlanTripActivity extends BaseActivity {
         counts.merge(tm.getType(), 1, Integer::sum);
         durations.merge(tm.getType(), (int) ChronoUnit.MINUTES.between(tm.getDepartAt(), tm.getArriveAt()), Integer::sum);
       }
-      if (!counts.containsKey(TravelType.WALK))
-        v.walkCard.setVisibility(View.GONE);
-      if (!counts.containsKey(TravelType.BUS))
-        v.busCard.setVisibility(View.GONE);
-      if (!counts.containsKey(TravelType.TRAIN))
-        v.trainCard.setVisibility(View.GONE);
-      if (!counts.containsKey(TravelType.FERRY))
-        v.ferryCard.setVisibility(View.GONE);
+      v.walkCard.setVisibility(!counts.containsKey(TravelType.WALK) ? View.GONE : View.VISIBLE);
+      v.busCard.setVisibility(!counts.containsKey(TravelType.BUS) ? View.GONE : View.VISIBLE);
+      v.trainCard.setVisibility(!counts.containsKey(TravelType.TRAIN) ? View.GONE : View.VISIBLE);
+      v.ferryCard.setVisibility(!counts.containsKey(TravelType.FERRY) ? View.GONE : View.VISIBLE);
 
       for (Map.Entry<TravelType, Integer> countEntry : counts.entrySet()) {
         if (countEntry.getKey() == TravelType.WALK) {
-          v.walkCount.setText(countEntry.getValue() + " walks");
+          v.walkCount.setText(countEntry.getValue() + " " + Utils.calculateWordForQuantity("walk", countEntry.getValue()));
           v.walkDuration.setText(durations.getOrDefault(TravelType.WALK, 0) + " minutes");
         } else if (countEntry.getKey() == TravelType.BUS) {
-          v.busCount.setText(countEntry.getValue() + " buses");
+          v.busCount.setText(countEntry.getValue() + " " + Utils.calculateWordForQuantity("bus", countEntry.getValue()));
           v.busDuration.setText(durations.getOrDefault(TravelType.BUS, 0) + " minutes");
         } else if (countEntry.getKey() == TravelType.TRAIN) {
-          v.trainCount.setText(countEntry.getValue() + " trains");
+          v.trainCount.setText(countEntry.getValue() + " " + Utils.calculateWordForQuantity("train", countEntry.getValue()));
           v.trainDuration.setText(durations.getOrDefault(TravelType.TRAIN, 0) + " minutes");
         } else if (countEntry.getKey() == TravelType.FERRY) {
-          v.ferryCount.setText(countEntry.getValue() + " ferrys");
+          v.ferryCount.setText(countEntry.getValue() + " " + Utils.calculateWordForQuantity("ferry", countEntry.getValue()));
           v.ferryDuration.setText(durations.getOrDefault(TravelType.FERRY, 0) + " minutes");
         }
       }

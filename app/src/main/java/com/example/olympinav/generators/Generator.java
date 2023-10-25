@@ -15,15 +15,15 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Generator {
-  public static TravelMethod generateTransportationMethod(TravelType type, @Nullable LocalDateTime onwardsFrom) {
+  public static TravelMethod generateTravelMethod(TravelType type, @Nullable LocalDateTime onwardsFrom) {
     ThreadLocalRandom r = ThreadLocalRandom.current();
     NoiseLevel n = NoiseLevel.values()[r.nextInt(NoiseLevel.values().length)];
     UsedCapacity c = UsedCapacity.values()[r.nextInt(UsedCapacity.values().length)];
     LatLng l = generateLatLng();
     List<LatLng> route = generateRoute(9, type);
     if (onwardsFrom == null) onwardsFrom = LocalDateTime.now();
-    LocalDateTime startTime = generateLocalDateTime(onwardsFrom);
-    LocalDateTime endTime = generateLocalDateTime(startTime);
+    LocalDateTime startTime = generateLocalDateTime(onwardsFrom, true);
+    LocalDateTime endTime = generateLocalDateTime(startTime, false);
     String routeNumber = String.valueOf(r.nextInt(111, 999));
     return new TravelMethod(l, route, type, startTime, endTime, n, c, type != TravelType.WALK ? routeNumber : null);
   }
@@ -44,14 +44,14 @@ public class Generator {
     return route;
   }
 
-  public static LocalDateTime generateLocalDateTime(LocalDateTime onwardsFrom) {
+  public static LocalDateTime generateLocalDateTime(LocalDateTime onwardsFrom, boolean isTransferTime) {
     ThreadLocalRandom r = ThreadLocalRandom.current();
-    return onwardsFrom.plusMinutes(r.nextInt(5, 30));
+    return onwardsFrom.plusMinutes(r.nextInt(5, isTransferTime ? 10 : 30));
   }
 
-  public static LocalDateTime generateLocalDateTimeBackwards(LocalDateTime backwardsFrom) {
+  public static LocalDateTime generateLocalDateTimeBackwards(LocalDateTime backwardsFrom, boolean isTransferTime) {
     ThreadLocalRandom r = ThreadLocalRandom.current();
-    return backwardsFrom.minusMinutes(r.nextInt(5, 30));
+    return backwardsFrom.minusMinutes(r.nextInt(5, isTransferTime ? 10 : 30));
   }
 
   // Used when searching for trips with the search methods 'Now' or 'Depart At'
@@ -60,15 +60,16 @@ public class Generator {
       LatLng startLocation = generateLatLng();
       LatLng endLocation = generateLatLng();
       List<TravelMethod> vehicles = new ArrayList<>();
-      for (int i = 0; i < 5; i++) {
+      int options = r.nextInt(3, 5);
+      for (int i = 0; i < options; i++) {
           // Start and end with walks, in between is a random type
-          TravelType type = i == 0 || i == 4
+          TravelType type = i == 0 || i == options - 1
               ? TravelType.WALK
               : TravelType.values()[r.nextInt(TravelType.values().length - 1)];
 
           // Start with the tripDepartAt argument, then use the previous trips departAt.
           LocalDateTime onwardsFrom = i == 0 ? tripDepartAt : vehicles.get(vehicles.size() - 1).getArriveAt();
-          vehicles.add(generateTransportationMethod(type, onwardsFrom));
+          vehicles.add(generateTravelMethod(type, onwardsFrom));
       }
       LocalDateTime departAt = vehicles.get(0).getDepartAt();
       LocalDateTime arriveAt = vehicles.get(vehicles.size() - 1).getArriveAt();
@@ -82,15 +83,16 @@ public class Generator {
     LatLng endLocation = generateLatLng();
     List<TravelMethod> vehicles = new ArrayList<>();
     // Generating the trip backwards and then reversing the list because
-    for (int i = 0; i < 5; i++) {
-        TravelType type = i == 0 || i == 4
+    int options = r.nextInt(3, 5);
+    for (int i = 0; i < options; i++) {
+        TravelType type = i == 0 || i == options - 1
             ? TravelType.WALK
             : TravelType.values()[r.nextInt(TravelType.values().length - 1)];
 
       LocalDateTime backwardsFrom = i == 0 ? tripArriveAt : vehicles.get(vehicles.size() - 1).getDepartAt();
-      TravelMethod v = generateTransportationMethod(type, backwardsFrom);
+      TravelMethod v = generateTravelMethod(type, backwardsFrom);
       v.setArriveAt(backwardsFrom);
-      v.setDepartAt(generateLocalDateTimeBackwards(backwardsFrom));
+      v.setDepartAt(generateLocalDateTimeBackwards(backwardsFrom, true));
       vehicles.add(v);
     }
 
