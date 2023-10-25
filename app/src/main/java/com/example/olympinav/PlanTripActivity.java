@@ -154,14 +154,10 @@ public class PlanTripActivity extends BaseActivity {
         counts.merge(tm.getType(), 1, Integer::sum);
         durations.merge(tm.getType(), (int) ChronoUnit.MINUTES.between(tm.getDepartAt(), tm.getArriveAt()), Integer::sum);
       }
-      if (!counts.containsKey(TravelType.WALK))
-        v.walkCard.setVisibility(View.GONE);
-      if (!counts.containsKey(TravelType.BUS))
-        v.busCard.setVisibility(View.GONE);
-      if (!counts.containsKey(TravelType.TRAIN))
-        v.trainCard.setVisibility(View.GONE);
-      if (!counts.containsKey(TravelType.FERRY))
-        v.ferryCard.setVisibility(View.GONE);
+      v.walkCard.setVisibility(!counts.containsKey(TravelType.WALK) ? View.GONE : View.VISIBLE);
+      v.busCard.setVisibility(!counts.containsKey(TravelType.BUS) ? View.GONE : View.VISIBLE);
+      v.trainCard.setVisibility(!counts.containsKey(TravelType.TRAIN) ? View.GONE : View.VISIBLE);
+      v.ferryCard.setVisibility(!counts.containsKey(TravelType.FERRY) ? View.GONE : View.VISIBLE);
 
       for (Map.Entry<TravelType, Integer> countEntry : counts.entrySet()) {
         if (countEntry.getKey() == TravelType.WALK) {
