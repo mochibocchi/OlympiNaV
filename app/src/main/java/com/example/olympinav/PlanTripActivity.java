@@ -40,6 +40,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class PlanTripActivity extends BaseActivity {
   private List<Trip> trips = new ArrayList<>();
@@ -114,10 +115,11 @@ public class PlanTripActivity extends BaseActivity {
         return;
       }
       trips = new ArrayList<>();
+      int options = ThreadLocalRandom.current().nextInt(3, 6);
       if (tripTypeSpinner.getSelectedItemPosition() == 2)
-        for (int i = 0; i < 4; i++) trips.add(Generator.generateTripBackwards(datetime));
+        for (int i = 0; i < options; i++) trips.add(Generator.generateTripBackwards(datetime));
       else
-        for (int i = 0; i < 4; i++) trips.add(Generator.generateTripForwards(datetime));
+        for (int i = 0; i < options; i++) trips.add(Generator.generateTripForwards(datetime));
       adapter.setTrips(trips);
       adapter.notifyDataSetChanged();
     });
