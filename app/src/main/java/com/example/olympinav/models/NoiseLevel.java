@@ -1,9 +1,9 @@
 package com.example.olympinav.models;
 
 public enum NoiseLevel {
-  HIGH("Very Loud"),
+  LOW("Quiet"),
   MEDIUM("Moderately Loud"),
-  LOW("Quiet");
+  HIGH("Very Loud");
 
   private final String displayString;
 
@@ -14,5 +14,10 @@ public enum NoiseLevel {
   public String getDisplayString() {
     return displayString;
   }
+
+  public int toProgressBarPercentage() {
+    return ordinal() + 1 / UsedCapacity.values().length * 100;
+  }
+
 }
 

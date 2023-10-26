@@ -6,7 +6,13 @@ import static com.example.olympinav.EventDetailsActivity.EXTRA_START_LOCATION;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +20,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -30,7 +39,6 @@ import com.example.olympinav.generators.Generator;
 import com.example.olympinav.models.TravelMethod;
 import com.example.olympinav.models.TravelType;
 import com.example.olympinav.models.Trip;
-import com.google.android.material.card.MaterialCardView;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -42,6 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class PlanTripActivity extends BaseActivity {
   private List<Trip> trips = new ArrayList<>();
@@ -153,28 +162,62 @@ public class PlanTripActivity extends BaseActivity {
       Trip trip = trips.get(position);
       Map<TravelType, Integer> counts = new HashMap<>(TravelType.values().length);
       Map<TravelType, Integer> durations = new HashMap<>(TravelType.values().length);
+      Map<TravelType, Double> averageNoiseLevelByType = trip.getTravelMethods().stream()
+          .collect(Collectors.groupingBy(TravelMethod::getType,
+              Collectors.averagingInt(tm -> tm.getNoiseLevel().toProgressBarPercentage())));
+      Map<TravelType, Double> averageUsedCapacityByType = trip.getTravelMethods().stream()
+          .collect(Collectors.groupingBy(TravelMethod::getType,
+              Collectors.averagingInt(tm -> tm.getUsedCapacity().toProgressBarPercentage())));
       for (TravelMethod tm : trip.getTravelMethods()) {
         counts.merge(tm.getType(), 1, Integer::sum);
         durations.merge(tm.getType(), (int) ChronoUnit.MINUTES.between(tm.getDepartAt(), tm.getArriveAt()), Integer::sum);
       }
-      v.walkCard.setVisibility(!counts.containsKey(TravelType.WALK) ? View.GONE : View.VISIBLE);
-      v.busCard.setVisibility(!counts.containsKey(TravelType.BUS) ? View.GONE : View.VISIBLE);
-      v.trainCard.setVisibility(!counts.containsKey(TravelType.TRAIN) ? View.GONE : View.VISIBLE);
-      v.ferryCard.setVisibility(!counts.containsKey(TravelType.FERRY) ? View.GONE : View.VISIBLE);
+      v.walkRow.setVisibility(!counts.containsKey(TravelType.WALK) ? View.GONE : View.VISIBLE);
+      v.busRow.setVisibility(!counts.containsKey(TravelType.BUS) ? View.GONE : View.VISIBLE);
+      v.trainRow.setVisibility(!counts.containsKey(TravelType.TRAIN) ? View.GONE : View.VISIBLE);
+      v.ferryRow.setVisibility(!counts.containsKey(TravelType.FERRY) ? View.GONE : View.VISIBLE);
 
       for (Map.Entry<TravelType, Integer> countEntry : counts.entrySet()) {
+        String count = String.valueOf(countEntry.getValue());
+        String name = Utils.calculateWordForQuantity(countEntry.getKey().toString().toLowerCase(), countEntry.getValue());
+        String duration = durations.getOrDefault(countEntry.getKey(), 0) + " minutes";
+        int noiseLevel = (int) Math.round(averageNoiseLevelByType.getOrDefault(countEntry.getKey(), 0d));
+        @ColorRes int noiseLevelColor = getProgressBarColor(noiseLevel);
+        int usedCapacity = (int) Math.round(averageUsedCapacityByType.getOrDefault(countEntry.getKey(), 0d));
+        @ColorRes int usedCapcityColor = getProgressBarColor(usedCapacity);
+
         if (countEntry.getKey() == TravelType.WALK) {
-          v.walkCount.setText(countEntry.getValue() + " " + Utils.calculateWordForQuantity("walk", countEntry.getValue()));
-          v.walkDuration.setText(durations.getOrDefault(TravelType.WALK, 0) + " minutes");
+          v.walkCount.setText(count);
+          v.walkName.setText(name);
+          v.walkDuration.setText(duration);
+          v.walkNoiseLevel.setProgress(noiseLevel);
+          v.walkNoiseLevel.setProgressTintList(ColorStateList.valueOf(getResources().getColor(noiseLevelColor)));
+          v.walkUsedCapcity.setProgress(usedCapacity);
+          v.walkUsedCapcity.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapcityColor)));
         } else if (countEntry.getKey() == TravelType.BUS) {
-          v.busCount.setText(countEntry.getValue() + " " + Utils.calculateWordForQuantity("bus", countEntry.getValue()));
-          v.busDuration.setText(durations.getOrDefault(TravelType.BUS, 0) + " minutes");
+          v.busCount.setText(count);
+          v.busName.setText(name);
+          v.busDuration.setText(duration);
+          v.busNoiseLevel.setProgress(noiseLevel);
+          v.busNoiseLevel.setProgressTintList(ColorStateList.valueOf(getResources().getColor(noiseLevelColor)));
+          v.busUsedCapcity.setProgress(usedCapacity);
+          v.busUsedCapcity.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapcityColor)));
         } else if (countEntry.getKey() == TravelType.TRAIN) {
-          v.trainCount.setText(countEntry.getValue() + " " + Utils.calculateWordForQuantity("train", countEntry.getValue()));
-          v.trainDuration.setText(durations.getOrDefault(TravelType.TRAIN, 0) + " minutes");
+          v.trainCount.setText(count);
+          v.trainName.setText(name);
+          v.trainDuration.setText(duration);
+          v.trainNoiseLevel.setProgress(noiseLevel);
+          v.trainNoiseLevel.setProgressTintList(ColorStateList.valueOf(getResources().getColor(noiseLevelColor)));
+          v.trainUsedCapcity.setProgress(usedCapacity);
+          v.trainUsedCapcity.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapcityColor)));
         } else if (countEntry.getKey() == TravelType.FERRY) {
-          v.ferryCount.setText(countEntry.getValue() + " " + Utils.calculateWordForQuantity("ferry", countEntry.getValue()));
-          v.ferryDuration.setText(durations.getOrDefault(TravelType.FERRY, 0) + " minutes");
+          v.ferryCount.setText(count);
+          v.ferryName.setText(name);
+          v.ferryDuration.setText(duration);
+          v.ferryNoiseLevel.setProgress(noiseLevel);
+          v.ferryNoiseLevel.setProgressTintList(ColorStateList.valueOf(getResources().getColor(noiseLevelColor)));
+          v.ferryUsedCapcity.setProgress(usedCapacity);
+          v.ferryUsedCapcity.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapcityColor)));
         }
       }
 
@@ -192,6 +235,15 @@ public class PlanTripActivity extends BaseActivity {
       });
     }
 
+    @ColorRes private int getProgressBarColor(int progress) {
+      return progress > 33 ? progress > 66 ? R.color.full : R.color.medium : R.color.quiet;
+    }
+
+    private void setProgressBarColor(ProgressBar progressBar, @ColorRes int color) {
+      Drawable progressDrawable = progressBar.getProgressDrawable().mutate();
+      progressDrawable.setColorFilter(getResources().getColor(color), PorterDuff.Mode.SRC_IN);
+      progressBar.setProgressDrawable(progressDrawable);
+    }
 
     @Override
     public int getItemCount() {
@@ -204,21 +256,33 @@ public class PlanTripActivity extends BaseActivity {
   }
 
   private class TripPlannerRowViewHolder extends RecyclerView.ViewHolder {
-    private MaterialCardView walkCard;
+    private TableRow walkRow;
     private TextView walkCount;
+    private TextView walkName;
     private TextView walkDuration;
+    private ProgressBar walkNoiseLevel;
+    private ProgressBar walkUsedCapcity;
 
-    private MaterialCardView busCard;
+    private TableRow busRow;
     private TextView busCount;
+    private TextView busName;
     private TextView busDuration;
+    private ProgressBar busNoiseLevel;
+    private ProgressBar busUsedCapcity;
 
-    private MaterialCardView trainCard;
+    private TableRow trainRow;
     private TextView trainCount;
+    private TextView trainName;
     private TextView trainDuration;
+    private ProgressBar trainNoiseLevel;
+    private ProgressBar trainUsedCapcity;
 
-    private MaterialCardView ferryCard;
+    private TableRow ferryRow;
     private TextView ferryCount;
+    private TextView ferryName;
     private TextView ferryDuration;
+    private ProgressBar ferryNoiseLevel;
+    private ProgressBar ferryUsedCapcity;
 
     private TextView leaveAt;
     private TextView duration;
@@ -227,24 +291,36 @@ public class PlanTripActivity extends BaseActivity {
 
     public TripPlannerRowViewHolder(@NonNull View itemView) {
       super(itemView);
-      walkCard = itemView.findViewById(R.id.walkCard);
+      walkRow = itemView.findViewById(R.id.walkRow);
       walkCount = itemView.findViewById(R.id.walkCount);
+      walkName = itemView.findViewById(R.id.walkName);
       walkDuration = itemView.findViewById(R.id.walkDuration);
+      walkNoiseLevel = itemView.findViewById(R.id.walkNoiseLevelProgressBar);
+      walkUsedCapcity = itemView.findViewById(R.id.walkUsedCapacityProgressBar);
 
-      busCard = itemView.findViewById(R.id.busCard);
+      busRow = itemView.findViewById(R.id.busRow);
       busCount = itemView.findViewById(R.id.busCount);
+      busName = itemView.findViewById(R.id.busName);
       busDuration = itemView.findViewById(R.id.busDuration);
+      busNoiseLevel = itemView.findViewById(R.id.busNoiseLevelProgressBar);
+      busUsedCapcity = itemView.findViewById(R.id.busUsedCapacityProgressBar);
 
-      trainCard = itemView.findViewById(R.id.trainCard);
+      trainRow = itemView.findViewById(R.id.trainRow);
       trainCount = itemView.findViewById(R.id.trainCount);
+      trainName = itemView.findViewById(R.id.trainName);
       trainDuration = itemView.findViewById(R.id.trainDuration);
+      trainNoiseLevel = itemView.findViewById(R.id.trainNoiseLevelProgressBar);
+      trainUsedCapcity = itemView.findViewById(R.id.trainUsedCapacityProgressBar);
 
-      ferryCard = itemView.findViewById(R.id.ferryCard);
+      ferryRow = itemView.findViewById(R.id.ferryRow);
       ferryCount = itemView.findViewById(R.id.ferryCount);
+      ferryName = itemView.findViewById(R.id.ferryName);
       ferryDuration = itemView.findViewById(R.id.ferryDuration);
+      ferryNoiseLevel = itemView.findViewById(R.id.ferryNoiseLevelProgressBar);
+      ferryUsedCapcity = itemView.findViewById(R.id.ferryUsedCapacityProgressBar);
 
       leaveAt = itemView.findViewById(R.id.leaveAt);
-      duration = itemView.findViewById(R.id.totalDuration);
+      duration = itemView.findViewById(R.id.duration);
       arriveAt = itemView.findViewById(R.id.arriveAt);
 
       clickDetector = itemView.findViewById(R.id.clickDetector);

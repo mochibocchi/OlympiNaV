@@ -12,4 +12,7 @@
     <color name="train_color">#FF4CAF50</color>
     <color name="ferry_color">#2196F3</color>
     <color name="walk_color">#000000</color>
+    <color name="quiet">#28A745</color>
+    <color name="medium">#FFC107</color>
+    <color name="full">#DC3545</color>
 </resources>

@@ -1,11 +1,11 @@
 package com.example.olympinav.models;
 
 public enum UsedCapacity {
-  FULL("Full"),
-  STANDING("Standing Room Only"),
-  HIGH("Nearly Full"),
+  LOW("Empty"),
   MEDIUM("Half Full"),
-  LOW("Empty");
+  HIGH("Nearly Full"),
+  STANDING("Standing Room Only"),
+  FULL("Full");
 
   private final String displayString;
 
@@ -15,5 +15,9 @@ public enum UsedCapacity {
 
   public String getDisplayString() {
     return displayString;
+  }
+
+  public int toProgressBarPercentage() {
+    return ordinal() + 1 / UsedCapacity.values().length * 100;
   }
 }

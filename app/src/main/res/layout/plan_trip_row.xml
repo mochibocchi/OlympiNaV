@@ -1,356 +1,383 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clickDetector"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card"
-        android:layout_width="0dp"
+    <TableLayout
+        android:id="@+id/methodTable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:id="@+id/walkRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/walkCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="2"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/walkingImage"
+                app:layout_constraintEnd_toStartOf="@id/walkingImage"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/walkingImage" />
+
+            <ImageView
+                android:id="@+id/walkingImage"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:src="@drawable/baseline_directions_walk_24"
+                app:layout_constraintEnd_toStartOf="@id/walkName"
+                app:layout_constraintStart_toEndOf="@id/walkCount"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/walkName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="walks"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/walkingImage"
+                app:layout_constraintEnd_toStartOf="@id/walkDuration"
+                app:layout_constraintStart_toEndOf="@id/walkingImage"
+                app:layout_constraintTop_toTopOf="@id/walkingImage" />
+
+            <TextView
+                android:id="@+id/walkDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="7 minutes"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/walkingImage"
+                app:layout_constraintEnd_toStartOf="@id/walkNoiseLevelProgressBar"
+                app:layout_constraintStart_toEndOf="@id/walkName"
+                app:layout_constraintTop_toTopOf="@id/walkingImage" />
+
+            <ProgressBar
+                android:id="@+id/walkNoiseLevelProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/walkingImage"
+                app:layout_constraintEnd_toStartOf="@id/walkUsedCapacityProgressBar"
+                app:layout_constraintStart_toEndOf="@id/walkDuration"
+                app:layout_constraintTop_toTopOf="@id/walkingImage" />
+
+            <ProgressBar
+                android:id="@+id/walkUsedCapacityProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/walkingImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/walkNoiseLevelProgressBar"
+                app:layout_constraintTop_toTopOf="@id/walkingImage" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/busRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/busCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="2"
+                android:textColor="@color/bus_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/busImage"
+                app:layout_constraintEnd_toStartOf="@id/busImage"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/busImage" />
+
+            <ImageView
+                android:id="@+id/busImage"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:src="@drawable/baseline_directions_bus_24"
+                app:layout_constraintEnd_toStartOf="@id/busName"
+                app:layout_constraintStart_toEndOf="@id/busCount"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/busName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="bus"
+                android:textColor="@color/bus_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/busImage"
+                app:layout_constraintEnd_toStartOf="@id/busDuration"
+                app:layout_constraintStart_toEndOf="@id/busImage"
+                app:layout_constraintTop_toTopOf="@id/busImage" />
+
+            <TextView
+                android:id="@+id/busDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="7 minutes"
+                android:textColor="@color/bus_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/busImage"
+                app:layout_constraintEnd_toStartOf="@id/busNoiseLevelProgressBar"
+                app:layout_constraintStart_toEndOf="@id/busName"
+                app:layout_constraintTop_toTopOf="@id/busImage" />
+
+            <ProgressBar
+                android:id="@+id/busNoiseLevelProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/busImage"
+                app:layout_constraintEnd_toStartOf="@id/busUsedCapacityProgressBar"
+                app:layout_constraintStart_toEndOf="@id/busDuration"
+                app:layout_constraintTop_toTopOf="@id/busImage" />
+
+            <ProgressBar
+                android:id="@+id/busUsedCapacityProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/busImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/busNoiseLevelProgressBar"
+                app:layout_constraintTop_toTopOf="@id/busImage" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trainRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/trainCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="2"
+                android:textColor="@color/train_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/trainImage"
+                app:layout_constraintEnd_toStartOf="@id/trainImage"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/trainImage" />
+
+            <ImageView
+                android:id="@+id/trainImage"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:src="@drawable/baseline_train_24"
+                app:layout_constraintEnd_toStartOf="@id/trainName"
+                app:layout_constraintStart_toEndOf="@id/trainCount"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/trainName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="train"
+                android:textColor="@color/train_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/trainImage"
+                app:layout_constraintEnd_toStartOf="@id/trainDuration"
+                app:layout_constraintStart_toEndOf="@id/trainImage"
+                app:layout_constraintTop_toTopOf="@id/trainImage" />
+
+            <TextView
+                android:id="@+id/trainDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="7 minutes"
+                android:textColor="@color/train_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/trainImage"
+                app:layout_constraintEnd_toStartOf="@id/trainNoiseLevelProgressBar"
+                app:layout_constraintStart_toEndOf="@id/trainName"
+                app:layout_constraintTop_toTopOf="@id/trainImage" />
+
+            <ProgressBar
+                android:id="@+id/trainNoiseLevelProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/trainImage"
+                app:layout_constraintEnd_toStartOf="@id/trainUsedCapacityProgressBar"
+                app:layout_constraintStart_toEndOf="@id/trainDuration"
+                app:layout_constraintTop_toTopOf="@id/trainImage" />
+
+            <ProgressBar
+                android:id="@+id/trainUsedCapacityProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/trainImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/trainNoiseLevelProgressBar"
+                app:layout_constraintTop_toTopOf="@id/trainImage" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/ferryRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/ferryCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="2"
+                android:textColor="@color/ferry_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/ferryImage"
+                app:layout_constraintEnd_toStartOf="@id/ferryImage"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ferryImage" />
+
+            <ImageView
+                android:id="@+id/ferryImage"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:src="@drawable/baseline_ferry_24"
+                app:layout_constraintEnd_toStartOf="@id/ferryName"
+                app:layout_constraintStart_toEndOf="@id/ferryCount"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/ferryName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="ferry"
+                android:textColor="@color/ferry_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/ferryImage"
+                app:layout_constraintEnd_toStartOf="@id/ferryDuration"
+                app:layout_constraintStart_toEndOf="@id/ferryImage"
+                app:layout_constraintTop_toTopOf="@id/ferryImage" />
+
+            <TextView
+                android:id="@+id/ferryDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="7 minutes"
+                android:textColor="@color/ferry_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/ferryImage"
+                app:layout_constraintEnd_toStartOf="@id/ferryNoiseLevelProgressBar"
+                app:layout_constraintStart_toEndOf="@id/ferryName"
+                app:layout_constraintTop_toTopOf="@id/ferryImage" />
+
+            <ProgressBar
+                android:id="@+id/ferryNoiseLevelProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/ferryImage"
+                app:layout_constraintEnd_toStartOf="@id/ferryUsedCapacityProgressBar"
+                app:layout_constraintStart_toEndOf="@id/ferryDuration"
+                app:layout_constraintTop_toTopOf="@id/ferryImage" />
+
+            <ProgressBar
+                android:id="@+id/ferryUsedCapacityProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/ferryImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ferryNoiseLevelProgressBar"
+                app:layout_constraintTop_toTopOf="@id/ferryImage" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:stretchColumns="*"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/methodTable">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/walkCard"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/leaveAt"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="0dp"
-                app:layout_constraintEnd_toStartOf="@id/busCard"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/walkingImage"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/baseline_directions_walk_24"
-                        app:layout_constraintBottom_toTopOf="@id/walkCount"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/walkCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2 walks"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@id/walkDuration"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/walkingImage" />
-
-                    <TextView
-                        android:id="@+id/walkDuration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="7 minutes"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/walkCount" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/busCard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="0dp"
-                app:layout_constraintEnd_toStartOf="@id/trainCard"
-                app:layout_constraintStart_toEndOf="@id/walkCard"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/busImage"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/baseline_directions_bus_24"
-                        app:layout_constraintBottom_toTopOf="@id/busCount"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/busCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1 bus"
-                        android:textColor="@color/bus_color"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@id/busDuration"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/busImage" />
-
-                    <TextView
-                        android:id="@+id/busDuration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="13 minutes"
-                        android:textColor="@color/bus_color"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/busCount" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/trainCard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="0dp"
-                app:layout_constraintEnd_toStartOf="@id/ferryCard"
-                app:layout_constraintStart_toEndOf="@id/busCard"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/trainImage"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/baseline_train_24"
-                        app:layout_constraintBottom_toTopOf="@id/trainCount"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/trainCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1 bus"
-                        android:textColor="@color/train_color"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@id/trainDuration"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/trainImage" />
-
-                    <TextView
-                        android:id="@+id/trainDuration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="13 minutes"
-                        android:textColor="@color/train_color"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/trainCount" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/ferryCard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/trainCard"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/ferryImage"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/baseline_ferry_24"
-                        app:layout_constraintBottom_toTopOf="@id/ferryCount"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/ferryCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1 bus"
-                        android:textColor="@color/ferry_color"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@id/ferryDuration"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ferryImage" />
-
-                    <TextView
-                        android:id="@+id/ferryDuration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="13 minutes"
-                        android:textColor="@color/ferry_color"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ferryCount" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/durationOuterCard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="0dp"
+                android:layout_gravity="center"
+                android:text="Leave At\n11:56am"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/walkCard">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Duration\n20 minutes"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/leaveAtCard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="0dp"
-                        app:layout_constraintEnd_toStartOf="@id/durationCard"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:id="@+id/arriveAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Arrive At\n12:16am"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:id="@+id/leaveAtHeader"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Leave At"
-                                android:textColor="@color/black"
-                                android:textSize="20sp"
-                                app:layout_constraintBottom_toTopOf="@id/leaveAt"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/leaveAt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="11:56am"
-                                android:textColor="@color/black"
-                                android:textSize="18sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/leaveAtHeader" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/durationCard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="0dp"
-                        app:layout_constraintEnd_toStartOf="@id/arriveAtCard"
-                        app:layout_constraintStart_toEndOf="@id/leaveAtCard"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:id="@+id/durationHeader"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Duration"
-                                android:textColor="@color/black"
-                                android:textSize="20sp"
-                                app:layout_constraintBottom_toTopOf="@id/totalDuration"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/totalDuration"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="20 minutes"
-                                android:textColor="@color/black"
-                                android:textSize="18sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/durationHeader" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/arriveAtCard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="0dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/durationCard"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:id="@+id/arriveAtHeader"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Arrive At"
-                                android:textColor="@color/black"
-                                android:textSize="20sp"
-                                app:layout_constraintBottom_toTopOf="@id/arriveAt"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/arriveAt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="12:16am"
-                                android:textColor="@color/black"
-                                android:textSize="18sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/arriveAtHeader" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </com.google.android.material.card.MaterialCardView>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+        </TableRow>
+    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
