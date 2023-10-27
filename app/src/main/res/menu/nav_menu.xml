@@ -18,7 +18,7 @@
         <item
             android:id="@+id/nav_service_updates"
             android:icon="@drawable/baseline_announcement_24"
-            android:title="Service updates"/>
+            android:title="Service Updates"/>
         <item
             android:id="@+id/nav_contact"
             android:icon="@drawable/baseline_phone_24"
@@ -40,7 +40,10 @@
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/baseline_exit_to_app_24"
                 android:title="Logout"/>
-
+            <item
+                android:id="@+id/nav_resetusersettings"
+                android:icon="@drawable/baseline_settings_backup_restore_24"
+                android:title="Reset User Threshold Settings"/>
         </menu>
 
     </item>

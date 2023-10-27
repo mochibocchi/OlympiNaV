@@ -23,9 +23,6 @@
             android:name=".EventDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".SavedTripsActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/noiseLevelFeedbackHeading3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Just right"
+            app:layout_constraintEnd_toEndOf="@+id/noiseLevelHappyFace"
+            app:layout_constraintStart_toStartOf="@+id/noiseLevelHappyFace"
+            app:layout_constraintTop_toBottomOf="@+id/noiseLevelHappyFace" />
+
+        <TextView
+            android:id="@+id/FeedbackHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/main_heading_padding_top"
+            android:text="Feedback"
+            android:textColor="@color/main_colour"
+            android:textSize="@dimen/main_heading_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/NoiseLevelFeedbackHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How was the noise level?"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/FeedbackHeading" />
+
+        <TextView
+            android:id="@+id/noiseLevelFeedbackHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Too loud"
+            app:layout_constraintEnd_toEndOf="@+id/noiseLevelSadFace"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/noiseLevelSadFace"
+            app:layout_constraintTop_toBottomOf="@+id/noiseLevelSadFace" />
+
+        <TextView
+            android:id="@+id/noiseLevelFeedbackHeading2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Slightly loud"
+            android:paddingBottom="25dp"
+            app:layout_constraintEnd_toEndOf="@+id/noiseLevelNeutralFace"
+            app:layout_constraintStart_toStartOf="@+id/noiseLevelNeutralFace"
+            app:layout_constraintTop_toBottomOf="@+id/noiseLevelNeutralFace" />
+
+        <ImageButton
+            android:id="@+id/noiseLevelSadFace"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:layout_marginStart="50dp"
+            android:src="@drawable/baseline_sentiment_very_dissatisfied_24"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/noiseLevelNeutralFace" />
+
+        <ImageButton
+            android:id="@+id/noiseLevelNeutralFace"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/main_heading_padding_top"
+            android:layout_toLeftOf="@id/noiseLevelSadFace"
+            android:clickable="true"
+            android:src="@drawable/baseline_sentiment_neutral_24"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toStartOf="@+id/noiseLevelHappyFace"
+            app:layout_constraintStart_toEndOf="@+id/noiseLevelSadFace"
+            app:layout_constraintTop_toBottomOf="@+id/NoiseLevelFeedbackHeading" />
+
+        <ImageButton
+            android:id="@+id/noiseLevelHappyFace"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_toRightOf="@id/noiseLevelSadFace"
+            android:clickable="true"
+            android:src="@drawable/baseline_sentiment_satisfied_alt_24"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:layout_marginEnd="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/noiseLevelNeutralFace" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

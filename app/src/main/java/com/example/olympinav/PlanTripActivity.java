@@ -5,7 +5,9 @@ import static com.example.olympinav.EventDetailsActivity.EXTRA_START_LOCATION;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -220,12 +222,18 @@ public class PlanTripActivity extends BaseActivity {
         int noiseLevel = (int) Math.round(averageNoiseLevelByType.getOrDefault(countEntry.getKey(), 0d));
         int usedCapacity = (int) Math.round(averageUsedCapacityByType.getOrDefault(countEntry.getKey(), 0d));
 
+        // Retrieve the UserNoiseBaseLevel from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("UserDataPref", Context.MODE_PRIVATE);
+        int UserNoiseBaseLevel = sharedPreferences.getInt("UserNoiseBaseLevel", 0);
+        int GlobalNoiseBaseLevelThreshold = 10;
+        int GlobalPrioritiseSeatsThreshold = 25;
+
         if (isSensitiveToNoiseActive) {
-          noiseLevel = Math.max(0, noiseLevel + 25); // Change the value here for the baseline of how much to adjust the noise level
+          noiseLevel = Math.max(0, noiseLevel + GlobalNoiseBaseLevelThreshold + UserNoiseBaseLevel); // Adjust the noise level value here according to user's personalised noise threshold
         }
 
         if (isPrioritiseSeatsActive) {
-          usedCapacity = Math.max(0, usedCapacity + 25); // Change the value here for the baseline of how much to adjust the capacity level
+          usedCapacity = Math.max(0, usedCapacity + GlobalPrioritiseSeatsThreshold); // Change the value here for the baseline of how much to adjust the capacity level
         }
 
         @ColorRes int noiseLevelColor = getProgressBarColor(noiseLevel);

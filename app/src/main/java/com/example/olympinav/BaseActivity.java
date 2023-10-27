@@ -1,6 +1,8 @@
 package com.example.olympinav;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -62,6 +64,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else if (itemId == R.id.nav_language) {
             Intent intent = new Intent(this, LanguageActivity.class);
             startActivity(intent);
+        } else if (itemId == R.id.nav_resetusersettings) {
+            resetUserNoiseBaseLevel();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -75,5 +79,15 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void resetUserNoiseBaseLevel() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserDataPref", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("UserNoiseBaseLevel", 0);
+        editor.apply();
+
+        Toast.makeText(this, "Resetting user's personalised settings threshold", Toast.LENGTH_SHORT).show();
     }
 }
