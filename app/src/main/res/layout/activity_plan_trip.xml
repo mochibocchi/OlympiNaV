@@ -13,6 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/NoiseLevelHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:text="Noise"
+            app:layout_constraintEnd_toStartOf="@+id/CapacityLevelHeading"
+            app:layout_constraintTop_toBottomOf="@+id/searchButton" />
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -84,23 +93,21 @@
             android:id="@+id/searchButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:text="Search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tripTypeSpinner" />
+            app:layout_constraintTop_toBottomOf="@+id/PrioritiseSeatsToggle" />
 
         <View
             android:id="@+id/divider"
             style="@style/Divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/searchButton" />
+            app:layout_constraintTop_toTopOf="@+id/recyclerView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -109,9 +116,34 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider">
+            app:layout_constraintTop_toBottomOf="@+id/CapacityLevelHeading">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/CapacityLevelHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Capacity"
+            android:layout_marginRight="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchButton" />
+
+        <Switch
+            android:id="@+id/SensitiveToNoiseToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sensitive to Noise"
+            app:layout_constraintEnd_toEndOf="@+id/tripDateTimeET"
+            app:layout_constraintTop_toBottomOf="@+id/tripDateTimeET" />
+
+        <Switch
+            android:id="@+id/PrioritiseSeatsToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prioritise Seats"
+            app:layout_constraintEnd_toEndOf="@+id/tripDateTimeET"
+            app:layout_constraintTop_toBottomOf="@+id/SensitiveToNoiseToggle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -121,5 +153,5 @@
         app:headerLayout="@layout/nav_header"
         app:itemIconTint="@color/main_colour"
         app:itemTextColor="@color/main_colour"
-        app:menu="@menu/nav_menu" />
+        app:menu="@menu/nav_menu"/>
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,8 +68,31 @@ public class PlanTripActivity extends BaseActivity {
     setupActivity();
     setupRecyclerView();
     setupTripDetailsFields();
+    setupNoiseSensitivityToggle(); // If user toggles Sensitive to Noise on, it will add more to the noise level.
+    setupPrioritiseSeatsToggle(); // If user toggles Prioritise Seats on, it will add more to the capacity level.
   }
-
+  private void setupPrioritiseSeatsToggle() {
+    Switch prioritiseSeatsToggle = findViewById(R.id.PrioritiseSeatsToggle);
+    prioritiseSeatsToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+    updateTripPrioritiseSeatsState(isChecked);
+    });
+  }
+  private void updateTripPrioritiseSeatsState(boolean isChecked) {
+    adapter.setPrioritiseSeatsActive(isChecked);
+    adapter.setTrips(trips);
+    adapter.notifyDataSetChanged();
+  }
+  private void setupNoiseSensitivityToggle() {
+    Switch sensitiveToNoiseToggle = findViewById(R.id.SensitiveToNoiseToggle);
+    sensitiveToNoiseToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+    updateTripSensitivityState(isChecked);
+    });
+  }
+  private void updateTripSensitivityState(boolean isChecked) {
+    adapter.setSensitiveToNoiseActive(isChecked);
+    adapter.setTrips(trips);
+    adapter.notifyDataSetChanged();
+  }
   private void setupTripDetailsFields() {
     startLocationET = findViewById(R.id.startLocationET);
     endLocationET = findViewById(R.id.endLocationET);
@@ -145,9 +169,20 @@ public class PlanTripActivity extends BaseActivity {
 
   class TripPlannerRecyclerViewAdapter extends RecyclerView.Adapter<TripPlannerRowViewHolder> {
     private List<Trip> trips;
+    private boolean isSensitiveToNoiseActive;
+    private boolean isPrioritiseSeatsActive;
 
     public TripPlannerRecyclerViewAdapter(List<Trip> trips) {
       this.trips = trips;
+      this.isSensitiveToNoiseActive = false;
+      this.isPrioritiseSeatsActive = false;
+    }
+    public void setSensitiveToNoiseActive(boolean active) {
+      isSensitiveToNoiseActive = active;
+    }
+
+    public void setPrioritiseSeatsActive(boolean active) {
+      isPrioritiseSeatsActive = active;
     }
 
     @NonNull
@@ -181,9 +216,19 @@ public class PlanTripActivity extends BaseActivity {
         String count = String.valueOf(countEntry.getValue());
         String name = Utils.calculateWordForQuantity(countEntry.getKey().toString().toLowerCase(), countEntry.getValue());
         String duration = durations.getOrDefault(countEntry.getKey(), 0) + " minutes";
+
         int noiseLevel = (int) Math.round(averageNoiseLevelByType.getOrDefault(countEntry.getKey(), 0d));
-        @ColorRes int noiseLevelColor = getProgressBarColor(noiseLevel);
         int usedCapacity = (int) Math.round(averageUsedCapacityByType.getOrDefault(countEntry.getKey(), 0d));
+
+        if (isSensitiveToNoiseActive) {
+          noiseLevel = Math.max(0, noiseLevel + 25); // Change the value here for the baseline of how much to adjust the noise level
+        }
+
+        if (isPrioritiseSeatsActive) {
+          usedCapacity = Math.max(0, usedCapacity + 25); // Change the value here for the baseline of how much to adjust the capacity level
+        }
+
+        @ColorRes int noiseLevelColor = getProgressBarColor(noiseLevel);
         @ColorRes int usedCapcityColor = getProgressBarColor(usedCapacity);
 
         if (countEntry.getKey() == TravelType.WALK) {
