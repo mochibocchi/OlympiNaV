@@ -16,7 +16,7 @@ public enum NoiseLevel {
   }
 
   public int toProgressBarPercentage() {
-    return ordinal() + 1 / UsedCapacity.values().length * 100;
+    return (int) ((ordinal() + 1) / (double) NoiseLevel.values().length * 100);
   }
 
 }

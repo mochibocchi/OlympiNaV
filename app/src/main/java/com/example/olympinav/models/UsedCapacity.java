@@ -18,6 +18,6 @@ public enum UsedCapacity {
   }
 
   public int toProgressBarPercentage() {
-    return ordinal() + 1 / UsedCapacity.values().length * 100;
+    return (int) ((ordinal() + 1) / (double) UsedCapacity.values().length * 100);
   }
 }

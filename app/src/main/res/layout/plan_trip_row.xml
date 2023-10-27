@@ -1,383 +1,394 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/clickDetector"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:elevation="8dp"
+    app:cardCornerRadius="12dp">
 
-    <TableLayout
-        android:id="@+id/methodTable"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clickDetector"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="*">
+        android:layout_height="wrap_content">
 
-        <TableRow
-            android:id="@+id/walkRow"
+        <TableLayout
+            android:id="@+id/methodTable"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:stretchColumns="*">
 
-            <TextView
-                android:id="@+id/walkCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="2"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/walkingImage"
-                app:layout_constraintEnd_toStartOf="@id/walkingImage"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/walkingImage" />
+            <TableRow
+                android:id="@+id/walkRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/walkingImage"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:src="@drawable/baseline_directions_walk_24"
-                app:layout_constraintEnd_toStartOf="@id/walkName"
-                app:layout_constraintStart_toEndOf="@id/walkCount"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/walkCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="2"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/walkingImage"
+                    app:layout_constraintEnd_toStartOf="@id/walkingImage"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/walkingImage" />
 
-            <TextView
-                android:id="@+id/walkName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="walks"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/walkingImage"
-                app:layout_constraintEnd_toStartOf="@id/walkDuration"
-                app:layout_constraintStart_toEndOf="@id/walkingImage"
-                app:layout_constraintTop_toTopOf="@id/walkingImage" />
+                <ImageView
+                    android:id="@+id/walkingImage"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/baseline_directions_walk_24"
+                    app:layout_constraintEnd_toStartOf="@id/walkName"
+                    app:layout_constraintStart_toEndOf="@id/walkCount"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/walkDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="7 minutes"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/walkingImage"
-                app:layout_constraintEnd_toStartOf="@id/walkNoiseLevelProgressBar"
-                app:layout_constraintStart_toEndOf="@id/walkName"
-                app:layout_constraintTop_toTopOf="@id/walkingImage" />
+                <TextView
+                    android:id="@+id/walkName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="walks"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/walkingImage"
+                    app:layout_constraintEnd_toStartOf="@id/walkDuration"
+                    app:layout_constraintStart_toEndOf="@id/walkingImage"
+                    app:layout_constraintTop_toTopOf="@id/walkingImage" />
 
-            <ProgressBar
-                android:id="@+id/walkNoiseLevelProgressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/walkingImage"
-                app:layout_constraintEnd_toStartOf="@id/walkUsedCapacityProgressBar"
-                app:layout_constraintStart_toEndOf="@id/walkDuration"
-                app:layout_constraintTop_toTopOf="@id/walkingImage" />
+                <TextView
+                    android:id="@+id/walkDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="7 minutes"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/walkingImage"
+                    app:layout_constraintEnd_toStartOf="@id/walkNoiseLevelProgressBar"
+                    app:layout_constraintStart_toEndOf="@id/walkName"
+                    app:layout_constraintTop_toTopOf="@id/walkingImage" />
 
-            <ProgressBar
-                android:id="@+id/walkUsedCapacityProgressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/walkingImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/walkNoiseLevelProgressBar"
-                app:layout_constraintTop_toTopOf="@id/walkingImage" />
+                <ProgressBar
+                    android:id="@+id/walkNoiseLevelProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@id/walkingImage"
+                    app:layout_constraintEnd_toStartOf="@id/walkUsedCapacityProgressBar"
+                    app:layout_constraintStart_toEndOf="@id/walkDuration"
+                    app:layout_constraintTop_toTopOf="@id/walkingImage" />
 
-        </TableRow>
+                <ProgressBar
+                    android:id="@+id/walkUsedCapacityProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@id/walkingImage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/walkNoiseLevelProgressBar"
+                    app:layout_constraintTop_toTopOf="@id/walkingImage" />
 
-        <TableRow
-            android:id="@+id/busRow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            </TableRow>
 
-            <TextView
-                android:id="@+id/busCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="2"
-                android:textColor="@color/bus_color"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/busImage"
-                app:layout_constraintEnd_toStartOf="@id/busImage"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/busImage" />
+            <TableRow
+                android:id="@+id/busRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/busImage"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:src="@drawable/baseline_directions_bus_24"
-                app:layout_constraintEnd_toStartOf="@id/busName"
-                app:layout_constraintStart_toEndOf="@id/busCount"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/busCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="2"
+                    android:textColor="@color/bus_color"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/busImage"
+                    app:layout_constraintEnd_toStartOf="@id/busImage"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/busImage" />
 
-            <TextView
-                android:id="@+id/busName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="bus"
-                android:textColor="@color/bus_color"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/busImage"
-                app:layout_constraintEnd_toStartOf="@id/busDuration"
-                app:layout_constraintStart_toEndOf="@id/busImage"
-                app:layout_constraintTop_toTopOf="@id/busImage" />
+                <ImageView
+                    android:id="@+id/busImage"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/baseline_directions_bus_24"
+                    app:layout_constraintEnd_toStartOf="@id/busName"
+                    app:layout_constraintStart_toEndOf="@id/busCount"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/busDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="7 minutes"
-                android:textColor="@color/bus_color"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/busImage"
-                app:layout_constraintEnd_toStartOf="@id/busNoiseLevelProgressBar"
-                app:layout_constraintStart_toEndOf="@id/busName"
-                app:layout_constraintTop_toTopOf="@id/busImage" />
+                <TextView
+                    android:id="@+id/busName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="bus"
+                    android:textColor="@color/bus_color"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/busImage"
+                    app:layout_constraintEnd_toStartOf="@id/busDuration"
+                    app:layout_constraintStart_toEndOf="@id/busImage"
+                    app:layout_constraintTop_toTopOf="@id/busImage" />
 
-            <ProgressBar
-                android:id="@+id/busNoiseLevelProgressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/busImage"
-                app:layout_constraintEnd_toStartOf="@id/busUsedCapacityProgressBar"
-                app:layout_constraintStart_toEndOf="@id/busDuration"
-                app:layout_constraintTop_toTopOf="@id/busImage" />
+                <TextView
+                    android:id="@+id/busDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="7 minutes"
+                    android:textColor="@color/bus_color"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/busImage"
+                    app:layout_constraintEnd_toStartOf="@id/busNoiseLevelProgressBar"
+                    app:layout_constraintStart_toEndOf="@id/busName"
+                    app:layout_constraintTop_toTopOf="@id/busImage" />
 
-            <ProgressBar
-                android:id="@+id/busUsedCapacityProgressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/busImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/busNoiseLevelProgressBar"
-                app:layout_constraintTop_toTopOf="@id/busImage" />
+                <ProgressBar
+                    android:id="@+id/busNoiseLevelProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@id/busImage"
+                    app:layout_constraintEnd_toStartOf="@id/busUsedCapacityProgressBar"
+                    app:layout_constraintStart_toEndOf="@id/busDuration"
+                    app:layout_constraintTop_toTopOf="@id/busImage" />
 
-        </TableRow>
+                <ProgressBar
+                    android:id="@+id/busUsedCapacityProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@id/busImage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/busNoiseLevelProgressBar"
+                    app:layout_constraintTop_toTopOf="@id/busImage" />
 
-        <TableRow
-            android:id="@+id/trainRow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            </TableRow>
 
-            <TextView
-                android:id="@+id/trainCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="2"
-                android:textColor="@color/train_color"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/trainImage"
-                app:layout_constraintEnd_toStartOf="@id/trainImage"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/trainImage" />
+            <TableRow
+                android:id="@+id/trainRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/trainImage"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:src="@drawable/baseline_train_24"
-                app:layout_constraintEnd_toStartOf="@id/trainName"
-                app:layout_constraintStart_toEndOf="@id/trainCount"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/trainCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="2"
+                    android:textColor="@color/train_color"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/trainImage"
+                    app:layout_constraintEnd_toStartOf="@id/trainImage"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/trainImage" />
 
-            <TextView
-                android:id="@+id/trainName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="train"
-                android:textColor="@color/train_color"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/trainImage"
-                app:layout_constraintEnd_toStartOf="@id/trainDuration"
-                app:layout_constraintStart_toEndOf="@id/trainImage"
-                app:layout_constraintTop_toTopOf="@id/trainImage" />
+                <ImageView
+                    android:id="@+id/trainImage"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/baseline_train_24"
+                    app:layout_constraintEnd_toStartOf="@id/trainName"
+                    app:layout_constraintStart_toEndOf="@id/trainCount"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/trainDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="7 minutes"
-                android:textColor="@color/train_color"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/trainImage"
-                app:layout_constraintEnd_toStartOf="@id/trainNoiseLevelProgressBar"
-                app:layout_constraintStart_toEndOf="@id/trainName"
-                app:layout_constraintTop_toTopOf="@id/trainImage" />
+                <TextView
+                    android:id="@+id/trainName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="train"
+                    android:textColor="@color/train_color"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/trainImage"
+                    app:layout_constraintEnd_toStartOf="@id/trainDuration"
+                    app:layout_constraintStart_toEndOf="@id/trainImage"
+                    app:layout_constraintTop_toTopOf="@id/trainImage" />
 
-            <ProgressBar
-                android:id="@+id/trainNoiseLevelProgressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/trainImage"
-                app:layout_constraintEnd_toStartOf="@id/trainUsedCapacityProgressBar"
-                app:layout_constraintStart_toEndOf="@id/trainDuration"
-                app:layout_constraintTop_toTopOf="@id/trainImage" />
+                <TextView
+                    android:id="@+id/trainDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="7 minutes"
+                    android:textColor="@color/train_color"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/trainImage"
+                    app:layout_constraintEnd_toStartOf="@id/trainNoiseLevelProgressBar"
+                    app:layout_constraintStart_toEndOf="@id/trainName"
+                    app:layout_constraintTop_toTopOf="@id/trainImage" />
 
-            <ProgressBar
-                android:id="@+id/trainUsedCapacityProgressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/trainImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/trainNoiseLevelProgressBar"
-                app:layout_constraintTop_toTopOf="@id/trainImage" />
-        </TableRow>
+                <ProgressBar
+                    android:id="@+id/trainNoiseLevelProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@id/trainImage"
+                    app:layout_constraintEnd_toStartOf="@id/trainUsedCapacityProgressBar"
+                    app:layout_constraintStart_toEndOf="@id/trainDuration"
+                    app:layout_constraintTop_toTopOf="@id/trainImage" />
 
-        <TableRow
-            android:id="@+id/ferryRow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <ProgressBar
+                    android:id="@+id/trainUsedCapacityProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@id/trainImage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/trainNoiseLevelProgressBar"
+                    app:layout_constraintTop_toTopOf="@id/trainImage" />
+            </TableRow>
 
-            <TextView
-                android:id="@+id/ferryCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="2"
-                android:textColor="@color/ferry_color"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/ferryImage"
-                app:layout_constraintEnd_toStartOf="@id/ferryImage"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/ferryImage" />
+            <TableRow
+                android:id="@+id/ferryRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/ferryImage"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:src="@drawable/baseline_ferry_24"
-                app:layout_constraintEnd_toStartOf="@id/ferryName"
-                app:layout_constraintStart_toEndOf="@id/ferryCount"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/ferryCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="2"
+                    android:textColor="@color/ferry_color"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/ferryImage"
+                    app:layout_constraintEnd_toStartOf="@id/ferryImage"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ferryImage" />
 
-            <TextView
-                android:id="@+id/ferryName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="ferry"
-                android:textColor="@color/ferry_color"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/ferryImage"
-                app:layout_constraintEnd_toStartOf="@id/ferryDuration"
-                app:layout_constraintStart_toEndOf="@id/ferryImage"
-                app:layout_constraintTop_toTopOf="@id/ferryImage" />
+                <ImageView
+                    android:id="@+id/ferryImage"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/baseline_ferry_24"
+                    app:layout_constraintEnd_toStartOf="@id/ferryName"
+                    app:layout_constraintStart_toEndOf="@id/ferryCount"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/ferryDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="7 minutes"
-                android:textColor="@color/ferry_color"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/ferryImage"
-                app:layout_constraintEnd_toStartOf="@id/ferryNoiseLevelProgressBar"
-                app:layout_constraintStart_toEndOf="@id/ferryName"
-                app:layout_constraintTop_toTopOf="@id/ferryImage" />
+                <TextView
+                    android:id="@+id/ferryName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="ferry"
+                    android:textColor="@color/ferry_color"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/ferryImage"
+                    app:layout_constraintEnd_toStartOf="@id/ferryDuration"
+                    app:layout_constraintStart_toEndOf="@id/ferryImage"
+                    app:layout_constraintTop_toTopOf="@id/ferryImage" />
 
-            <ProgressBar
-                android:id="@+id/ferryNoiseLevelProgressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/ferryImage"
-                app:layout_constraintEnd_toStartOf="@id/ferryUsedCapacityProgressBar"
-                app:layout_constraintStart_toEndOf="@id/ferryDuration"
-                app:layout_constraintTop_toTopOf="@id/ferryImage" />
+                <TextView
+                    android:id="@+id/ferryDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="7 minutes"
+                    android:textColor="@color/ferry_color"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/ferryImage"
+                    app:layout_constraintEnd_toStartOf="@id/ferryNoiseLevelProgressBar"
+                    app:layout_constraintStart_toEndOf="@id/ferryName"
+                    app:layout_constraintTop_toTopOf="@id/ferryImage" />
 
-            <ProgressBar
-                android:id="@+id/ferryUsedCapacityProgressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/ferryImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ferryNoiseLevelProgressBar"
-                app:layout_constraintTop_toTopOf="@id/ferryImage" />
-        </TableRow>
-    </TableLayout>
+                <ProgressBar
+                    android:id="@+id/ferryNoiseLevelProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@id/ferryImage"
+                    app:layout_constraintEnd_toStartOf="@id/ferryUsedCapacityProgressBar"
+                    app:layout_constraintStart_toEndOf="@id/ferryDuration"
+                    app:layout_constraintTop_toTopOf="@id/ferryImage" />
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:stretchColumns="*"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/methodTable">
+                <ProgressBar
+                    android:id="@+id/ferryUsedCapacityProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@id/ferryImage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ferryNoiseLevelProgressBar"
+                    app:layout_constraintTop_toTopOf="@id/ferryImage" />
+            </TableRow>
+        </TableLayout>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/methodTable">
 
-            <TextView
-                android:id="@+id/leaveAt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Leave At\n11:56am"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/duration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Duration\n20 minutes"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/leaveAt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Leave At\n11:56am"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/arriveAt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Arrive At\n12:16am"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Duration\n20 minutes"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        </TableRow>
-    </TableLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/arriveAt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Arrive At\n12:16am"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </TableRow>
+        </TableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
+

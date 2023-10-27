@@ -224,9 +224,9 @@ public class PlanTripActivity extends BaseActivity {
       LocalDateTime tripStartTime = trip.getTravelMethods().get(0).getDepartAt();
       LocalDateTime tripEndTime = trip.getTravelMethods().get(trip.getTravelMethods().size() - 1).getArriveAt();
       int tripDuration = (int) ChronoUnit.MINUTES.between(tripStartTime, tripEndTime);
-      v.leaveAt.setText(tripStartTime.format(DateTimeFormatter.ofPattern("hh:mma")));
-      v.arriveAt.setText(tripEndTime.format(DateTimeFormatter.ofPattern("hh:mma")));
-      v.duration.setText(tripDuration + " minutes");
+      v.leaveAt.setText("Leave At\n" + tripStartTime.format(DateTimeFormatter.ofPattern("hh:mma")));
+      v.arriveAt.setText("Arrive At\n" + tripEndTime.format(DateTimeFormatter.ofPattern("hh:mma")));
+      v.duration.setText("Duration\n" + tripDuration + " minutes");
 
       v.clickDetector.setOnClickListener(view -> {
         Intent i = new Intent(PlanTripActivity.this, ViewTripActivity.class);
@@ -235,7 +235,8 @@ public class PlanTripActivity extends BaseActivity {
       });
     }
 
-    @ColorRes private int getProgressBarColor(int progress) {
+    @ColorRes
+    private int getProgressBarColor(int progress) {
       return progress > 33 ? progress > 66 ? R.color.full : R.color.medium : R.color.quiet;
     }
 
