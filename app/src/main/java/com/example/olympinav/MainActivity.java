@@ -37,17 +37,11 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupActivity();
-
-        FloatingActionButton fabPlanTrip = findViewById(R.id.fabPlanTrip);
-        fabPlanTrip.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PlanTripActivity.class)));
-
-        // Load previously user-inputted tickets from a previous session
-        SharedPreferences preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        enteredTicketNumbers = preferences.getStringSet("enteredTicketNumbers", new HashSet<>());
-
-        // Initialise the recycler view for all our event items
-        recyclerView = findViewById(R.id.recyclerView);
-        fabAddNewTicket = findViewById(R.id.fabAddTicket);
+        SetUpViews();
+        InitialiseRecyclerView();
+        displayPreviouslyEnteredTickets();
+    }
+    private void InitialiseRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         initialiseEventList();
         eventList = new ArrayList<>();
@@ -61,18 +55,17 @@ public class MainActivity extends BaseActivity {
             intent.putExtra("eventId", event.id);
             startActivity(intent);
         });
-
+    }
+    private void SetUpViews() {
+        FloatingActionButton fabPlanTrip = findViewById(R.id.fabPlanTrip);
+        fabPlanTrip.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PlanTripActivity.class)));
+        recyclerView = findViewById(R.id.recyclerView);
+        fabAddNewTicket = findViewById(R.id.fabAddTicket);
         // Click on the + button to add new ticket
         fabAddNewTicket.setOnClickListener(view -> {
             AddTicketNumber();
         });
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        displayPreviouslyEnteredTickets();
-    }
-
     private void AddTicketNumber() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_get_ticket_number, null);
@@ -83,14 +76,11 @@ public class MainActivity extends BaseActivity {
         builder.setPositiveButton("Confirm", (dialog, which) -> {
             String ticketNumber = editTextTicketNumber.getText().toString();
             // Check if user is entering in a duplicate ticket ID
-            if (enteredTicketNumbers.contains(ticketNumber))
-            {
+            if (enteredTicketNumbers.contains(ticketNumber)) {
                 Toast.makeText(this, "Ticket already entered", Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 enteredTicketNumbers.add(ticketNumber);
-
-                // Fetch and display the event associated with the entered ticket number
+                saveEnteredTicketNumbers();
                 DisplayEvent(ticketNumber);
             }
         });
@@ -99,6 +89,7 @@ public class MainActivity extends BaseActivity {
         builder.setNegativeButton("Cancel", null);
         dialog.show();
     }
+
 
     private void DisplayEvent(String ticketNumber) {
         EventDao eventDao = MyApp.getAppDatabase().eventDao();
@@ -110,8 +101,6 @@ public class MainActivity extends BaseActivity {
                 runOnUiThread(() -> {
                     eventList.add(event);
                     eventAdapter.notifyDataSetChanged();
-//                    Toast.makeText(this, "Successfully added new ticket " + ticketNumber, Toast.LENGTH_SHORT).show();
-                    saveEnteredTicketNumbers();
                 });
             } else {
                 runOnUiThread(() -> {
@@ -149,86 +138,16 @@ public class MainActivity extends BaseActivity {
         Set<String> uniqueTicketNumbers = new HashSet<>(enteredTicketNumbers);
         editor.putStringSet("enteredTicketNumbers", uniqueTicketNumbers);
         editor.apply();
+
+        Log.d("Event Ticket Save", "Saving ticket: " + uniqueTicketNumbers);
     }
 
     private void displayPreviouslyEnteredTickets() {
-        // Clear the eventList to prevent duplicates
-        eventList.clear();
-
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        enteredTicketNumbers = preferences.getStringSet("enteredTicketNumbers", new HashSet<>());
         for (String ticketNumber : enteredTicketNumbers) {
-            Log.d("Event Retrieval", "Processing ticket: " + ticketNumber);
             DisplayEvent(ticketNumber);
         }
+        Log.d("Event Ticket Display", "Displaying ticket: " + enteredTicketNumbers);
     }
-
-
-
-
-    // Idk if we'll need this code later, so I'll just leave it here commented.
-//    private void manageNewEventFunctionality() {
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_event, null);
-//        builder.setView(dialogView);
-//
-//        EditText editTextEventName = dialogView.findViewById(R.id.editTextEventName);
-//        EditText editTextEventType = dialogView.findViewById(R.id.editTextEventType);
-//
-//        builder.setPositiveButton("Add", (dialog, which) -> {
-//            String eventName = editTextEventName.getText().toString();
-//            String eventDate = editTextEventType.getText().toString();
-//
-//            // Add the new event to the list
-//            Event event = new Event(eventName, eventDate);
-//
-//            EventDao eventDao = MyApp.getAppDatabase().eventDao();
-//            AsyncTask.execute(() -> {
-//                eventDao.insert(event);
-//            });
-//
-//            // Refresh the RecyclerView
-//            //eventAdapter.notifyDataSetChanged();
-//        });
-//
-//        AlertDialog dialog = builder.create();
-//        builder.setNegativeButton("Cancel", null);
-//        dialog.show();
-//    }
-
-//    private void getDataFromDatabase() {
-//        EventDao eventDao = MyApp.getAppDatabase().eventDao();
-//
-//        LiveData<List<Event>> eventsLiveData = eventDao.getAllEvents();
-//
-//        eventsLiveData.observe(this, events -> {
-//            // Create a new list to store the non-duplicate events
-//            List<Event> nonDuplicateEvents = new ArrayList<>();
-//
-//            for (Event event : events) {
-//                if (!isPrepopulatedEvent(event) && !eventList.contains(event)) {
-//                    nonDuplicateEvents.add(event);
-//                }
-//            }
-//
-//            // Clear the eventList and add only non-duplicate events
-//            eventList.clear();
-//            eventList.addAll(nonDuplicateEvents);
-//
-//            // Notify the adapter of the data change
-//            eventAdapter.notifyDataSetChanged();
-//        });
-//    }
-//
-//    private void getDataFromDatabase() {
-//        EventDao eventDao = MyApp.getAppDatabase().eventDao();
-//        LiveData<List<Event>> eventsLiveData = eventDao.getAllEvents();
-//        eventsLiveData.observe(this, events -> {
-//            eventList.clear();
-//            eventList.addAll(events);
-//            eventAdapter.notifyDataSetChanged();
-//        });
-//    }
-//    private boolean isPrepopulatedEvent(Event event) {
-//        return !enteredTicketNumbers.contains(event.getTicketId());
-//    }
 }
