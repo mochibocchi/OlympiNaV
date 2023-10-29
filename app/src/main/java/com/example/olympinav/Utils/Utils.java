@@ -1,5 +1,9 @@
 package com.example.olympinav.Utils;
 
+import androidx.annotation.ColorRes;
+
+import com.example.olympinav.R;
+
 public class Utils {
 
 
@@ -16,4 +20,9 @@ public class Utils {
     }
   }
 
+
+  @ColorRes
+  public static int getProgressBarColor(int progress) {
+    return progress > 33 ? progress > 66 ? R.color.full : R.color.medium : R.color.quiet;
+  }
 }

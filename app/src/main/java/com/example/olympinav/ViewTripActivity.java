@@ -4,13 +4,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.olympinav.Utils.Utils;
 import com.example.olympinav.models.TravelMethod;
 import com.example.olympinav.models.TravelType;
 import com.example.olympinav.models.Trip;
@@ -118,8 +120,7 @@ public class ViewTripActivity extends BaseActivity {
         v.boardLocation.setTextColor(getResources().getColor(color));
         v.departLocation.setTextColor(getResources().getColor(color));
         v.tripDuration.setTextColor(getResources().getColor(color));
-        v.noiseLevel.setTextColor(getResources().getColor(color));
-        v.busyness.setTextColor(getResources().getColor(color));
+
 
         v.boardLocation.setText("Board Location");
         v.departLocation.setText("Depart Location");
@@ -127,11 +128,24 @@ public class ViewTripActivity extends BaseActivity {
         v.tripDuration.setText(ChronoUnit.MINUTES.between(tm.getDepartAt(), tm.getArriveAt()) + " minutes");
 
         if (tm.getType() != TravelType.WALK) {
+            int noiseLevelColor = Utils.getProgressBarColor(tm.getNoiseLevel().toProgressBarPercentage());
             v.noiseLevel.setText(tm.getNoiseLevel().getDisplayString());
-            v.busyness.setText(tm.getUsedCapacity().getDisplayString());
+            v.noiseLevel.setTextColor(getResources().getColor(noiseLevelColor));
+            v.noiseLevelProgressBar.setProgress(tm.getNoiseLevel().toProgressBarPercentage());
+            v.noiseLevelProgressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(noiseLevelColor)));
+            int usedCapacityColor = Utils.getProgressBarColor(tm.getUsedCapacity().toProgressBarPercentage());
+            v.usedCapacity.setText(tm.getUsedCapacity().getDisplayString());
+            v.usedCapacity.setTextColor(getResources().getColor(usedCapacityColor));
+            v.usedCapacityProgressBar.setProgress(tm.getUsedCapacity().toProgressBarPercentage());
+            v.usedCapacityProgressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapacityColor)));
+
+//            v.noiseLevel.setTextColor(getResources().getColor(color));
+//            v.usedCapacity.setTextColor(getResources().getColor(color));
         } else {
             v.noiseLevel.setVisibility(View.GONE);
-            v.busyness.setVisibility(View.GONE);
+            v.noiseLevelProgressBar.setVisibility(View.GONE);
+            v.usedCapacity.setVisibility(View.GONE);
+            v.usedCapacityProgressBar.setVisibility(View.GONE);
         }
     }
 
@@ -155,7 +169,9 @@ public class ViewTripActivity extends BaseActivity {
 
       TextView tripDuration;
       TextView noiseLevel;
-      TextView busyness;
+      ProgressBar noiseLevelProgressBar;
+      TextView usedCapacity;
+      ProgressBar usedCapacityProgressBar;
 
       public TripStintViewHolder(View itemView) {
           super(itemView);
@@ -169,8 +185,10 @@ public class ViewTripActivity extends BaseActivity {
           boardLocation = itemView.findViewById(R.id.boardLocation);
           departLocation = itemView.findViewById(R.id.departLocation);
           tripDuration = itemView.findViewById(R.id.tripDuration);
-          noiseLevel = itemView.findViewById(R.id.noiseLevel);
-          busyness = itemView.findViewById(R.id.busyness);
+          noiseLevel = itemView.findViewById(R.id.noiseLevelTextView);
+          noiseLevelProgressBar = itemView.findViewById(R.id.noiseLevelProgressBar);
+          usedCapacity = itemView.findViewById(R.id.usedCapacityTextView);
+          usedCapacityProgressBar = itemView.findViewById(R.id.usedCapacityProgressBar);
       }
   }
 

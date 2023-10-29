@@ -236,8 +236,8 @@ public class PlanTripActivity extends BaseActivity {
           usedCapacity = Math.max(0, usedCapacity + GlobalPrioritiseSeatsThreshold); // Change the value here for the baseline of how much to adjust the capacity level
         }
 
-        @ColorRes int noiseLevelColor = getProgressBarColor(noiseLevel);
-        @ColorRes int usedCapacityColor = getProgressBarColor(usedCapacity);
+        @ColorRes int noiseLevelColor = Utils.getProgressBarColor(noiseLevel);
+        @ColorRes int usedCapacityColor = Utils.getProgressBarColor(usedCapacity);
 
         if (countEntry.getKey() == TravelType.WALK) {
           v.walkCount.setText(count);
@@ -286,17 +286,6 @@ public class PlanTripActivity extends BaseActivity {
         i.putExtra("trip", trip);
         startActivity(i);
       });
-    }
-
-    @ColorRes
-    private int getProgressBarColor(int progress) {
-      return progress > 33 ? progress > 66 ? R.color.full : R.color.medium : R.color.quiet;
-    }
-
-    private void setProgressBarColor(ProgressBar progressBar, @ColorRes int color) {
-      Drawable progressDrawable = progressBar.getProgressDrawable().mutate();
-      progressDrawable.setColorFilter(getResources().getColor(color), PorterDuff.Mode.SRC_IN);
-      progressBar.setProgressDrawable(progressDrawable);
     }
 
     @Override
