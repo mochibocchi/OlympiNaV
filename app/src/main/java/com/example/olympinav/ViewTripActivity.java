@@ -32,6 +32,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -68,7 +69,7 @@ public class ViewTripActivity extends BaseActivity {
       TextView price = findViewById(R.id.price);
       price.setText("$3.51"); // Don't have a price system
       // Finish button opens up a feedback dialogue:
-      Button finishBtn = findViewById(R.id.openFeedbackDialogue);
+      FloatingActionButton finishBtn = findViewById(R.id.openFeedbackDialogueFAB);
       finishBtn.setOnClickListener(v -> {
           PromptUserForTripFeedback();
       });
