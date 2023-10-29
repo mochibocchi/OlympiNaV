@@ -237,7 +237,7 @@ public class PlanTripActivity extends BaseActivity {
         }
 
         @ColorRes int noiseLevelColor = getProgressBarColor(noiseLevel);
-        @ColorRes int usedCapcityColor = getProgressBarColor(usedCapacity);
+        @ColorRes int usedCapacityColor = getProgressBarColor(usedCapacity);
 
         if (countEntry.getKey() == TravelType.WALK) {
           v.walkCount.setText(count);
@@ -246,7 +246,7 @@ public class PlanTripActivity extends BaseActivity {
           v.walkNoiseLevel.setProgress(noiseLevel);
           v.walkNoiseLevel.setProgressTintList(ColorStateList.valueOf(getResources().getColor(noiseLevelColor)));
           v.walkUsedCapcity.setProgress(usedCapacity);
-          v.walkUsedCapcity.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapcityColor)));
+          v.walkUsedCapcity.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapacityColor)));
         } else if (countEntry.getKey() == TravelType.BUS) {
           v.busCount.setText(count);
           v.busName.setText(name);
@@ -254,7 +254,7 @@ public class PlanTripActivity extends BaseActivity {
           v.busNoiseLevel.setProgress(noiseLevel);
           v.busNoiseLevel.setProgressTintList(ColorStateList.valueOf(getResources().getColor(noiseLevelColor)));
           v.busUsedCapcity.setProgress(usedCapacity);
-          v.busUsedCapcity.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapcityColor)));
+          v.busUsedCapcity.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapacityColor)));
         } else if (countEntry.getKey() == TravelType.TRAIN) {
           v.trainCount.setText(count);
           v.trainName.setText(name);
@@ -262,7 +262,7 @@ public class PlanTripActivity extends BaseActivity {
           v.trainNoiseLevel.setProgress(noiseLevel);
           v.trainNoiseLevel.setProgressTintList(ColorStateList.valueOf(getResources().getColor(noiseLevelColor)));
           v.trainUsedCapcity.setProgress(usedCapacity);
-          v.trainUsedCapcity.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapcityColor)));
+          v.trainUsedCapcity.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapacityColor)));
         } else if (countEntry.getKey() == TravelType.FERRY) {
           v.ferryCount.setText(count);
           v.ferryName.setText(name);
@@ -270,7 +270,7 @@ public class PlanTripActivity extends BaseActivity {
           v.ferryNoiseLevel.setProgress(noiseLevel);
           v.ferryNoiseLevel.setProgressTintList(ColorStateList.valueOf(getResources().getColor(noiseLevelColor)));
           v.ferryUsedCapcity.setProgress(usedCapacity);
-          v.ferryUsedCapcity.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapcityColor)));
+          v.ferryUsedCapcity.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapacityColor)));
         }
       }
 
