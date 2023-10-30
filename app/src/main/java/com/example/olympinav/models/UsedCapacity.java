@@ -4,7 +4,7 @@ public enum UsedCapacity {
   LOW("Empty"),
   MEDIUM("Half Full"),
   HIGH("Nearly Full"),
-  STANDING("Standing Room Only"),
+  STANDING("Standing Only"),
   FULL("Full");
 
   private final String displayString;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -47,11 +46,11 @@
         app:cardCornerRadius="4dp"
         app:cardElevation="0dp"
         app:contentPadding="8dp"
-        app:strokeWidth="2dp"
-        app:strokeColor="@color/bus_color"
         app:layout_constraintBottom_toTopOf="@id/tripDuration"
         app:layout_constraintStart_toEndOf="@id/section"
-        app:layout_constraintTop_toTopOf="@id/section">
+        app:layout_constraintTop_toTopOf="@id/section"
+        app:strokeColor="@color/bus_color"
+        app:strokeWidth="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -83,19 +82,39 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:id="@+id/noiseLevel"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/noiseLevelParent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:text="Very Loud"
-        android:textColor="@color/bus_color"
-        android:textSize="18sp"
-        app:layout_constraintTop_toTopOf="@id/transportNumberParent"
         app:layout_constraintBottom_toBottomOf="@id/transportNumberParent"
-        app:layout_constraintStart_toEndOf="@+id/transportNumberParent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/transportNumberParent">
+
+        <ProgressBar
+            android:id="@+id/noiseLevelProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/noiseLevelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="YOOOO"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/noiseLevelProgressBar"
+            app:layout_constraintEnd_toEndOf="@id/noiseLevelProgressBar"
+            app:layout_constraintStart_toStartOf="@id/noiseLevelProgressBar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/tripDuration"
@@ -109,19 +128,39 @@
         app:layout_constraintStart_toEndOf="@id/section"
         app:layout_constraintTop_toBottomOf="@id/transportNumberParent" />
 
-    <TextView
-        android:id="@+id/busyness"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/usedCapacityParent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:text="Very Busy"
-        android:textColor="@color/bus_color"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@id/tripDuration"
-        app:layout_constraintTop_toTopOf="@id/tripDuration"
         app:layout_constraintBottom_toBottomOf="@id/tripDuration"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tripDuration">
+
+        <ProgressBar
+            android:id="@+id/usedCapacityProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/usedCapacityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="YOOOO"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/usedCapacityProgressBar"
+            app:layout_constraintEnd_toEndOf="@id/usedCapacityProgressBar"
+            app:layout_constraintStart_toStartOf="@id/usedCapacityProgressBar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bottomDot"
