@@ -1,7 +1,10 @@
 package com.example.olympinav.generators;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 
+import com.example.olympinav.R;
+import com.example.olympinav.models.ServiceUpdate;
 import com.example.olympinav.models.TravelMethod;
 import com.example.olympinav.models.TravelType;
 import com.example.olympinav.models.Trip;
@@ -102,5 +105,28 @@ public class Generator {
     LocalDateTime arriveAt = reversed.get(0).getDepartAt();
     LocalDateTime departAt = reversed.get(vehicles.size() - 1).getArriveAt();
     return new Trip(startLocation, endLocation, arriveAt, departAt, reversed);
+  }
+
+  public static ServiceUpdate generateServiceUpdate() {
+    ThreadLocalRandom r = ThreadLocalRandom.current();
+    String routeNumber = String.valueOf(r.nextInt(111, 999));
+    int type = r.nextInt(1, 4);
+    LocalDateTime lastUpdatedAt = LocalDateTime.now().minusMinutes(r.nextInt(120));
+    String message;
+    @DrawableRes int drawable;
+    if (type == 1) {
+      drawable = R.drawable.baseline_info_24;
+      message = "Timetable temporarily updated for " + routeNumber + " to improve accessibility for QUT students " +
+          "during exam period.";
+    } else if (type == 2) {
+      drawable = R.drawable.baseline_warning_24;
+      message = "Stops temporarily moved for " + routeNumber + " due to construction. Trip planner has been updated " +
+          "accordingly.";
+    } else {
+      drawable = R.drawable.baseline_error_24;
+      message = routeNumber + " will be at stopped 9:30pm on the 13th of November to perform maintenance. " +
+          "It will resume service the following morning.";
+    }
+    return new ServiceUpdate(message, drawable, lastUpdatedAt);
   }
 }
