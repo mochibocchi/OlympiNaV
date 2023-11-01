@@ -222,18 +222,15 @@ public class PlanTripActivity extends BaseActivity {
         int noiseLevel = (int) Math.round(averageNoiseLevelByType.getOrDefault(countEntry.getKey(), 0d));
         int usedCapacity = (int) Math.round(averageUsedCapacityByType.getOrDefault(countEntry.getKey(), 0d));
 
-        // Retrieve the UserNoiseBaseLevel from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("UserDataPref", Context.MODE_PRIVATE);
         int UserNoiseBaseLevel = sharedPreferences.getInt("UserNoiseBaseLevel", 0);
-        int GlobalNoiseBaseLevelThreshold = 10;
-        int GlobalPrioritiseSeatsThreshold = 25;
 
         if (isSensitiveToNoiseActive) {
-          noiseLevel = Math.max(0, noiseLevel + GlobalNoiseBaseLevelThreshold + UserNoiseBaseLevel); // Adjust the noise level value here according to user's personalised noise threshold
+          noiseLevel = Math.max(0, noiseLevel + SensorData.NoiseBaseLevelThreshold.getValue() + UserNoiseBaseLevel);
         }
 
         if (isPrioritiseSeatsActive) {
-          usedCapacity = Math.max(0, usedCapacity + GlobalPrioritiseSeatsThreshold); // Change the value here for the baseline of how much to adjust the capacity level
+          usedCapacity = Math.max(0, usedCapacity + SensorData.PrioritiseSeatsThreshold.getValue());
         }
 
         @ColorRes int noiseLevelColor = Utils.getProgressBarColor(noiseLevel);

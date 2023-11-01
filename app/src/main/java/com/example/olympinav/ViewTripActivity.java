@@ -3,7 +3,6 @@ package com.example.olympinav;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -129,7 +128,7 @@ public class ViewTripActivity extends BaseActivity {
 
         if (tm.getType() != TravelType.WALK) {
             int noiseLevelColor = Utils.getProgressBarColor(tm.getNoiseLevel().toProgressBarPercentage());
-            v.noiseLevel.setText(tm.getNoiseLevel().getDisplayString());
+            v.noiseLevel.setText((tm.getNoiseLevel()).getDisplayString());
             v.noiseLevel.setTextColor(getResources().getColor(noiseLevelColor));
             v.noiseLevelProgressBar.setProgress(tm.getNoiseLevel().toProgressBarPercentage());
             v.noiseLevelProgressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(noiseLevelColor)));
@@ -207,6 +206,7 @@ public class ViewTripActivity extends BaseActivity {
 //    are uncomfortable with loud environments.
 
     private void PromptUserForTripFeedback() {
+        UserSettingsManager userSettingsManager = new UserSettingsManager(getSharedPreferences("UserDataPref", Context.MODE_PRIVATE));
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_end_of_trip_feedback, null);
         builder.setView(dialogView);
@@ -223,7 +223,7 @@ public class ViewTripActivity extends BaseActivity {
         });
 
         neutralButton.setOnClickListener(v -> {
-            updateUserNoiseBaseLevel(10);
+            userSettingsManager.updateUserNoiseBaseLevel(10);
             Toast.makeText(this, "We'll adjust your personalised noise threshold.", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
             Intent intent = new Intent(ViewTripActivity.this, MainActivity.class);
@@ -231,7 +231,7 @@ public class ViewTripActivity extends BaseActivity {
         });
 
         sadButton.setOnClickListener(v -> {
-            updateUserNoiseBaseLevel(25);
+            userSettingsManager.updateUserNoiseBaseLevel(25);
             Toast.makeText(this, "We'll adjust your personalised noise threshold.", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
             Intent intent = new Intent(ViewTripActivity.this, MainActivity.class);
@@ -241,17 +241,5 @@ public class ViewTripActivity extends BaseActivity {
         dialog = builder.create();
         builder.setNegativeButton("Cancel", null);
         dialog.show();
-    }
-
-    private void updateUserNoiseBaseLevel(int feedback) {
-        SharedPreferences sharedPreferences = getSharedPreferences("UserDataPref", Context.MODE_PRIVATE);
-        int currentBaseLevel = sharedPreferences.getInt("UserNoiseBaselineLevel", 0);
-
-        currentBaseLevel += feedback;
-
-        // Save the updated user's updated UserNoiseBaseLevel back to SharedPreferences
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("UserNoiseBaseLevel", currentBaseLevel);
-        editor.apply();
     }
 }
