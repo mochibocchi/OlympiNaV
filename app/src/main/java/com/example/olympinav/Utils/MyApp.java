@@ -14,7 +14,7 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         appDatabase = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, DATABASE_NAME).build();
+                AppDatabase.class, DATABASE_NAME).fallbackToDestructiveMigration().build();
     }
 
     public static AppDatabase getAppDatabase() {
