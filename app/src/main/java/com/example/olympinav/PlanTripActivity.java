@@ -67,7 +67,7 @@ public class PlanTripActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_plan_trip);
     getPrefilledLocations(); // If user opens up from vehicleDetailsActivity, grab the event address from the event item
-    setupActivity();
+    setupActivity("Plan Trip");
     setupRecyclerView();
     setupTripDetailsFields();
     setupNoiseSensitivityToggle(); // If user toggles Sensitive to Noise on, it will add more to the noise level.

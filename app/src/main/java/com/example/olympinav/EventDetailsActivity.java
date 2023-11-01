@@ -37,7 +37,7 @@ public class EventDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
-        setupActivity();
+        setupActivity("View Ticket");
 
         SharedPreferences preferences = getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE);
         enteredTicketNumbers = preferences.getStringSet("enteredTicketNumbers", new HashSet<>());

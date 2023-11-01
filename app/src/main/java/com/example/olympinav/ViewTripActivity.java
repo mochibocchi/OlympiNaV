@@ -57,7 +57,7 @@ public class ViewTripActivity extends BaseActivity {
         map.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(-27.4705, 153.0260), 12,
             30, 0)));
     });
-    setupActivity();
+    setupActivity("View Trip");
     trip = (Trip) getIntent().getParcelableExtra("trip");
     setupViews();
     setupRecyclerView();
@@ -138,9 +138,6 @@ public class ViewTripActivity extends BaseActivity {
             v.usedCapacity.setTextColor(getResources().getColor(usedCapacityColor));
             v.usedCapacityProgressBar.setProgress(tm.getUsedCapacity().toProgressBarPercentage());
             v.usedCapacityProgressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(usedCapacityColor)));
-
-//            v.noiseLevel.setTextColor(getResources().getColor(color));
-//            v.usedCapacity.setTextColor(getResources().getColor(color));
         } else {
             v.noiseLevel.setVisibility(View.GONE);
             v.noiseLevelProgressBar.setVisibility(View.GONE);

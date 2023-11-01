@@ -26,8 +26,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
     }
 
-    protected void setupActivity() {
+    protected void setupActivity(String pageTitle) {
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(pageTitle);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
