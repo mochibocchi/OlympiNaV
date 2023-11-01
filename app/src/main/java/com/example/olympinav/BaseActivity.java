@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +37,14 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        String[] languages = {"English", "German", "French", "Chinese", "Japanese"};
+        Integer[] flags = {R.drawable.united_states_flag, R.drawable.german_flag, R.drawable.french_flag,
+            R.drawable.chinese_flag, R.drawable.japanese_flag};
+
+        Spinner spinner = findViewById(R.id.languageSpinner);
+        spinner.setAdapter(new ImageTextSpinnerAdapter(this, R.layout.image_text_spinner_value_layout, languages, flags));
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -56,9 +66,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         } else if (itemId == R.id.nav_feedback) {
             Intent intent = new Intent(this, FeedbackActivity.class);
-            startActivity(intent);
-        } else if (itemId == R.id.nav_language) {
-            Intent intent = new Intent(this, LanguageActivity.class);
             startActivity(intent);
         } else if (itemId == R.id.nav_logout) {
             Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();

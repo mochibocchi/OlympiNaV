@@ -140,16 +140,7 @@
             app:layout_constraintStart_toStartOf="@+id/btnUpdate" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- This connects the navigation view to the screen -->
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:itemIconTint="@color/main_colour"
-        app:itemTextColor="@color/main_colour"
-        app:menu="@menu/nav_menu"/>
+    <include layout="@layout/layout_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
 
