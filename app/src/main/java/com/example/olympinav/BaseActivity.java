@@ -54,17 +54,14 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else if (itemId == R.id.nav_service_updates) {
             Intent intent = new Intent(this, ServiceUpdatesActivity.class);
             startActivity(intent);
-        } else if (itemId == R.id.nav_contact) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
         } else if (itemId == R.id.nav_feedback) {
             Intent intent = new Intent(this, FeedbackActivity.class);
             startActivity(intent);
-        } else if (itemId == R.id.nav_logout) {
-            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.nav_language) {
             Intent intent = new Intent(this, LanguageActivity.class);
             startActivity(intent);
+        } else if (itemId == R.id.nav_logout) {
+            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.nav_resetusersettings) {
             resetUserNoiseBaseLevel();
         }
