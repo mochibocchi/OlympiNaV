@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.olympinav.DB.User;
+import com.example.olympinav.DB.UserWithTicketsAndEvents;
 import com.example.olympinav.Utils.MyApp;
 
 public class LoginActivity extends AppCompatActivity {
@@ -44,12 +45,18 @@ public class LoginActivity extends AppCompatActivity {
             errorText.setVisibility(View.VISIBLE);
           });
         } else {
-          runOnUiThread(() -> {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-          });
+          UserWithTicketsAndEvents loggedInUser =
+              MyApp.getAppDatabase().userDao().getUserWithTicketsAndEvents(username.getText().toString());
+          if (loggedInUser != null) {
+            MyApp.setUser(loggedInUser);
+            runOnUiThread(() -> startActivity(new Intent(LoginActivity.this, MainActivity.class)));
+          } else {
+            runOnUiThread(() -> Toast.makeText(this, "An unknown error occurred, please try again.", Toast.LENGTH_LONG).show());
+          }
         }
       });
     });
+
     // Clear incase returning to this activity.
     errorText.setText("");
     errorText.setVisibility(View.GONE);

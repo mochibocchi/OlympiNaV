@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.olympinav.Utils.MyApp;
 import com.google.android.material.navigation.NavigationView;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,6 +27,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (MyApp.getUser() == null)
+            logout();
     }
 
     protected void setupActivity(String pageTitle) {
@@ -68,7 +71,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, FeedbackActivity.class);
             startActivity(intent);
         } else if (itemId == R.id.nav_logout) {
-            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+            logout();
         } else if (itemId == R.id.nav_resetusersettings) {
             resetUserNoiseBaseLevel();
         }
@@ -94,5 +97,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         editor.apply();
 
         Toast.makeText(this, "Resetting user's personalised settings threshold", Toast.LENGTH_SHORT).show();
+    }
+
+    private void logout() {
+        MyApp.setUser(null);
+        startActivity(new Intent(BaseActivity.this, LoginActivity.class));
     }
 }

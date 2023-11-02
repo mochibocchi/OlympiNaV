@@ -11,12 +11,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.olympinav.DB.Event;
 import com.example.olympinav.DB.EventDao;
+import com.example.olympinav.DB.Ticket;
+import com.example.olympinav.DB.TicketWithEvent;
 import com.example.olympinav.Utils.MyApp;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,7 +28,6 @@ import java.util.Set;
 
 public class MainActivity extends BaseActivity {
     ArrayList<Event> eventList;
-    Set<String> enteredTicketNumbers = new HashSet<>();
     private RecyclerView recyclerView;
     private FloatingActionButton fabAddNewTicket;
     private EventAdapter eventAdapter;
@@ -37,11 +37,11 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupActivity("Home");
-        SetUpViews();
-        InitialiseRecyclerView();
-        displayPreviouslyEnteredTickets();
+        setupViews();
+        initialiseRecyclerView();
+        displayUsersTickets();
     }
-    private void InitialiseRecyclerView() {
+    private void initialiseRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         initialiseEventList();
         eventList = new ArrayList<>();
@@ -52,21 +52,19 @@ public class MainActivity extends BaseActivity {
         eventAdapter.setOnItemClickListener(position -> {
             Intent intent = new Intent(MainActivity.this, EventDetailsActivity.class);
             Event event = eventList.get(position);
-            intent.putExtra("eventId", event.id);
+            intent.putExtra("eventId", event.getId());
             startActivity(intent);
         });
     }
-    private void SetUpViews() {
+    private void setupViews() {
         FloatingActionButton fabPlanTrip = findViewById(R.id.fabPlanTrip);
         fabPlanTrip.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PlanTripActivity.class)));
         recyclerView = findViewById(R.id.recyclerView);
         fabAddNewTicket = findViewById(R.id.fabAddTicket);
         // Click on the + button to add new ticket
-        fabAddNewTicket.setOnClickListener(view -> {
-            AddTicketNumber();
-        });
+        fabAddNewTicket.setOnClickListener(view -> addTicketNumber());
     }
-    private void AddTicketNumber() {
+    private void addTicketNumber() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_get_ticket_number, null);
         builder.setView(dialogView);
@@ -75,40 +73,41 @@ public class MainActivity extends BaseActivity {
 
         builder.setPositiveButton("Confirm", (dialog, which) -> {
             String ticketNumber = editTextTicketNumber.getText().toString();
-            // Check if user is entering in a duplicate ticket ID
-            if (enteredTicketNumbers.contains(ticketNumber)) {
-                Toast.makeText(this, "Ticket already entered", Toast.LENGTH_SHORT).show();
-            } else {
-                enteredTicketNumbers.add(ticketNumber);
-                saveEnteredTicketNumbers();
-                DisplayEvent(ticketNumber);
+
+            // Check if user has already entered this ticket
+            for (TicketWithEvent ticket : MyApp.getUser().getTickets()) {
+                if (ticket.getEvent().getTicketId().equals(ticketNumber)) {
+                    Toast.makeText(this, "You have already added this ticket.", Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
+
+            AsyncTask.execute(() -> {
+                Event newEvent = MyApp.getAppDatabase().eventDao().getEventByTicketId(ticketNumber);
+                if (newEvent == null) {
+                    runOnUiThread(() -> Toast.makeText(this, "No Event found with that code", Toast.LENGTH_SHORT).show());
+                    return;
+                }
+
+                // Insert new ticket
+                Ticket ticket = new Ticket(newEvent.getId(), MyApp.getUser().getUser().getUsername());
+                MyApp.getAppDatabase().ticketDao().insert(ticket);
+
+                // Update User object.
+                MyApp.setUser(MyApp.getAppDatabase().userDao().getUserWithTicketsAndEvents(MyApp.getUser().getUser().getUsername()));
+
+                // Update recyclerview
+                runOnUiThread(() -> {
+                  int updateIndex = eventList.size();
+                  eventList.add(newEvent);
+                  eventAdapter.notifyItemInserted(updateIndex);
+                });
+            });
         });
 
         AlertDialog dialog = builder.create();
         builder.setNegativeButton("Cancel", null);
         dialog.show();
-    }
-
-
-    private void DisplayEvent(String ticketNumber) {
-        EventDao eventDao = MyApp.getAppDatabase().eventDao();
-
-        AsyncTask.execute(() -> {
-            Event event = eventDao.getEventByTicketId(ticketNumber);
-
-            if (event != null) {
-                runOnUiThread(() -> {
-                    eventList.add(event);
-                    eventAdapter.notifyDataSetChanged();
-                });
-            } else {
-                runOnUiThread(() -> {
-                    Toast.makeText(this, "Ticket not found", Toast.LENGTH_SHORT).show();
-                    Log.e("Event Retrieval", "Ticket not found: " + ticketNumber);
-                });
-            }
-        });
     }
 
     private void initialiseEventList() {
@@ -131,23 +130,9 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void saveEnteredTicketNumbers() {
-        SharedPreferences preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        Set<String> uniqueTicketNumbers = new HashSet<>(enteredTicketNumbers);
-        editor.putStringSet("enteredTicketNumbers", uniqueTicketNumbers);
-        editor.apply();
-
-        Log.d("Event Ticket Save", "Saving ticket: " + uniqueTicketNumbers);
-    }
-
-    private void displayPreviouslyEnteredTickets() {
-        SharedPreferences preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        enteredTicketNumbers = preferences.getStringSet("enteredTicketNumbers", new HashSet<>());
-        for (String ticketNumber : enteredTicketNumbers) {
-            DisplayEvent(ticketNumber);
-        }
-        Log.d("Event Ticket Display", "Displaying ticket: " + enteredTicketNumbers);
+    private void displayUsersTickets() {
+        for (TicketWithEvent ticket : MyApp.getUser().getTickets())
+            eventList.add(ticket.getEvent());
+        eventAdapter.notifyItemRangeInserted(0, MyApp.getUser().getTickets().size());
     }
 }

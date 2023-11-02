@@ -41,8 +41,11 @@ public class SignupActivity extends AppCompatActivity {
             errorText.setVisibility(View.VISIBLE);
           });
         } else {
-          MyApp.getAppDatabase().userDao().insert(new User(username.getText().toString(), password.getText().toString()));
-          runOnUiThread(() -> startActivity(new Intent(SignupActivity.this, MainActivity.class)));
+          MyApp.getAppDatabase().userDao().insert(new User(username.getText().toString(), password.getText().toString(), 0));
+          runOnUiThread(() -> {
+            Toast.makeText(this, "Account Successfully Created. Please Login.", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+          });
         }
       });
     });
