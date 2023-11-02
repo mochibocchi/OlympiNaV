@@ -27,6 +27,7 @@ public class MainActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private FloatingActionButton fabAddNewTicket;
     private EventAdapter eventAdapter;
+    private TextView noEventsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class MainActivity extends BaseActivity {
         fabAddNewTicket = findViewById(R.id.fabAddTicket);
         // Click on the + button to add new ticket
         fabAddNewTicket.setOnClickListener(view -> addTicketNumber());
+        noEventsTextView = findViewById(R.id.noEventsTextView);
     }
 
     private void addTicketNumber() {
@@ -95,9 +97,6 @@ public class MainActivity extends BaseActivity {
                 // Update User object.
                 MyApp.setUser(MyApp.getAppDatabase().userDao().getUserWithTicketsAndEvents(MyApp.getUser().getUser().getUsername()));
 
-                // Call displayUsersTickets to refresh the UI
-                displayUsersTickets();
-
                 runOnUiThread(() -> {
                   clearRecyclerView();
                   displayUsersTickets();
@@ -111,7 +110,6 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initialiseEventList() {
-
         EventDao eventDao = MyApp.getAppDatabase().eventDao();
 
         // Pre-populate events into the database
@@ -136,32 +134,28 @@ public class MainActivity extends BaseActivity {
         clearRecyclerView();
         displayUsersTickets();
     }
+
     private void displayUsersTickets() {
+        eventList.clear();
+        eventList.addAll(MyApp.getUser().getTickets());
+
         if (eventList.isEmpty()) {
             // Event list is empty, show the "No Events Added" message
-            TextView noEventsTextView = findViewById(R.id.noEventsTextView);
             noEventsTextView.setVisibility(View.VISIBLE);
-        } else {
-            // Event list is not empty, hide the "No Events Added" message
-            TextView noEventsTextView = findViewById(R.id.noEventsTextView);
-            noEventsTextView.setVisibility(View.GONE);
-
-            // Clear the existing eventList
-            eventList.clear();
-
-            // Populate the RecyclerView with events
-            for (TicketWithEvent ticket : MyApp.getUser().getTickets()) {
-                eventList.add(ticket);
-            }
-
-            eventAdapter.notifyDataSetChanged();
+            return;
         }
+
+        // Event list is not empty, hide the "No Events Added" message
+        noEventsTextView.setVisibility(View.GONE);
+        // Populate the RecyclerView with events
+        eventAdapter.notifyItemRangeInserted(0, eventAdapter.getItemCount());
     }
 
 
     private void clearRecyclerView() {
+        int itemCount = eventAdapter.getItemCount();
         eventList.clear();
-        eventAdapter.notifyDataSetChanged();
+        eventAdapter.notifyItemRangeRemoved(0, itemCount);
     }
 }
 
