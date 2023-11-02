@@ -1,46 +1,36 @@
 package com.example.olympinav;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-
 import com.example.olympinav.DB.Event;
 import com.example.olympinav.DB.EventDao;
+import com.example.olympinav.DB.Ticket;
+import com.example.olympinav.DB.TicketWithEvent;
 import com.example.olympinav.Utils.MyApp;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class EventDetailsActivity extends BaseActivity {
 
     TextView tvTicketId, tvEventName, tvEventDate, tvEventAddress, tvImageId;
     Button btnUpdate, btnDelete;
     EventDao eventDao;
-    int eventId;
     Event event;
+    private Ticket ticket;
     ImageView eventImage;
     private static final String SHARED_PREF_KEY = "MyPreferences";
-    private Set<String> enteredTicketNumbers = new HashSet<>();
     public static final String EXTRA_START_LOCATION = "start_location";
     public static final String EXTRA_END_LOCATION = "end_location";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
         setupActivity("View Ticket");
-
-        SharedPreferences preferences = getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE);
-        enteredTicketNumbers = preferences.getStringSet("enteredTicketNumbers", new HashSet<>());
 
         tvTicketId = findViewById(R.id.tvTicketId);
         tvEventName = findViewById(R.id.tvEventName);
@@ -53,44 +43,42 @@ public class EventDetailsActivity extends BaseActivity {
 
         eventDao = MyApp.getAppDatabase().eventDao();
 
-        if (getIntent().getIntExtra("eventId", -1) != -1){
-            eventId = getIntent().getIntExtra("eventId", -1);
-
-            eventDao.getEventById(eventId).observe(this, dbEvent -> {
-                if (dbEvent != null) {
-                    this.event = dbEvent;
-                    tvTicketId.setText(this.event.getTicketId());
-                    tvEventName.setText(this.event.getEventName());
-                    tvEventDate.setText(this.event.getDate());
-                    tvEventAddress.setText(this.event.getAddress());
-                    tvImageId.setText(this.event.getImageId());
-                    eventImage.setImageResource(event.getImageId());
-                }
-            });
-
-            btnUpdate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (event != null) {
-                        openPlanTripActivity();
-                    }
-                }
-
-            });
-            btnDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (event != null) {
-                        deleteTheEvent();
-                        Toast.makeText(EventDetailsActivity.this,"Delete", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-        }else {
-            Toast.makeText(this, "No Event Id Found", Toast.LENGTH_SHORT).show();
+        long ticketId = getIntent().getLongExtra("ticketId", -1);
+        if (ticketId == -1) {
+            Toast.makeText(this, "An unknown error occurred ", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(EventDetailsActivity.this, MainActivity.class));
+            return;
         }
 
+        for (TicketWithEvent ticketWithEvent : MyApp.getUser().getTickets()) {
+            if (ticketWithEvent.getTicket().getId().equals(ticketId)) {
+                ticket = ticketWithEvent.getTicket();
+                event = ticketWithEvent.getEvent();
+            }
+        }
+
+        if (event == null) {
+            Toast.makeText(this, "Couldn't find your ticket for this event, please try again.", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(EventDetailsActivity.this, MainActivity.class));
+        }
+
+        tvTicketId.setText(this.event.getTicketId());
+        tvEventName.setText(this.event.getEventName());
+        tvEventDate.setText(this.event.getDate());
+        tvEventAddress.setText(this.event.getAddress());
+        tvImageId.setText(this.event.getImageId());
+        eventImage.setImageResource(event.getImageId());
+
+        btnUpdate.setOnClickListener(view -> {
+            if (event != null) {
+                openPlanTripActivity();
+            }
+        });
+        btnDelete.setOnClickListener(view -> {
+            if (event != null) {
+                deleteTicket();
+            }
+        });
     }
 
     private void openPlanTripActivity() {
@@ -101,61 +89,20 @@ public class EventDetailsActivity extends BaseActivity {
         intent.putExtra(EXTRA_END_LOCATION, eventAddress);
         startActivity(intent);
     }
-    private void updateTheEvent() {
 
-        // Creating the view to create the dialog. We are re-using the dialog we created in Week-4 to add new event.
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_event, null);
-        EditText editTextEventName = dialogView.findViewById(R.id.editTextEventName);
-        EditText editTextEventDate = dialogView.findViewById(R.id.editTextEventDate);
-
-        // Pre-set the current event name and type to these edittext views.
-        editTextEventName.setText(event.getEventName());
-        editTextEventDate.setText(event.getDate());
-
-        //Creating the dialog builder to create the pop up dialog.
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(dialogView);
-
-        //Setting and implementing the update operation
-        builder.setPositiveButton("Update", (dialog, which) -> {
-            String eventName = editTextEventName.getText().toString();
-            String eventType = editTextEventDate.getText().toString();
-
-            //update the values
-            event.setEventName(eventName);
-            event.setDate(eventType);
-
-            AsyncTask.execute(() -> {
-                eventDao.update(event);
-            });
-        });
-
-        // Setting the update cancellation
-        builder.setNegativeButton("Cancel", (dialog, which) -> {
-            // Do nothing or handle any other actions
-            dialog.cancel();
-        });
-
-        //Creating and showing the dialog.
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-    }
-
-    private void deleteTheEvent() {
+    private void deleteTicket() {
         AsyncTask.execute(() -> {
-            // Remove the event's ticket number from the enteredTicketNumbers set
-            enteredTicketNumbers.remove(event.getTicketId());
-
             // Delete the event from the database
-            eventDao.delete(event);
+            MyApp.getAppDatabase().ticketDao().delete(ticket);
+            MyApp.setUser(MyApp.getAppDatabase().userDao().getUserWithTicketsAndEvents(MyApp.getUser().getUser().getUsername()));
 
             // Navigate back to the MainActivity
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            runOnUiThread(() -> {
+                Toast.makeText(this, "Ticket Successfully Deleted", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            });
         });
-        Toast.makeText(this, "Successfully deleted ticket: " + event.getTicketId(), Toast.LENGTH_SHORT).show();
     }
 
 }

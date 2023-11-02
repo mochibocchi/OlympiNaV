@@ -10,12 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.olympinav.DB.Event;
+import com.example.olympinav.DB.TicketWithEvent;
 
 import java.util.ArrayList;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
 
-    private ArrayList<Event> eventList;
+    private ArrayList<TicketWithEvent> eventList;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -25,7 +26,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         mListener = listener;
     }
 
-    public EventAdapter(ArrayList<Event> eventList) {
+    public EventAdapter(ArrayList<TicketWithEvent> eventList) {
         this.eventList = eventList;
     }
 
@@ -38,7 +39,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
-        Event event = eventList.get(position);
+        TicketWithEvent te = eventList.get(position);
+        Event event = te.getEvent();
         holder.eventImage.setImageResource(event.getImageId());
         holder.eventName.setText(event.getEventName());
         holder.eventDate.setText(event.getDate());

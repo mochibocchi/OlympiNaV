@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 public class MainActivity extends BaseActivity {
-    ArrayList<Event> eventList;
+    ArrayList<TicketWithEvent> eventList;
     private RecyclerView recyclerView;
     private FloatingActionButton fabAddNewTicket;
     private EventAdapter eventAdapter;
@@ -41,6 +41,7 @@ public class MainActivity extends BaseActivity {
         initialiseRecyclerView();
         displayUsersTickets();
     }
+
     private void initialiseRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         initialiseEventList();
@@ -51,11 +52,12 @@ public class MainActivity extends BaseActivity {
         // If user clicks on any of the event items, it will bring event details activity.
         eventAdapter.setOnItemClickListener(position -> {
             Intent intent = new Intent(MainActivity.this, EventDetailsActivity.class);
-            Event event = eventList.get(position);
-            intent.putExtra("eventId", event.getId());
+            TicketWithEvent te = eventList.get(position);
+            intent.putExtra("ticketId", te.getTicket().getId());
             startActivity(intent);
         });
     }
+
     private void setupViews() {
         FloatingActionButton fabPlanTrip = findViewById(R.id.fabPlanTrip);
         fabPlanTrip.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PlanTripActivity.class)));
@@ -64,6 +66,7 @@ public class MainActivity extends BaseActivity {
         // Click on the + button to add new ticket
         fabAddNewTicket.setOnClickListener(view -> addTicketNumber());
     }
+
     private void addTicketNumber() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_get_ticket_number, null);
@@ -96,11 +99,9 @@ public class MainActivity extends BaseActivity {
                 // Update User object.
                 MyApp.setUser(MyApp.getAppDatabase().userDao().getUserWithTicketsAndEvents(MyApp.getUser().getUser().getUsername()));
 
-                // Update recyclerview
                 runOnUiThread(() -> {
-                  int updateIndex = eventList.size();
-                  eventList.add(newEvent);
-                  eventAdapter.notifyItemInserted(updateIndex);
+                  clearRecyclerView();
+                  displayUsersTickets();
                 });
             });
         });
@@ -130,9 +131,20 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        clearRecyclerView();
+        displayUsersTickets();
+    }
+
     private void displayUsersTickets() {
-        for (TicketWithEvent ticket : MyApp.getUser().getTickets())
-            eventList.add(ticket.getEvent());
+        eventList.addAll(MyApp.getUser().getTickets());
         eventAdapter.notifyItemRangeInserted(0, MyApp.getUser().getTickets().size());
+    }
+
+    private void clearRecyclerView() {
+        eventList.clear();
+        eventAdapter.notifyDataSetChanged();
     }
 }
