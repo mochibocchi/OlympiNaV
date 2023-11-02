@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -99,6 +100,9 @@ public class MainActivity extends BaseActivity {
                 // Update User object.
                 MyApp.setUser(MyApp.getAppDatabase().userDao().getUserWithTicketsAndEvents(MyApp.getUser().getUser().getUsername()));
 
+                // Call displayUsersTickets to refresh the UI
+                displayUsersTickets();
+
                 runOnUiThread(() -> {
                   clearRecyclerView();
                   displayUsersTickets();
@@ -137,14 +141,33 @@ public class MainActivity extends BaseActivity {
         clearRecyclerView();
         displayUsersTickets();
     }
-
     private void displayUsersTickets() {
-        eventList.addAll(MyApp.getUser().getTickets());
-        eventAdapter.notifyItemRangeInserted(0, MyApp.getUser().getTickets().size());
+        if (eventList.isEmpty()) {
+            // Event list is empty, show the "No Events Added" message
+            TextView noEventsTextView = findViewById(R.id.noEventsTextView);
+            noEventsTextView.setVisibility(View.VISIBLE);
+        } else {
+            // Event list is not empty, hide the "No Events Added" message
+            TextView noEventsTextView = findViewById(R.id.noEventsTextView);
+            noEventsTextView.setVisibility(View.GONE);
+
+            // Clear the existing eventList
+            eventList.clear();
+
+            // Populate the RecyclerView with events
+            for (TicketWithEvent ticket : MyApp.getUser().getTickets()) {
+                eventList.add(ticket);
+            }
+
+            eventAdapter.notifyDataSetChanged();
+        }
     }
+
 
     private void clearRecyclerView() {
         eventList.clear();
         eventAdapter.notifyDataSetChanged();
     }
 }
+
+
