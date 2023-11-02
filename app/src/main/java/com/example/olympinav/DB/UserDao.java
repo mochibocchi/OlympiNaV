@@ -4,11 +4,15 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.Update;
 
 @Dao
 public interface UserDao {
   @Insert
   void insert(User user);
+
+  @Update
+  void update(User user);
 
   @Query("SELECT * FROM users where username = :username AND password = :password")
   User getUserByLoginDetails(String username, String password);

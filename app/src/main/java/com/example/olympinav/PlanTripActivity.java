@@ -5,16 +5,9 @@ import static com.example.olympinav.EventDetailsActivity.EXTRA_START_LOCATION;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +30,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.olympinav.Utils.MyApp;
 import com.example.olympinav.Utils.Utils;
 import com.example.olympinav.generators.Generator;
 import com.example.olympinav.models.TravelMethod;
@@ -199,16 +193,18 @@ public class PlanTripActivity extends BaseActivity {
       Trip trip = trips.get(position);
       Map<TravelType, Integer> counts = new HashMap<>(TravelType.values().length);
       Map<TravelType, Integer> durations = new HashMap<>(TravelType.values().length);
+      for (TravelMethod tm : trip.getTravelMethods()) {
+        counts.merge(tm.getType(), 1, Integer::sum);
+        durations.merge(tm.getType(), (int) ChronoUnit.MINUTES.between(tm.getDepartAt(), tm.getArriveAt()), Integer::sum);
+      }
+
       Map<TravelType, Double> averageNoiseLevelByType = trip.getTravelMethods().stream()
           .collect(Collectors.groupingBy(TravelMethod::getType,
               Collectors.averagingInt(tm -> tm.getNoiseLevel().toProgressBarPercentage())));
       Map<TravelType, Double> averageUsedCapacityByType = trip.getTravelMethods().stream()
           .collect(Collectors.groupingBy(TravelMethod::getType,
               Collectors.averagingInt(tm -> tm.getUsedCapacity().toProgressBarPercentage())));
-      for (TravelMethod tm : trip.getTravelMethods()) {
-        counts.merge(tm.getType(), 1, Integer::sum);
-        durations.merge(tm.getType(), (int) ChronoUnit.MINUTES.between(tm.getDepartAt(), tm.getArriveAt()), Integer::sum);
-      }
+
       v.walkRow.setVisibility(!counts.containsKey(TravelType.WALK) ? View.GONE : View.VISIBLE);
       v.busRow.setVisibility(!counts.containsKey(TravelType.BUS) ? View.GONE : View.VISIBLE);
       v.trainRow.setVisibility(!counts.containsKey(TravelType.TRAIN) ? View.GONE : View.VISIBLE);
@@ -222,11 +218,9 @@ public class PlanTripActivity extends BaseActivity {
         int noiseLevel = (int) Math.round(averageNoiseLevelByType.getOrDefault(countEntry.getKey(), 0d));
         int usedCapacity = (int) Math.round(averageUsedCapacityByType.getOrDefault(countEntry.getKey(), 0d));
 
-        SharedPreferences sharedPreferences = getSharedPreferences("UserDataPref", Context.MODE_PRIVATE);
-        int UserNoiseBaseLevel = sharedPreferences.getInt("UserNoiseBaseLevel", 0);
-
         if (isSensitiveToNoiseActive) {
-          noiseLevel = Math.max(0, noiseLevel + SensorData.NoiseBaseLevelThreshold.getValue() + UserNoiseBaseLevel);
+          noiseLevel = Math.max(0,
+              noiseLevel + SensorData.NoiseBaseLevelThreshold.getValue() + MyApp.getUser().getUser().getNoiseBaselineLevel());
         }
 
         if (isPrioritiseSeatsActive) {

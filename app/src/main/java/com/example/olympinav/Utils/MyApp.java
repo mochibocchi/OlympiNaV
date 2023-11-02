@@ -1,13 +1,10 @@
 package com.example.olympinav.Utils;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import androidx.room.Room;
 
 import com.example.olympinav.DB.AppDatabase;
-import com.example.olympinav.DB.User;
 import com.example.olympinav.DB.UserWithTicketsAndEvents;
 
 public class MyApp extends Application {

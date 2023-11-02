@@ -1,9 +1,9 @@
 package com.example.olympinav;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.olympinav.Utils.MyApp;
 import com.example.olympinav.Utils.Utils;
 import com.example.olympinav.models.TravelMethod;
 import com.example.olympinav.models.TravelType;
@@ -42,7 +43,7 @@ import java.util.List;
 public class ViewTripActivity extends BaseActivity {
     private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mma");
   private Trip trip;
-  private TripStintReyclerView adapter;
+  private TripStintRecyclerView adapter;
   private GoogleMap map;
   private AlertDialog dialog;
 
@@ -71,23 +72,21 @@ public class ViewTripActivity extends BaseActivity {
       price.setText("$3.51"); // Don't have a price system
       // Finish button opens up a feedback dialogue:
       FloatingActionButton finishBtn = findViewById(R.id.openFeedbackDialogueFAB);
-      finishBtn.setOnClickListener(v -> {
-          PromptUserForTripFeedback();
-      });
+      finishBtn.setOnClickListener(v -> PromptUserForTripFeedback());
   }
 
   private void setupRecyclerView() {
     RecyclerView recyclerView = findViewById(R.id.recyclerView);
-    adapter = new TripStintReyclerView(trip.getTravelMethods());
+    adapter = new TripStintRecyclerView(trip.getTravelMethods());
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.setAdapter(adapter);
   }
 
-  class TripStintReyclerView extends RecyclerView.Adapter<TripStintViewHolder> {
+  class TripStintRecyclerView extends RecyclerView.Adapter<TripStintViewHolder> {
       List<TravelMethod> travelMethods;
 
-      public TripStintReyclerView(List<TravelMethod> tms) {
+      public TripStintRecyclerView(List<TravelMethod> tms) {
           this.travelMethods = tms;
       }
 
@@ -206,7 +205,6 @@ public class ViewTripActivity extends BaseActivity {
 //    are uncomfortable with loud environments.
 
     private void PromptUserForTripFeedback() {
-        UserSettingsManager userSettingsManager = new UserSettingsManager(getSharedPreferences("UserDataPref", Context.MODE_PRIVATE));
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_end_of_trip_feedback, null);
         builder.setView(dialogView);
@@ -223,7 +221,8 @@ public class ViewTripActivity extends BaseActivity {
         });
 
         neutralButton.setOnClickListener(v -> {
-            userSettingsManager.updateUserNoiseBaseLevel(10);
+            MyApp.getUser().getUser().setNoiseBaselineLevel(MyApp.getUser().getUser().getNoiseBaselineLevel() + 10);
+            updateUser();
             Toast.makeText(this, "We'll adjust your personalised noise threshold.", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
             Intent intent = new Intent(ViewTripActivity.this, MainActivity.class);
@@ -231,7 +230,8 @@ public class ViewTripActivity extends BaseActivity {
         });
 
         sadButton.setOnClickListener(v -> {
-            userSettingsManager.updateUserNoiseBaseLevel(25);
+            MyApp.getUser().getUser().setNoiseBaselineLevel(MyApp.getUser().getUser().getNoiseBaselineLevel() + 25);
+            updateUser();
             Toast.makeText(this, "We'll adjust your personalised noise threshold.", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
             Intent intent = new Intent(ViewTripActivity.this, MainActivity.class);
@@ -242,4 +242,12 @@ public class ViewTripActivity extends BaseActivity {
         builder.setNegativeButton("Cancel", null);
         dialog.show();
     }
+
+    private void updateUser() {
+      AsyncTask.execute(() -> {
+        MyApp.getAppDatabase().userDao().update(MyApp.getUser().getUser());
+        MyApp.setUser(MyApp.getAppDatabase().userDao().getUserWithTicketsAndEvents(MyApp.getUser().getUser().getUsername()));
+      });
+    }
+
 }

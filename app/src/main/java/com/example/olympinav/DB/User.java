@@ -32,4 +32,8 @@ public class User {
   public Integer getNoiseBaselineLevel() {
     return noiseBaselineLevel;
   }
+
+  public void setNoiseBaselineLevel(Integer noiseBaselineLevel) {
+    this.noiseBaselineLevel = noiseBaselineLevel;
+  }
 }

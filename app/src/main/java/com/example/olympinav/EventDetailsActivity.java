@@ -22,7 +22,6 @@ public class EventDetailsActivity extends BaseActivity {
     Event event;
     private Ticket ticket;
     ImageView eventImage;
-    private static final String SHARED_PREF_KEY = "MyPreferences";
     public static final String EXTRA_START_LOCATION = "start_location";
     public static final String EXTRA_END_LOCATION = "end_location";
 
