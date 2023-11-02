@@ -87,6 +87,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/baseline_directions_black_bus_24" />
 
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Your other UI elements here -->
+
+            <TextView
+                android:id="@+id/noEventsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You have no events added yet. Click the + sign to add."
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/layout_menu" />
